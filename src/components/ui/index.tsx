@@ -43,8 +43,8 @@ export const Arr = ({ s = 16 }: { s?: number }) => (
 
 /* ── Check icon ────────────────────────── */
 export const Chk = () => (
-  <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
+  <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
   </div>
 );
 

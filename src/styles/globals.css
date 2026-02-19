@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 @layer base {
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -13,85 +13,38 @@
 @layer components {
   .wrap { @apply max-w-[1140px] mx-auto px-5 md:px-8; }
 
-  /* Buttons */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
-           px-7 py-3.5 text-[15px] bg-sp text-white cursor-pointer
-           transition-all duration-300 no-underline border-none tracking-[-0.01em];
-    box-shadow: 0 1px 2px rgba(2,159,222,0.15), 0 0 0 0 rgba(2,159,222,0);
+  /* Primary CTA — Blue gradient */
+  .cta-primary {
+    @apply inline-flex items-center justify-center gap-2.5 font-bold rounded-full
+           px-7 py-3.5 text-[15px] text-white cursor-pointer uppercase tracking-wide
+           transition-all duration-300 no-underline border-none;
+    background: linear-gradient(135deg, #029fde 0%, #0178a8 100%);
+    box-shadow: 0 2px 12px rgba(2,159,222,0.35);
   }
-  .btn-primary:hover {
-    @apply bg-sp-600;
-    box-shadow: 0 4px 16px rgba(2,159,222,0.25), 0 0 0 0 rgba(2,159,222,0);
-    transform: translateY(-1px);
-  }
-
-  .btn-outline {
-    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
-           px-7 py-3.5 text-[15px] bg-transparent text-ink cursor-pointer
-           transition-all duration-200 no-underline tracking-[-0.01em];
-    border: 1.5px solid #dde1e6;
-  }
-  .btn-outline:hover { @apply border-sp text-sp bg-sp-50/50; }
-
-  .btn-white {
-    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
-           px-7 py-3.5 text-[15px] bg-white text-sp cursor-pointer
-           transition-all duration-300 no-underline border-none tracking-[-0.01em];
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  }
-  .btn-white:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.1); transform: translateY(-1px); }
-
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
-           px-7 py-3.5 text-[15px] bg-white/10 text-white cursor-pointer
-           transition-all duration-200 no-underline backdrop-blur-sm;
-    border: 1.5px solid rgba(255,255,255,0.2);
-  }
-  .btn-ghost:hover { @apply bg-white/[0.18]; border-color: rgba(255,255,255,0.35); }
-
-  /* Green CTA - Candidate-Flow style */
-  .cta-green {
-    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
-           px-7 py-3.5 text-[15px] text-white cursor-pointer
-           transition-all duration-300 no-underline border-none tracking-[-0.01em];
-    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-    box-shadow: 0 2px 8px rgba(16,185,129,0.3), 0 0 0 0 rgba(16,185,129,0);
-  }
-  .cta-green:hover {
-    box-shadow: 0 8px 28px rgba(16,185,129,0.35), 0 0 0 0 rgba(16,185,129,0);
-    transform: translateY(-1px);
-    filter: brightness(1.05);
-  }
-
-  /* Cards */
-  .card {
-    @apply bg-white rounded-2xl p-7 transition-all duration-300;
-    border: 1px solid rgba(0,0,0,0.04);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 0 0 1px rgba(0,0,0,0.02);
-  }
-  .card:hover {
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+  .cta-primary:hover {
+    box-shadow: 0 8px 32px rgba(2,159,222,0.45);
     transform: translateY(-2px);
+    filter: brightness(1.08);
   }
 
-  /* Sections */
-  .section { @apply py-20 md:py-28; }
-
-  /* Inputs */
-  .input-field {
-    @apply w-full px-4 py-3.5 border border-ink-faint/60 rounded-xl text-sm
-           bg-white text-ink font-body outline-none transition-all;
+  /* Secondary CTA — White outline */
+  .cta-outline {
+    @apply inline-flex items-center justify-center gap-2.5 font-bold rounded-full
+           px-7 py-3.5 text-[15px] text-white cursor-pointer uppercase tracking-wide
+           transition-all duration-300 no-underline;
+    border: 2px solid rgba(255,255,255,0.2);
   }
-  .input-field:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.1); }
-  .input-field::placeholder { @apply text-ink-muted; }
+  .cta-outline:hover { border-color: #029fde; @apply text-sp; }
 
   /* Dark input */
   .input-dark {
-    @apply w-full px-4 py-3.5 border border-white/[0.08] rounded-xl text-sm
-           bg-white/[0.03] text-white font-body outline-none transition-all;
+    @apply w-full px-4 py-3.5 border border-white/[0.1] rounded-xl text-sm
+           bg-white/[0.04] text-white font-body outline-none transition-all;
   }
-  .input-dark:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.1); }
-  .input-dark::placeholder { @apply text-white/25; }
+  .input-dark:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.15); }
+  .input-dark::placeholder { @apply text-white/30; }
   .input-dark option { @apply bg-[#111] text-white; }
+
+  /* Sections */
+  .section { @apply py-20 md:py-28; }
 }
