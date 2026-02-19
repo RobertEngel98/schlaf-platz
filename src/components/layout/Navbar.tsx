@@ -16,7 +16,7 @@ export default function Navbar() {
           <img src={BRAND.logo} alt="Schlaf-Platz Logo" className="h-10 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center gap-8">
-          {NAV.map(l => <Link key={l.href} href={l.href} className="text-white/80 no-underline text-[15px] font-display font-medium hover:text-sp-gold transition-colors">{l.label}</Link>)}
+          {NAV.map(l => <Link key={l.href} href={l.href} className="text-white/80 no-underline text-[15px] font-display font-medium hover:text-white transition-colors">{l.label}</Link>)}
           <a href={`https://www.${BRAND.appDomain}/partner/`} className="btn-gold !py-2.5 !px-6 !text-sm">Jetzt inserieren</a>
         </nav>
         <button className="md:hidden flex flex-col gap-[5px] p-2" onClick={() => setOpen(!open)} aria-label="Menu">

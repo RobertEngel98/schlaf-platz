@@ -66,7 +66,7 @@ export default function HomeClient() {
             { icon: "🏠", t: "Komplette Apartments", d: "Keine geteilten Zimmer. Voll moeblierte Wohnungen mit Kueche, Bad und WLAN." },
           ].map((item, i) => (
             <div key={i} className="card p-9">
-              <div className="w-14 h-14 rounded-[14px] bg-sp-gold/10 flex items-center justify-center mb-6 text-[28px]">{item.icon}</div>
+              <div className="w-14 h-14 rounded-[14px] bg-sp-blue/10 flex items-center justify-center mb-6 text-[28px]">{item.icon}</div>
               <h3 className="font-display font-bold text-xl text-sp-blue mb-3">{item.t}</h3>
               <p className="text-gray-500 text-[15px] leading-relaxed">{item.d}</p>
             </div>
@@ -78,7 +78,7 @@ export default function HomeClient() {
       <Section bg="white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="hero-bg rounded-[20px] p-12 relative overflow-hidden">
-            <p className="label-sm !text-sp-gold">Fuer Unternehmen &amp; Monteure</p>
+            <p className="label-sm !text-white">Fuer Unternehmen &amp; Monteure</p>
             <h3 className="font-display font-extrabold text-[28px] text-white leading-tight mb-4">Unterkunft finden</h3>
             <p className="text-white/70 text-[15px] leading-relaxed mb-8">Finden Sie in 90 Sekunden die passende Monteurwohnung. Ob fuer 5 oder 100 Mitarbeiter.</p>
             <Link href="/mieter" className="btn-gold">Jetzt Unterkunft finden <Arrow /></Link>
@@ -131,7 +131,7 @@ export default function HomeClient() {
             { y: "2024", t: "App-Launch & Markenregistrierung" },
           ].map(i => (
             <div key={i.y} className="card !rounded-xl p-5 min-w-[180px] text-center">
-              <p className="font-display font-extrabold text-2xl text-sp-gold m-0 mb-2">{i.y}</p>
+              <p className="font-display font-extrabold text-2xl text-sp-blue m-0 mb-2">{i.y}</p>
               <p className="text-gray-500 text-sm leading-snug m-0">{i.t}</p>
             </div>
           ))}

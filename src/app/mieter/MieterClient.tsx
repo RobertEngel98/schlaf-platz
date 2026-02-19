@@ -11,7 +11,7 @@ function Steps({ cur, total }: { cur: number; total: number }) {
     <div className="flex items-center gap-2 mb-8">
       {Array.from({ length: total }, (_, i) => (
         <div key={i} className="flex items-center gap-2" style={{ flex: i < total - 1 ? 1 : "none" }}>
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-display font-bold shrink-0 transition-all ${i < cur ? "bg-sp-green text-white" : i === cur ? "bg-gradient-to-br from-sp-gold to-sp-gold-light text-white" : "bg-sp-bg-alt text-gray-500"}`}>
+          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-display font-bold shrink-0 transition-all ${i < cur ? "bg-sp-green text-white" : i === cur ? "bg-gradient-to-br from-sp-blue to-sp-blue-light text-white" : "bg-sp-bg-alt text-gray-500"}`}>
             {i < cur ? "✓" : i + 1}
           </div>
           {i < total - 1 && <div className={`flex-1 h-0.5 rounded-full transition-colors ${i < cur ? "bg-sp-green" : "bg-sp-bg-alt"}`} />}
@@ -65,8 +65,8 @@ export default function MieterClient() {
                     <div><label className="label-field">Art der Unterkunft</label>
                       <div className="flex flex-col gap-2">
                         {[{ v: "apartment", l: "🏠 Komplette Wohnung" }, { v: "zimmer", l: "🛏️ Einzelzimmer" }, { v: "flexibel", l: "🔄 Flexibel" }].map(o => (
-                          <div key={o.v} onClick={() => s("type", o.v)} className={`flex items-center gap-3 p-4 rounded-xl border-[1.5px] cursor-pointer transition-all ${f.type === o.v ? "border-sp-gold bg-sp-gold/5" : "border-sp-bg-alt hover:border-sp-gold/50"}`}>
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${f.type === o.v ? "border-sp-gold" : "border-sp-bg-alt"}`}>{f.type === o.v && <div className="w-2.5 h-2.5 rounded-full bg-sp-gold" />}</div>
+                          <div key={o.v} onClick={() => s("type", o.v)} className={`flex items-center gap-3 p-4 rounded-xl border-[1.5px] cursor-pointer transition-all ${f.type === o.v ? "border-sp-blue bg-sp-blue/5" : "border-sp-bg-alt hover:border-sp-blue/50"}`}>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${f.type === o.v ? "border-sp-blue" : "border-sp-bg-alt"}`}>{f.type === o.v && <div className="w-2.5 h-2.5 rounded-full bg-sp-blue" />}</div>
                             <span className="font-semibold text-sm text-sp-blue">{o.l}</span>
                           </div>
                         ))}
@@ -106,7 +106,7 @@ export default function MieterClient() {
                       <div><label className="label-field">Telefon *</label><input className="input-field" placeholder="+49 ..." type="tel" value={f.phone} onChange={e => s("phone", e.target.value)} /></div>
                       <div><label className="label-field">E-Mail (opt.)</label><input className="input-field" placeholder="info@firma.de" type="email" value={f.email} onChange={e => s("email", e.target.value)} /></div>
                     </div>
-                    <p className="text-xs text-gray-500">Mit dem Absenden stimmen Sie unserer <Link href="/datenschutzerklaerung" className="text-sp-gold">Datenschutzerklaerung</Link> zu.</p>
+                    <p className="text-xs text-gray-500">Mit dem Absenden stimmen Sie unserer <Link href="/datenschutzerklaerung" className="text-sp-blue">Datenschutzerklaerung</Link> zu.</p>
                   </div>
                 )}
                 <div className="flex gap-3 mt-6">
@@ -137,7 +137,7 @@ export default function MieterClient() {
             { i: "👥", t: "Personelle Abhaengigkeit", d: "Wenn die eine Person, die sich um Unterkuenfte kuemmert, ausfaellt, bricht Chaos aus." },
           ].map((x, j) => (
             <div key={j} className="card p-8">
-              <div className="w-[52px] h-[52px] rounded-xl bg-sp-gold/10 flex items-center justify-center mb-5 text-2xl">{x.i}</div>
+              <div className="w-[52px] h-[52px] rounded-xl bg-sp-blue/10 flex items-center justify-center mb-5 text-2xl">{x.i}</div>
               <h3 className="font-display font-bold text-lg text-sp-blue mb-3">{x.t}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{x.d}</p>
             </div>

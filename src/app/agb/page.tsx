@@ -8,7 +8,7 @@ export default function AGBPage() {
     <section className="bg-white py-16"><div className="wrap max-w-[800px]">
       <div className="prose prose-gray max-w-none font-body text-gray-700 leading-relaxed">
         <p>Die vollstaendigen AGB der Schlaf-Platz e.G. werden in Kuerze hier veroeffentlicht.</p>
-        <p>Bei Fragen wenden Sie sich bitte an: <a href="mailto:info@schlaf-platz.com" className="text-sp-gold">info@schlaf-platz.com</a></p>
+        <p>Bei Fragen wenden Sie sich bitte an: <a href="mailto:info@schlaf-platz.com" className="text-sp-blue">info@schlaf-platz.com</a></p>
       </div>
     </div></section>
   <Footer /></div>);

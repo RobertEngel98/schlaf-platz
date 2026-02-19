@@ -17,7 +17,7 @@ export default function KarriereClient() {
       <Navbar />
       <section className="hero-bg pt-[120px] pb-24 relative overflow-hidden">
         <div className="wrap relative z-10 text-center max-w-[720px] mx-auto">
-          <p className="text-sp-gold text-sm font-display font-semibold uppercase tracking-widest mb-4">Karriere bei Schlaf-Platz</p>
+          <p className="text-white/80 text-sm font-display font-semibold uppercase tracking-widest mb-4">Karriere bei Schlaf-Platz</p>
           <h1 className="font-display font-extrabold text-white leading-[1.1] tracking-tight mb-6" style={{ fontSize: "clamp(36px,5vw,56px)" }}>
             Werde Teil von <span className="text-gradient-gold">Deutschlands</span> wachsender Monteurzimmer-Plattform
           </h1>
@@ -38,7 +38,7 @@ export default function KarriereClient() {
             { i: "🎓", t: "Ausbildung", d: "Wir bilden auch aus: Kauffrau/Kaufmann." },
           ].map((p, i) => (
             <div key={i} className="card p-8">
-              <div className="w-14 h-14 rounded-[14px] bg-sp-gold/10 flex items-center justify-center mb-5 text-[28px]">{p.i}</div>
+              <div className="w-14 h-14 rounded-[14px] bg-sp-blue/10 flex items-center justify-center mb-5 text-[28px]">{p.i}</div>
               <h3 className="font-display font-bold text-lg text-sp-blue mb-2">{p.t}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{p.d}</p>
             </div>
@@ -54,7 +54,7 @@ export default function KarriereClient() {
               <div className="flex-1">
                 <h3 className="font-display font-bold text-sp-blue text-lg mb-2">{pos.title}</h3>
                 <div className="flex gap-3 flex-wrap mb-2">
-                  <span className="text-xs font-display font-semibold bg-sp-gold/10 text-sp-gold rounded-full px-3 py-1">{pos.type}</span>
+                  <span className="text-xs font-display font-semibold bg-sp-blue/10 text-sp-blue rounded-full px-3 py-1">{pos.type}</span>
                   <span className="text-xs font-display font-semibold bg-sp-bg text-gray-500 rounded-full px-3 py-1">{pos.loc}</span>
                 </div>
                 <p className="text-gray-500 text-sm m-0">{pos.desc}</p>

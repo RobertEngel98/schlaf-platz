@@ -9,7 +9,7 @@ export default function DatenschutzPage() {
       <div className="prose prose-gray max-w-none font-body text-gray-700 leading-relaxed">
         <h2 className="font-display font-bold text-sp-blue text-xl mt-8 mb-4">1. Datenschutz auf einen Blick</h2>
         <p>Wir nehmen den Schutz Ihrer persoenlichen Daten sehr ernst. Die vollstaendige Datenschutzerklaerung wird in Kuerze hier veroeffentlicht.</p>
-        <p>Bei Fragen zum Datenschutz wenden Sie sich bitte an: <a href="mailto:info@schlaf-platz.com" className="text-sp-gold">info@schlaf-platz.com</a></p>
+        <p>Bei Fragen zum Datenschutz wenden Sie sich bitte an: <a href="mailto:info@schlaf-platz.com" className="text-sp-blue">info@schlaf-platz.com</a></p>
       </div>
     </div></section>
   <Footer /></div>);

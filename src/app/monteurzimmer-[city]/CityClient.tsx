@@ -11,7 +11,7 @@ export default function CityClient({ city }: { city: CityData }) {
       <Navbar />
       <section className="hero-bg pt-[120px] pb-20 relative overflow-hidden">
         <div className="wrap relative z-10 max-w-[720px]">
-          <p className="text-sp-gold text-sm font-display font-semibold uppercase tracking-widest mb-4">{city.emoji} Monteurzimmer</p>
+          <p className="text-white/80 text-sm font-display font-semibold uppercase tracking-widest mb-4">{city.emoji} Monteurzimmer</p>
           <h1 className="font-display font-extrabold text-white leading-[1.1] tracking-tight mb-6" style={{ fontSize: "clamp(32px,4.5vw,52px)" }}>
             Monteurzimmer in <span className="text-gradient-gold">{city.name}</span>
           </h1>
@@ -29,7 +29,7 @@ export default function CityClient({ city }: { city: CityData }) {
         <SectionHeader label="Wissenswertes" title={`Daten & Fakten ueber ${city.name}`} />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[{ l: "Bundesland", v: city.bundesland }, { l: "Einwohner", v: city.einwohner }, { l: "Flaeche", v: city.flaeche }, { l: "Autobahnen", v: city.autobahnen }].map(d => (
-            <div key={d.l} className="card !rounded-xl p-5"><p className="text-xs font-display font-semibold text-sp-gold uppercase tracking-wider mb-1">{d.l}</p><p className="font-display font-bold text-sp-blue text-base m-0">{d.v}</p></div>
+            <div key={d.l} className="card !rounded-xl p-5"><p className="text-xs font-display font-semibold text-sp-blue uppercase tracking-wider mb-1">{d.l}</p><p className="font-display font-bold text-sp-blue text-base m-0">{d.v}</p></div>
           ))}
         </div>
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">

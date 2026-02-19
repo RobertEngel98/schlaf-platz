@@ -21,7 +21,7 @@ export function AnimatedNumber({ end, suffix = "", dur = 2000 }: { end: number; 
 
 export function Stars({ count = 5, size = 16 }: { count?: number; size?: number }) {
   return <div className="flex gap-[3px]">{[...Array(count)].map((_, i) => (
-    <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill="#E8AA42"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+    <svg key={i} width={size} height={size} viewBox="0 0 24 24" fill="#029fde"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
   ))}</div>;
 }
 
@@ -36,7 +36,7 @@ export function Check({ size = 20, color = "#2D8A4E" }: { size?: number; color?:
 export function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`bg-white rounded-xl border transition-colors duration-300 overflow-hidden ${open ? "border-sp-gold" : "border-sp-bg-alt"}`}>
+    <div className={`bg-white rounded-xl border transition-colors duration-300 overflow-hidden ${open ? "border-sp-blue" : "border-sp-bg-alt"}`}>
       <button onClick={() => setOpen(!open)} className="w-full px-6 py-5 bg-transparent border-none flex items-center justify-between gap-4 cursor-pointer text-left">
         <span className="font-display font-semibold text-base text-sp-blue">{q}</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={open ? "#E8AA42" : "#5A5A5A"} strokeWidth="2" className={`transition-transform duration-300 shrink-0 ${open ? "rotate-180" : ""}`}><path d="M6 9l6 6 6-6" /></svg>

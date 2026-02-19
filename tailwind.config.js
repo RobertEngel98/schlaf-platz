@@ -5,12 +5,12 @@ module.exports = {
     extend: {
       colors: {
         sp: {
-          blue: "#003366",
-          "blue-light": "#004488",
-          "blue-dark": "#002244",
-          gold: "#E8AA42",
-          "gold-light": "#F5D998",
-          "gold-dark": "#D4952E",
+          blue: "#029fde",
+          "blue-light": "#02b5f5",
+          "blue-dark": "#0287bd",
+          gold: "#ffffff",
+          "gold-light": "#f0f0f0",
+          "gold-dark": "#e0e0e0",
           bg: "#F7F5F0",
           "bg-alt": "#EDE9E1",
           green: "#2D8A4E",

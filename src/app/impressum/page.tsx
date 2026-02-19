@@ -10,7 +10,7 @@ export default function ImpressumPage() {
         <h2 className="font-display font-bold text-sp-blue text-xl mt-8 mb-4">Angaben gemaess § 5 TMG</h2>
         <p>Schlaf-Platz e.G.<br/>Vertreten durch: Viktor Brehm (Inhaber)<br/>E-Mail: info@schlaf-platz.com<br/>Telefon: +49 160 95460613</p>
         <h2 className="font-display font-bold text-sp-blue text-xl mt-8 mb-4">Streitschlichtung</h2>
-        <p>Plattform der Europaeischen Kommission zur Online-Streitbeilegung (OS) fuer Verbraucher: <a href="https://ec.europa.eu/consumers/odr/" className="text-sp-gold">https://ec.europa.eu/consumers/odr/</a></p>
+        <p>Plattform der Europaeischen Kommission zur Online-Streitbeilegung (OS) fuer Verbraucher: <a href="https://ec.europa.eu/consumers/odr/" className="text-sp-blue">https://ec.europa.eu/consumers/odr/</a></p>
         <p>Wir sind nicht bereit und nicht verpflichtet an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
       </div>
     </div></section>
