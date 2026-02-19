@@ -1,20 +1,30 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { BRAND } from "@/lib/constants";
 
-export const metadata: Metadata = { title: "App fuer Mieter und Vermieter" };
+export const metadata = { title: "App & Vermieter-Portal" };
 
-export default function Page() {
+export default function AppPage() {
   return (
-    <div className="bg-[#0a0a0a]">
+    <div className="bg-white">
       <Navbar />
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20"><div className="wrap max-w-[600px]"><h1 className="font-display text-4xl md:text-5xl uppercase tracking-wide text-white">Die App fuer Mieter und Vermieter</h1></div></section>
-      <section className="py-14 md:py-20 border-t border-white/[0.06]">
-        <div className="wrap max-w-[700px] text-center">
-          <p className="text-white/40 text-lg mb-6">Unsere App befindet sich in der Entwicklung und wird bald verfuegbar sein.</p>
-          <p className="text-white/30 text-sm mb-8">Verwalten Sie Buchungen, kommunizieren Sie direkt mit Partnern und finden Sie Unterkuenfte — alles in einer App.</p>
-          <Link href="/mieter" className="cta-primary">In der Zwischenzeit: Jetzt Anfrage senden</Link>
+      <section className="pt-32 pb-10 md:pt-40 md:pb-12">
+        <div className="wrap max-w-[600px]">
+          <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-4">Fuer Vermieter</p>
+          <h1 className="font-display text-5xl md:text-6xl text-ink leading-[0.95] uppercase tracking-wide mb-5">Kostenlos inserieren.</h1>
+          <p className="text-gray-400 text-lg leading-relaxed mb-6">Registrieren Sie Ihre Wohnung kostenlos auf Schlaf-Platz und erreichen Sie tausende Handwerksfirmen in ganz Deutschland.</p>
+          <div className="space-y-3 mb-8">
+            {["0 Euro Gebuehren — dauerhaft","Transparenzregister inklusive","Persoenliche Betreuung","Mehr Sichtbarkeit fuer Ihre Immobilie"].map(t => (
+              <div key={t} className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-sp/15 flex items-center justify-center shrink-0">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <span className="text-gray-500 text-[14px]">{t}</span>
+              </div>
+            ))}
+          </div>
+          <a href={`mailto:${BRAND.email}?subject=Vermieter-Registrierung`} className="cta-primary">Jetzt registrieren</a>
         </div>
       </section>
       <Footer />

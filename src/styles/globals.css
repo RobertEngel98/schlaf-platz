@@ -6,8 +6,8 @@
 
 @layer base {
   html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { @apply font-body text-ink bg-surface; }
-  ::selection { @apply bg-sp-200 text-sp-900; }
+  body { @apply font-body text-ink bg-white; }
+  ::selection { @apply bg-sp-100 text-sp-900; }
 }
 
 @layer components {
@@ -19,24 +19,40 @@
            px-7 py-3.5 text-[15px] text-white cursor-pointer uppercase tracking-wide
            transition-all duration-300 no-underline border-none;
     background: linear-gradient(135deg, #029fde 0%, #0178a8 100%);
-    box-shadow: 0 2px 12px rgba(2,159,222,0.35);
+    box-shadow: 0 2px 12px rgba(2,159,222,0.3);
   }
   .cta-primary:hover {
-    box-shadow: 0 8px 32px rgba(2,159,222,0.45);
+    box-shadow: 0 8px 32px rgba(2,159,222,0.4);
     transform: translateY(-2px);
-    filter: brightness(1.08);
   }
 
-  /* Secondary CTA — White outline */
+  /* Outline CTA — dark or light */
   .cta-outline {
+    @apply inline-flex items-center justify-center gap-2.5 font-bold rounded-full
+           px-7 py-3.5 text-[15px] cursor-pointer uppercase tracking-wide
+           transition-all duration-300 no-underline;
+    border: 2px solid #dde1e6;
+    color: #0d1117;
+  }
+  .cta-outline:hover { border-color: #029fde; @apply text-sp; }
+
+  .cta-outline-white {
     @apply inline-flex items-center justify-center gap-2.5 font-bold rounded-full
            px-7 py-3.5 text-[15px] text-white cursor-pointer uppercase tracking-wide
            transition-all duration-300 no-underline;
     border: 2px solid rgba(255,255,255,0.2);
   }
-  .cta-outline:hover { border-color: #029fde; @apply text-sp; }
+  .cta-outline-white:hover { border-color: #029fde; @apply text-sp; }
 
-  /* Dark input */
+  /* Light input */
+  .input-light {
+    @apply w-full px-4 py-3.5 border border-gray-200 rounded-xl text-sm
+           bg-white text-ink font-body outline-none transition-all;
+  }
+  .input-light:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.1); }
+  .input-light::placeholder { @apply text-gray-400; }
+
+  /* Dark input (for dark sections) */
   .input-dark {
     @apply w-full px-4 py-3.5 border border-white/[0.1] rounded-xl text-sm
            bg-white/[0.04] text-white font-body outline-none transition-all;
@@ -44,7 +60,4 @@
   .input-dark:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.15); }
   .input-dark::placeholder { @apply text-white/30; }
   .input-dark option { @apply bg-[#111] text-white; }
-
-  /* Sections */
-  .section { @apply py-20 md:py-28; }
 }

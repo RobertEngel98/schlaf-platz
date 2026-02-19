@@ -1,19 +1,22 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-export const metadata: Metadata = { title: "Datenschutzerklaerung" };
+const TITLE = "Datenschutzerklaerung";
+
+export const metadata = { title: TITLE };
 
 export default function Page() {
   return (
-    <div className="bg-[#0a0a0a]">
+    <div className="bg-white">
       <Navbar />
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20"><div className="wrap max-w-[600px]"><h1 className="font-display text-4xl md:text-5xl uppercase tracking-wide text-white">Datenschutzerklaerung</h1></div></section>
-      <section className="py-14 md:py-20 border-t border-white/[0.06]">
-        <div className="wrap max-w-[700px] text-white/50 text-base leading-relaxed space-y-4">
-          <p>Der Schutz Ihrer persoenlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten daher ausschliesslich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TKG 2003).</p>
-          <p>Verantwortlicher: Schlaf-Platz e.G. — Viktor Brehm — info@schlaf-platz.com</p>
-          <p>Kontakt Datenschutz: <a href="mailto:info@schlaf-platz.com" className="text-sp no-underline hover:underline">info@schlaf-platz.com</a></p>
+      <section className="pt-32 pb-10 md:pt-40 md:pb-12">
+        <div className="wrap max-w-[700px]">
+          <h1 className="font-display text-4xl md:text-5xl text-ink uppercase tracking-wide mb-4">{TITLE}</h1>
+          <div className="border-t border-gray-100 pt-6">
+            <p className="text-gray-400 text-[15px] leading-relaxed">
+              Inhalt wird geladen. Bei Fragen wenden Sie sich bitte an info@schlaf-platz.com.
+            </p>
+          </div>
         </div>
       </section>
       <Footer />
