@@ -1,77 +1,104 @@
 "use client";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Section, SectionHeader, Arrow } from "@/components/ui";
+import { Section, Heading, Tag, FadeIn, Arr } from "@/components/ui";
 import { BRAND } from "@/lib/constants";
 
-const POSITIONS = [
-  { title: "Selbststaendiger Agenturpartner (m/w/d)", type: "Selbststaendig", loc: "Deutschlandweit", desc: "Baue dein eigenes Netzwerk auf und werde Teil unseres Partnermodells." },
-  { title: "Vertriebspartner (m/w/d)", type: "Selbststaendig", loc: "Deutschlandweit", desc: "Bringe Schlaf-Platz in deine Region. Telefonakquise und Netzwerkaufbau." },
-  { title: "Innendienst (m/w/d)", type: "Festanstellung", loc: "Remote / Buero", desc: "Betreuung unserer Partner und Mieter. Buchungsmanagement und Kundenservice." },
-  { title: "Ausbildung Kauffrau/Kaufmann fuer Bueromanagement", type: "Ausbildung", loc: "Vor Ort", desc: "Starte deine Karriere in einem wachsenden Unternehmen." },
+const JOBS = [
+  { title: "Vertriebsmitarbeiter (m/w/d)", type: "Vollzeit", location: "Remote / Muehldorf", desc: "Du gewinnst neue Vermieter und Firmen fuer unsere Plattform." },
+  { title: "Kundenbetreuer (m/w/d)", type: "Vollzeit", location: "Remote / Muehldorf", desc: "Du betreust unsere Partner und sorgst fuer zufriedene Mieter." },
+  { title: "Agenturpartner (m/w/d)", type: "Selbststaendig", location: "Deutschlandweit", desc: "Als selbststaendiger Partner akquirierst du Vermieter in deiner Region." },
+  { title: "Werkstudent Marketing (m/w/d)", type: "Teilzeit", location: "Remote", desc: "Du unterstuetzt unser Marketing-Team bei Content und Social Media." },
+];
+
+const TIMELINE = [
+  { year: "2014", text: "Gruendung als Einzelunternehmen" },
+  { year: "2020", text: "Umbau zur eingetragenen Genossenschaft (e.G.)" },
+  { year: "2023", text: "223% Umsatzwachstum, 1.500+ Partner" },
+  { year: "2024", text: "Launch der Schlaf-Platz App, 23 Mitarbeiter" },
+  { year: "2025", text: "Marktfuehrer-Ziel mit 50+ Staedten" },
 ];
 
 export default function KarriereClient() {
   return (
     <div>
       <Navbar />
-      <section className="hero-bg pt-[120px] pb-24 relative overflow-hidden">
-        <div className="wrap relative z-10 text-center max-w-[720px] mx-auto">
-          <p className="text-white/80 text-sm font-display font-semibold uppercase tracking-widest mb-4">Karriere bei Schlaf-Platz</p>
-          <h1 className="font-display font-extrabold text-white leading-[1.1] tracking-tight mb-6" style={{ fontSize: "clamp(36px,5vw,56px)" }}>
-            Werde Teil von <span className="text-gradient-gold">Deutschlands</span> wachsender Monteurzimmer-Plattform
-          </h1>
-          <p className="text-white/65 text-lg max-w-[520px] mx-auto mb-8">{BRAND.stats.partners.toLocaleString("de-DE")}+ Partner. {BRAND.stats.team} Teammitglieder. +{BRAND.stats.growth}% Wachstum.</p>
-          <a href="#stellen" className="btn-gold">Offene Stellen ansehen <Arrow size={18} /></a>
+
+      {/* Hero */}
+      <section className="relative bg-ink pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        <div className="absolute bottom-[-30%] left-[-10%] w-[500px] h-[500px] rounded-full bg-sp/8 blur-[100px]" />
+        <div className="wrap relative z-10 max-w-[600px]">
+          <Tag variant="light">Karriere bei Schlaf-Platz</Tag>
+          <h1 className="font-display text-4xl md:text-5xl text-white leading-[1.1] tracking-tight mt-5 mb-5">Gestalte die Zukunft des Wohnens mit.</h1>
+          <p className="text-white/45 text-lg leading-relaxed">Werde Teil eines schnell wachsenden Teams mit 23 Mitarbeitern und echter Startup-Mentalitaet.</p>
         </div>
       </section>
 
-      <Section bg="surface">
-        <SectionHeader label="Warum Schlaf-Platz" title="Was dich bei uns erwartet" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Numbers */}
+      <div className="bg-white border-b border-surface-dim py-6">
+        <div className="wrap flex items-center justify-center gap-8 md:gap-16 flex-wrap">
           {[
-            { i: "🚀", t: "Wachstum", d: "+223% Umsatzwachstum 2023. Du waechst mit." },
-            { i: "🏠", t: "Flexibel", d: "Remote-Arbeit moeglich. Flexible Arbeitszeiten." },
-            { i: "🤝", t: "Teamgeist", d: "23-koepfiges Team. Jaehrliche Teamtagung." },
-            { i: "📈", t: "Karrierepfade", d: "Vom Innendienst zum Agenturpartner." },
-            { i: "💰", t: "Faire Verguetung", d: "Attraktives Gehalt plus Provisionsmodelle." },
-            { i: "🎓", t: "Ausbildung", d: "Wir bilden auch aus: Kauffrau/Kaufmann." },
-          ].map((p, i) => (
-            <div key={i} className="card p-8">
-              <div className="w-14 h-14 rounded-[14px] bg-sp-blue/10 flex items-center justify-center mb-5 text-[28px]">{p.i}</div>
-              <h3 className="font-display font-bold text-lg text-sp-blue mb-2">{p.t}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{p.d}</p>
+            { v: "23", l: "Mitarbeiter" },
+            { v: "223%", l: "Umsatzwachstum" },
+            { v: "50+", l: "Staedte" },
+            { v: "100%", l: "Remote moeglich" },
+          ].map(s => (
+            <div key={s.l} className="text-center">
+              <p className="text-2xl font-bold text-sp m-0">{s.v}</p>
+              <p className="text-[11px] text-ink-muted uppercase tracking-widest m-0">{s.l}</p>
             </div>
           ))}
         </div>
-      </Section>
+      </div>
 
-      <Section bg="white" id="stellen">
-        <SectionHeader label="Offene Stellen" title="Finde deine Rolle bei Schlaf-Platz" />
-        <div className="flex flex-col gap-4 max-w-[800px] mx-auto">
-          {POSITIONS.map((pos, i) => (
-            <div key={i} className="card !rounded-xl p-7 flex flex-col sm:flex-row sm:items-center gap-4">
-              <div className="flex-1">
-                <h3 className="font-display font-bold text-sp-blue text-lg mb-2">{pos.title}</h3>
-                <div className="flex gap-3 flex-wrap mb-2">
-                  <span className="text-xs font-display font-semibold bg-sp-blue/10 text-sp-blue rounded-full px-3 py-1">{pos.type}</span>
-                  <span className="text-xs font-display font-semibold bg-sp-bg text-gray-500 rounded-full px-3 py-1">{pos.loc}</span>
+      {/* Timeline */}
+      <Section bg="cool">
+        <Heading tag="Unsere Geschichte" title="Von der Idee zum Marktfuehrer" />
+        <div className="max-w-[600px] mx-auto">
+          {TIMELINE.map((t, i) => (
+            <FadeIn key={i} delay={i * 80}>
+              <div className="flex gap-5 mb-6 last:mb-0">
+                <div className="flex flex-col items-center">
+                  <div className="w-10 h-10 rounded-xl bg-sp text-white flex items-center justify-center text-xs font-bold shrink-0">{t.year}</div>
+                  {i < TIMELINE.length - 1 && <div className="w-px flex-1 bg-sp-100 mt-2" />}
                 </div>
-                <p className="text-gray-500 text-sm m-0">{pos.desc}</p>
+                <p className="text-ink-light text-[15px] leading-relaxed pt-2.5">{t.text}</p>
               </div>
-              <a href={`mailto:${BRAND.email}?subject=Bewerbung: ${pos.title}`} className="btn-gold !py-3 !px-6 !text-sm shrink-0">Bewerben</a>
-            </div>
+            </FadeIn>
           ))}
         </div>
       </Section>
 
-      <section className="hero-bg py-20">
-        <div className="wrap text-center">
-          <h2 className="font-display font-extrabold text-white text-2xl md:text-3xl mb-4">Keine passende Stelle dabei?</h2>
-          <p className="text-white/65 text-base max-w-[480px] mx-auto mb-8">Schick uns eine Initiativbewerbung.</p>
-          <a href={`mailto:${BRAND.email}?subject=Initiativbewerbung`} className="btn-gold">Initiativbewerbung senden</a>
+      {/* Jobs */}
+      <Section bg="white">
+        <Heading tag="Offene Stellen" title="Finde deinen Platz bei uns" sub="Alle Positionen sind remote-friendly. Bewirb dich direkt per E-Mail." />
+        <div className="max-w-[700px] mx-auto space-y-3">
+          {JOBS.map((j, i) => (
+            <FadeIn key={i} delay={i * 60}>
+              <a href={`mailto:${BRAND.email}?subject=Bewerbung: ${j.title}`} className="card flex flex-col sm:flex-row sm:items-center gap-4 no-underline group cursor-pointer">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-display text-lg text-ink group-hover:text-sp transition-colors">{j.title}</h3>
+                  <p className="text-ink-muted text-sm mt-1">{j.desc}</p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <span className="text-[11px] font-semibold uppercase tracking-widest text-ink-muted bg-surface-cool px-3 py-1 rounded-full">{j.type}</span>
+                  <Arr s={16} />
+                </div>
+              </a>
+            </FadeIn>
+          ))}
+        </div>
+      </Section>
+
+      {/* CTA */}
+      <section className="bg-ink py-16 md:py-20">
+        <div className="wrap text-center max-w-[500px] mx-auto">
+          <h2 className="font-display text-2xl md:text-3xl text-white mb-4">Nichts Passendes dabei?</h2>
+          <p className="text-white/40 text-[15px] leading-relaxed mb-8">Schick uns eine Initiativbewerbung — wir freuen uns immer ueber motivierte Talente.</p>
+          <a href={`mailto:${BRAND.email}?subject=Initiativbewerbung`} className="btn-primary">Initiativ bewerben <Arr s={16}/></a>
         </div>
       </section>
+
       <Footer />
     </div>
   );

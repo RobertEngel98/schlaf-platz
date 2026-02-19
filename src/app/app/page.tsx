@@ -1,18 +1,29 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-export const metadata: Metadata = { title: "Schlaf-Platz App | Fuer Mieter & Vermieter" };
-export default function AppPage() {
-  return (<div><Navbar />
-    <section className="hero-bg pt-[120px] pb-20"><div className="wrap text-center max-w-[600px] mx-auto">
-      <p className="text-white text-sm font-display font-semibold uppercase tracking-widest mb-4">Schlaf-Platz App</p>
-      <h1 className="font-display font-extrabold text-white text-3xl md:text-4xl mb-6">Die App fuer Mieter &amp; Vermieter</h1>
-      <p className="text-white/65 text-lg mb-8">Verwalten Sie Ihre Unterkuenfte, Buchungen und das Transparenzregister - alles in einer App.</p>
-      <div className="flex gap-4 justify-center flex-wrap">
-        <a href="https://app.schlaf-platz.com" className="btn-gold">Zur App</a>
-        <a href="https://www.monteurzimmerapartments.de/partner/" className="btn-outline-white">Jetzt inserieren</a>
-      </div>
-    </div></section>
-  <Footer /></div>);
+import { Tag } from "@/components/ui";
+
+export const metadata: Metadata = { title: "Schlaf-Platz App" };
+
+export default function Page() {
+  return (
+    <div>
+      <Navbar />
+      <section className="relative bg-ink pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+        <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-sp/8 blur-[100px]" />
+        <div className="wrap relative z-10 max-w-[600px]">
+          <h1 className="font-display text-3xl md:text-4xl text-white leading-tight">Die App fuer Mieter und Vermieter</h1>
+        </div>
+      </section>
+      <section className="bg-white py-14 md:py-20">
+        <div className="wrap max-w-[700px]">
+          <p className="text-ink-light text-base leading-relaxed">Verwalten Sie Unterkuenfte, Buchungen und das Transparenzregister bequem in einer App. Verfuegbar fuer iOS und Android.</p>
+          <div className="mt-10 pt-6 border-t border-surface-dim">
+            <p className="text-ink-muted text-sm">Kontakt: <a href="mailto:info@schlaf-platz.com" className="text-sp hover:underline no-underline">info@schlaf-platz.com</a> | <a href="tel:+4916095460613" className="text-sp hover:underline no-underline">+49 160 95460613</a></p>
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
 }

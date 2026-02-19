@@ -2,70 +2,99 @@
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Stars, Section, SectionHeader, Arrow } from "@/components/ui";
+import { Section, Heading, Tag, Faq, Arr, Chk, FadeIn } from "@/components/ui";
 import { BRAND, CityData } from "@/lib/constants";
 
 export default function CityClient({ city }: { city: CityData }) {
+  const c = city;
   return (
     <div>
       <Navbar />
-      <section className="hero-bg pt-[120px] pb-20 relative overflow-hidden">
-        <div className="wrap relative z-10 max-w-[720px]">
-          <p className="text-white/80 text-sm font-display font-semibold uppercase tracking-widest mb-4">{city.emoji} Monteurzimmer</p>
-          <h1 className="font-display font-extrabold text-white leading-[1.1] tracking-tight mb-6" style={{ fontSize: "clamp(32px,4.5vw,52px)" }}>
-            Monteurzimmer in <span className="text-gradient-gold">{city.name}</span>
-          </h1>
-          <p className="text-xl text-white/70 font-display font-medium mb-4">Unterkuenfte fuer Handwerker &amp; Monteure in {city.name} &amp; Umgebung</p>
-          <p className="text-white/55 text-base leading-relaxed max-w-[580px] mb-8">{city.heroDesc}</p>
-          <div className="flex gap-4 flex-wrap">
-            <Link href="/mieter" className="btn-gold">Unterkunft in {city.name} finden <Arrow size={18} /></Link>
-            <Link href="/app" className="btn-outline-white">Monteurzimmer anbieten</Link>
+
+      {/* Hero */}
+      <section className="relative bg-ink pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-sp/8 blur-[120px]" />
+        <div className="wrap relative z-10 max-w-[650px]">
+          <Tag variant="light">{c.emoji} {c.bundesland}</Tag>
+          <h1 className="font-display text-4xl md:text-5xl text-white leading-[1.1] tracking-tight mt-5 mb-5">Monteurzimmer in {c.name}</h1>
+          <p className="text-white/45 text-lg leading-relaxed mb-8">{c.heroDesc}</p>
+          <div className="flex gap-3 flex-wrap">
+            <Link href="/mieter" className="btn-primary">Unterkunft anfragen <Arr s={16}/></Link>
+            <Link href="/app" className="btn-ghost">Kostenlos inserieren</Link>
           </div>
-          <div className="flex items-center gap-3 mt-10 opacity-80"><Stars size={16} /><span className="text-white/60 text-sm">{BRAND.stats.rating} aus {BRAND.stats.reviews}+ Bewertungen</span></div>
         </div>
       </section>
 
-      <Section bg="white">
-        <SectionHeader label="Wissenswertes" title={`Daten & Fakten ueber ${city.name}`} />
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[{ l: "Bundesland", v: city.bundesland }, { l: "Einwohner", v: city.einwohner }, { l: "Flaeche", v: city.flaeche }, { l: "Autobahnen", v: city.autobahnen }].map(d => (
-            <div key={d.l} className="card !rounded-xl p-5"><p className="text-xs font-display font-semibold text-sp-blue uppercase tracking-wider mb-1">{d.l}</p><p className="font-display font-bold text-sp-blue text-base m-0">{d.v}</p></div>
+      {/* City stats */}
+      <div className="bg-white border-b border-surface-dim py-5">
+        <div className="wrap flex items-center justify-center gap-6 md:gap-10 flex-wrap text-[13px]">
+          {[
+            { l: "Einwohner", v: c.einwohner },
+            { l: "Flaeche", v: c.flaeche },
+            { l: "Autobahnen", v: c.autobahnen },
+            { l: "Hbf", v: c.bahnhof },
+          ].map(s => (
+            <span key={s.l} className="text-ink-light"><strong className="text-ink">{s.l}:</strong> {s.v}</span>
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="card p-7"><h3 className="font-display font-bold text-lg text-sp-blue mb-3">Wichtige Branchen</h3><p className="text-gray-500 text-sm leading-relaxed">{city.branchen}</p><p className="text-gray-500 text-sm mt-2"><strong className="text-sp-blue">Unternehmen:</strong> {city.unternehmen}</p></div>
-          <div className="card p-7"><h3 className="font-display font-bold text-lg text-sp-blue mb-3">Verkehrsanbindung</h3><p className="text-gray-500 text-sm leading-relaxed"><strong>Autobahnen:</strong> {city.autobahnen}<br /><strong>Bahnhof:</strong> {city.bahnhof}</p></div>
+      </div>
+
+      {/* Key industries */}
+      <Section bg="white">
+        <Heading tag={`Wirtschaft ${c.name}`} title={`Branchen & Industrie in ${c.name}`} sub={`Wichtige Arbeitgeber: ${c.unternehmen}`} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[800px] mx-auto">
+          {c.industrie.map((ind, i) => (
+            <FadeIn key={i} delay={i * 80}>
+              <div className="card">
+                <h3 className="font-display text-lg text-ink mb-2">{ind.name}</h3>
+                <p className="text-ink-light text-sm leading-relaxed">{ind.desc}</p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
-      </Section>
-
-      {city.stadtteile.length > 0 && <Section bg="surface"><SectionHeader label="Stadtteile" title={`Stadtteile in ${city.name}`} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{city.stadtteile.map(s => <div key={s.name} className="card !rounded-xl p-6"><h4 className="font-display font-bold text-sp-blue mb-2">{s.name}</h4><p className="text-gray-500 text-sm leading-relaxed m-0">{s.desc}</p></div>)}</div>
-      </Section>}
-
-      {city.industrie.length > 0 && <Section bg="white"><SectionHeader label="Wirtschaft" title={`Industriegebiete in ${city.name}`} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{city.industrie.map(g => <div key={g.name} className="card !rounded-xl p-6"><h4 className="font-display font-bold text-sp-blue mb-2">{g.name}</h4><p className="text-gray-500 text-sm leading-relaxed m-0">{g.desc}</p></div>)}</div>
-      </Section>}
-
-      {city.messen.length > 0 && <Section bg="surface"><SectionHeader label="Messen" title={`Wichtige Messen in ${city.name}`} />
-        <div className="flex flex-wrap gap-3 justify-center">{city.messen.map(m => <span key={m} className="card !rounded-full px-5 py-2.5 text-sm font-display font-semibold text-sp-blue">{m}</span>)}</div>
-      </Section>}
-
-      {city.sights.length > 0 && <Section bg="white"><SectionHeader label="Freizeit" title={`Sehenswuerdigkeiten in ${city.name}`} />
-        <div className="flex flex-wrap gap-3 justify-center">{city.sights.map(s => <span key={s} className="bg-sp-bg border border-sp-bg-alt rounded-xl px-5 py-3 text-sm text-sp-blue font-medium">{s}</span>)}</div>
-      </Section>}
-
-      <Section bg="surface">
-        <div className="hero-bg rounded-[20px] p-12 md:p-16 text-center relative overflow-hidden">
-          <div className="relative z-10">
-            <h2 className="font-display font-extrabold text-white text-2xl md:text-3xl mb-4">Monteurzimmer in {city.name} anbieten?</h2>
-            <p className="text-white/65 text-base max-w-[480px] mx-auto mb-8">Inserieren Sie kostenlos und erreichen Sie tausende Handwerksfirmen.</p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/app" className="btn-gold">Kostenlos inserieren</Link>
-              <Link href="/mieter" className="btn-outline-white">Unterkunft finden</Link>
-            </div>
+        {c.messen.length > 0 && (
+          <div className="mt-8 text-center">
+            <p className="text-ink-muted text-sm">Wichtige Messen: <span className="text-ink font-medium">{c.messen.join(", ")}</span></p>
           </div>
+        )}
+      </Section>
+
+      {/* Stadtteile */}
+      <Section bg="cool">
+        <Heading tag="Stadtteile" title={`Die wichtigsten Stadtteile in ${c.name}`} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[800px] mx-auto">
+          {c.stadtteile.map((st, i) => (
+            <FadeIn key={i} delay={i * 60}>
+              <div className="bg-white rounded-xl border border-surface-dim p-5">
+                <h3 className="font-semibold text-ink text-[15px] mb-1">{st.name}</h3>
+                <p className="text-ink-muted text-sm">{st.desc}</p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </Section>
+
+      {/* Sights */}
+      {c.sights.length > 0 && (
+        <Section bg="white">
+          <Heading tag={`${c.name} entdecken`} title={`Sehenswuerdigkeiten in ${c.name}`} />
+          <div className="flex flex-wrap justify-center gap-3 max-w-[600px] mx-auto">
+            {c.sights.map(s => (
+              <span key={s} className="bg-surface-cool border border-surface-dim rounded-full px-4 py-2 text-sm text-ink-light">{s}</span>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {/* CTA */}
+      <section className="bg-ink py-16 md:py-20">
+        <div className="wrap text-center max-w-[500px] mx-auto">
+          <h2 className="font-display text-2xl md:text-3xl text-white mb-4">Monteurzimmer in {c.name} gesucht?</h2>
+          <p className="text-white/40 text-[15px] leading-relaxed mb-8">Senden Sie uns Ihre Anfrage und erhalten Sie innerhalb von 15 Minuten einen Rueckruf.</p>
+          <Link href="/mieter" className="btn-primary">Jetzt Unterkunft anfragen <Arr s={16}/></Link>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

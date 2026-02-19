@@ -1,14 +1,29 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-export const metadata: Metadata = { title: "Online Shop | Produkte fuer Ihre Monteurunterkunft" };
-export default function OnlineShopPage() {
-  return (<div><Navbar />
-    <section className="hero-bg pt-[120px] pb-20"><div className="wrap text-center max-w-[600px] mx-auto">
-      <p className="text-white text-sm font-display font-semibold uppercase tracking-widest mb-4">Online Shop</p>
-      <h1 className="font-display font-extrabold text-white text-3xl md:text-4xl mb-6">Produkte fuer Ihre Monteurunterkunft</h1>
-      <p className="text-white/65 text-lg mb-8">Unser Shop wird gerade aufgebaut. Bald finden Sie hier alles, was Sie fuer Ihre Monteurunterkunft benoetigen.</p>
-      <a href="mailto:info@schlaf-platz.com" className="btn-gold">Kontakt aufnehmen</a>
-    </div></section>
-  <Footer /></div>);
+import { Tag } from "@/components/ui";
+
+export const metadata: Metadata = { title: "Online Shop" };
+
+export default function Page() {
+  return (
+    <div>
+      <Navbar />
+      <section className="relative bg-ink pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+        <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-sp/8 blur-[100px]" />
+        <div className="wrap relative z-10 max-w-[600px]">
+          <h1 className="font-display text-3xl md:text-4xl text-white leading-tight">Online Shop</h1>
+        </div>
+      </section>
+      <section className="bg-white py-14 md:py-20">
+        <div className="wrap max-w-[700px]">
+          <p className="text-ink-light text-base leading-relaxed">Unser Shop wird gerade aufgebaut. Bald finden Sie hier alles fuer Ihre Monteurunterkunft — von Bettwaesche bis Kuechenausstattung.</p>
+          <div className="mt-10 pt-6 border-t border-surface-dim">
+            <p className="text-ink-muted text-sm">Kontakt: <a href="mailto:info@schlaf-platz.com" className="text-sp hover:underline no-underline">info@schlaf-platz.com</a> | <a href="tel:+4916095460613" className="text-sp hover:underline no-underline">+49 160 95460613</a></p>
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
 }
