@@ -28,26 +28,62 @@ export default function HomeClient() {
     <div className="bg-white overflow-x-hidden">
       <Navbar />
 
-      {/* ═══ HERO — dark section ═══ */}
-      <section className="relative bg-[#0b1220] min-h-[92svh] flex items-center overflow-hidden">
+      {/* ═══ HERO — dark section with dual CTA cards ═══ */}
+      <section className="relative bg-[#0b1220] overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-[-15%] right-[-5%] w-[600px] h-[600px] rounded-full bg-sp/[0.08] blur-[150px]" />
           <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-sp/[0.05] blur-[120px]" />
         </div>
         <div className="wrap relative z-10 pt-28 pb-14 md:pt-36 md:pb-16">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-5 animate-fade-in">Die Nr. 1 Plattform fuer Monteurzimmer in Deutschland</p>
-          <h1 className="font-display text-[clamp(3rem,7vw,6rem)] text-white leading-[0.95] tracking-wide uppercase mb-6 max-w-[850px] animate-fade-up">
+          <h1 className="font-display text-[clamp(3rem,7vw,5.5rem)] text-white leading-[0.95] tracking-wide uppercase mb-5 animate-fade-up">
             Monteurzimmer finden<br /><span className="text-sp">in unter 15 Minuten.</span>
           </h1>
-          <p className="text-white/40 text-lg md:text-xl leading-relaxed max-w-[560px] mb-2 animate-fade-up" style={{ animationDelay: "100ms" }}>
+          <p className="text-white/40 text-lg md:text-xl leading-relaxed max-w-[600px] mb-2 animate-fade-up" style={{ animationDelay: "100ms" }}>
             Ueber <strong className="text-white">1.500 verifizierte Vermieter</strong> in 50+ Staedten. Komplett moeblierte Apartments — <strong className="text-white">ohne Gebuehren, ohne Risiko.</strong>
           </p>
-          <div className="flex flex-col sm:flex-row items-start gap-4 mt-8">
-            <Link href="/mieter" className="cta-primary">Kostenlos Unterkunft anfragen <Arr s={18} /></Link>
-            <span className="text-white/25 text-[13px] pt-3.5">100% kostenlos &middot; Rueckruf in 15 Min.</span>
+          <div className="mt-6 animate-fade-up" style={{ animationDelay: "200ms" }}><TrustBadge /></div>
+
+          {/* ── Dual CTA Cards inside Hero ── */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 animate-fade-up" style={{ animationDelay: "300ms" }}>
+            {/* Mieter Card */}
+            <Link href="/mieter" className="group relative rounded-2xl p-6 md:p-7 overflow-hidden border border-sp/20 no-underline transition-all duration-300 hover:border-sp/40 hover:scale-[1.01]" style={{ background: "linear-gradient(135deg, rgba(2,159,222,0.1) 0%, rgba(2,159,222,0.03) 100%)" }}>
+              <div className="absolute top-0 right-0 w-[180px] h-[180px] bg-sp/[0.08] rounded-full blur-[60px]" />
+              <div className="relative z-10">
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp">Fuer Unternehmen &amp; Handwerker</span>
+                <h3 className="font-display text-3xl md:text-[2.5rem] text-white leading-[0.95] uppercase tracking-wide mt-2 mb-3">Monteurzimmer<br />finden</h3>
+                <p className="text-white/35 text-[14px] leading-relaxed mb-4">Ob 3 oder 100 Mitarbeiter — persoenlicher Rueckruf in 15 Minuten. Komplett kostenlos.</p>
+                <div className="space-y-2 mb-5">
+                  {["Persoenlicher Ansprechpartner","Rueckruf in 15 Minuten","Keine Buchungsgebuehren"].map(t => (
+                    <div key={t} className="flex items-center gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
+                      <span className="text-white/40 text-[13px]">{t}</span>
+                    </div>
+                  ))}
+                </div>
+                <span className="cta-primary !text-[13px] !px-6 !py-3 group-hover:shadow-[0_8px_32px_rgba(2,159,222,0.4)]">Jetzt anfragen <Arr s={16}/></span>
+              </div>
+            </Link>
+
+            {/* Vermieter Card */}
+            <Link href="/app" className="group rounded-2xl p-6 md:p-7 border border-white/[0.08] bg-white/[0.03] no-underline transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05] hover:scale-[1.01]">
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25">Fuer Vermieter &amp; Eigentuemer</span>
+              <h3 className="font-display text-3xl md:text-[2.5rem] text-white leading-[0.95] uppercase tracking-wide mt-2 mb-3">Kostenlos<br />inserieren</h3>
+              <p className="text-white/35 text-[14px] leading-relaxed mb-4">Erreichen Sie tausende Handwerksfirmen. Transparenzregister und persoenliche Betreuung inklusive.</p>
+              <div className="space-y-2 mb-5">
+                {["0 Euro Gebuehren — dauerhaft","Transparenzregister inklusive","Persoenliche Betreuung"].map(t => (
+                  <div key={t} className="flex items-center gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
+                    <span className="text-white/40 text-[13px]">{t}</span>
+                  </div>
+                ))}
+              </div>
+              <span className="cta-outline-white !text-[13px] !px-6 !py-3 group-hover:border-sp group-hover:text-sp">Kostenlos inserieren <Arr s={16}/></span>
+            </Link>
           </div>
-          <div className="mt-7 animate-fade-up" style={{ animationDelay: "300ms" }}><TrustBadge /></div>
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-up" style={{ animationDelay: "400ms" }}>
+
+          {/* Hero stats */}
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 animate-fade-up" style={{ animationDelay: "450ms" }}>
             {[
               { v: <AnimNum end={1500} suffix="+" />, l: "Verifizierte Partner" },
               { v: <AnimNum end={50} suffix="+" />, l: "Staedte in DE" },
@@ -82,7 +118,7 @@ export default function HomeClient() {
         <div className="wrap">
           <FadeIn>
             <p className="text-red-500 text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Das Problem</p>
-            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide max-w-[700px] mb-3">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
               Jede Woche ohne Monteurzimmer kostet Sie <span className="text-red-500">bares Geld.</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-[560px] mb-10">Ihre Disponenten verschwenden wertvolle Arbeitszeit — waehrend Auftraege warten und Mitarbeiter frustriert sind.</p>
@@ -116,7 +152,7 @@ export default function HomeClient() {
         <div className="wrap">
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Die Loesung</p>
-            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide max-w-[700px] mb-3">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
               In 3 Schritten zur <span className="text-sp">perfekten Unterkunft.</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-[540px] mb-10">Kein stundenlanges Suchen, kein Risiko. Wir uebernehmen alles — Sie lehnen sich zurueck.</p>
@@ -152,7 +188,7 @@ export default function HomeClient() {
         <div className="wrap">
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Warum Schlaf-Platz</p>
-            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide max-w-[750px] mb-10">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
               3 Gruende, warum <span className="text-sp">1.500+ Partner</span> uns vertrauen.
             </h2>
           </FadeIn>
@@ -182,7 +218,7 @@ export default function HomeClient() {
         <div className="wrap">
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Kundenstimmen</p>
-            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide max-w-[600px] mb-10">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
               Das sagen unsere <span className="text-sp">Partner.</span>
             </h2>
           </FadeIn>
@@ -213,49 +249,12 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ═══ DUAL CTA ═══ */}
-      <section className="py-14 md:py-20">
-        <div className="wrap">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FadeIn>
-              <div className="relative rounded-2xl p-7 md:p-9 overflow-hidden h-full border border-sp/15 bg-sp/[0.03]">
-                <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-sp/[0.06] rounded-full blur-[80px]" />
-                <div className="relative z-10">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp">Fuer Unternehmen &amp; Handwerker</span>
-                  <h3 className="font-display text-3xl md:text-4xl text-ink leading-[0.95] uppercase tracking-wide mt-2 mb-3">Monteurzimmer finden</h3>
-                  <p className="text-gray-400 text-[15px] leading-relaxed mb-5">Ob 3 oder 100 Mitarbeiter — persoenlicher Rueckruf in 15 Minuten. Komplett kostenlos.</p>
-                  <div className="space-y-2 mb-5">
-                    {["Persoenlicher Ansprechpartner","Rueckruf in 15 Minuten","Keine Buchungsgebuehren"].map(t => (
-                      <div key={t} className="flex items-center gap-2.5"><Chk /><span className="text-gray-400 text-[13px]">{t}</span></div>
-                    ))}
-                  </div>
-                  <Link href="/mieter" className="cta-primary">Jetzt anfragen <Arr s={16}/></Link>
-                </div>
-              </div>
-            </FadeIn>
-            <FadeIn delay={80}>
-              <div className="rounded-2xl p-7 md:p-9 border border-gray-100 bg-white h-full">
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-300">Fuer Vermieter &amp; Eigentuemer</span>
-                <h3 className="font-display text-3xl md:text-4xl text-ink leading-[0.95] uppercase tracking-wide mt-2 mb-3">Kostenlos inserieren</h3>
-                <p className="text-gray-400 text-[15px] leading-relaxed mb-5">Erreichen Sie tausende Handwerksfirmen. Transparenzregister inklusive.</p>
-                <div className="space-y-2 mb-5">
-                  {["0 Euro Gebuehren — dauerhaft","Transparenzregister inklusive","Persoenliche Betreuung"].map(t => (
-                    <div key={t} className="flex items-center gap-2.5"><Chk /><span className="text-gray-400 text-[13px]">{t}</span></div>
-                  ))}
-                </div>
-                <Link href="/app" className="cta-outline">Kostenlos inserieren <Arr s={16}/></Link>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ CITIES ═══ */}
-      <section className="py-14 md:py-20 bg-gray-50/60 border-y border-gray-100" id="staedte">
+      <section className="py-14 md:py-20" id="staedte">
         <div className="wrap">
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Standorte</p>
-            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide max-w-[700px] mb-10">
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
               Monteurzimmer in <span className="text-sp">ueber 50 Staedten.</span>
             </h2>
           </FadeIn>
@@ -276,7 +275,7 @@ export default function HomeClient() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="py-14 md:py-20">
+      <section className="py-14 md:py-20 bg-gray-50/60 border-y border-gray-100">
         <div className="wrap">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14">
             <div className="md:col-span-4">
