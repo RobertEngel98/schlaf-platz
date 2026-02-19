@@ -1,5 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
-// SCHLAF-PLATZ — Shared Constants & Data
+// SCHLAF-PLATZ — Shared Constants & City Data
+// Fix: replaced typographic quotes „" with standard quotes
 // ═══════════════════════════════════════════════════════════════
 
 export const BRAND = {
@@ -306,7 +307,7 @@ export const CITIES: CityData[] = [
     unternehmen: "Henkel, E.ON, Vodafone, L'Oréal",
     messen: ["drupa", "boot Düsseldorf", "MEDICA", "interpack"],
     stadtteile: [
-      { name: "Altstadt", description: "Das historische Herz mit dem „längsten Tresen der Welt" und traditionellen Brauereien." },
+      { name: "Altstadt", description: "Das historische Herz mit dem 'längsten Tresen der Welt' und traditionellen Brauereien." },
       { name: "Oberkassel", description: "Elegantes Wohngebiet westlich des Rheins mit Villen und Altbauten." },
       { name: "Flingern", description: "Kreativer Hotspot mit Ateliers, Cafés und jungem Lebensstil." },
       { name: "Pempelfort", description: "Lebendiges Wohngebiet mit Altbauflair und guter Anbindung." },
