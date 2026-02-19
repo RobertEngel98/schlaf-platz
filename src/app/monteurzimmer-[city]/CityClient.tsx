@@ -28,7 +28,7 @@ export default function CityClient({ city }: { city: CityData }) {
             { v: city.einwohner, l: "Einwohner" },
             { v: city.flaeche, l: "Flaeche" },
             { v: city.autobahnen, l: "Autobahnen" },
-            { v: city.hbf, l: "Hauptbahnhof" },
+            { v: city.bahnhof, l: "Hauptbahnhof" },
           ].map(s => (
             <div key={s.l}>
               <p className="text-xl md:text-2xl font-bold text-white m-0">{s.v}</p>
@@ -44,7 +44,7 @@ export default function CityClient({ city }: { city: CityData }) {
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.15em] mb-4">Industrie & Wirtschaft</p>
           <h2 className="font-display text-3xl md:text-4xl text-white leading-tight mb-14">Wichtige Arbeitgeber in {city.name}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {city.industries.map((ind, i) => (
+            {city.industrie.map((ind, i) => (
               <FadeIn key={i} delay={i * 60}>
                 <div className="border border-white/[0.06] rounded-2xl p-6 bg-white/[0.02]">
                   <h3 className="text-white font-bold mb-2">{ind.name}</h3>
