@@ -2,10 +2,7 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "schlaf-platz.com",
-      },
+      { protocol: "https", hostname: "schlaf-platz.com" },
     ],
   },
 };
