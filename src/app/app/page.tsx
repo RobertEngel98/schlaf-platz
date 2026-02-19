@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Tag } from "@/components/ui";
 
-export const metadata: Metadata = { title: "Schlaf-Platz App" };
+export const metadata: Metadata = { title: "App fuer Mieter und Vermieter" };
 
 export default function Page() {
   return (
-    <div>
+    <div className="bg-[#0a0a0a]">
       <Navbar />
-      <section className="relative bg-ink pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
-        <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-sp/8 blur-[100px]" />
-        <div className="wrap relative z-10 max-w-[600px]">
-          <h1 className="font-display text-3xl md:text-4xl text-white leading-tight">Die App fuer Mieter und Vermieter</h1>
-        </div>
-      </section>
-      <section className="bg-white py-14 md:py-20">
-        <div className="wrap max-w-[700px]">
-          <p className="text-ink-light text-base leading-relaxed">Verwalten Sie Unterkuenfte, Buchungen und das Transparenzregister bequem in einer App. Verfuegbar fuer iOS und Android.</p>
-          <div className="mt-10 pt-6 border-t border-surface-dim">
-            <p className="text-ink-muted text-sm">Kontakt: <a href="mailto:info@schlaf-platz.com" className="text-sp hover:underline no-underline">info@schlaf-platz.com</a> | <a href="tel:+4916095460613" className="text-sp hover:underline no-underline">+49 160 95460613</a></p>
-          </div>
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20"><div className="wrap max-w-[600px]"><h1 className="font-display text-3xl md:text-4xl text-white">Die App fuer Mieter und Vermieter</h1></div></section>
+      <section className="py-14 md:py-20 border-t border-white/[0.06]">
+        <div className="wrap max-w-[700px] text-center">
+          <p className="text-white/40 text-lg mb-6">Unsere App befindet sich in der Entwicklung und wird bald verfuegbar sein.</p>
+          <p className="text-white/30 text-sm mb-8">Verwalten Sie Buchungen, kommunizieren Sie direkt mit Partnern und finden Sie Unterkuenfte — alles in einer App.</p>
+          <Link href="/mieter" className="cta-green">In der Zwischenzeit: Jetzt Anfrage senden</Link>
         </div>
       </section>
       <Footer />

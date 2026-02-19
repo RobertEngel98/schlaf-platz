@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Tag } from "@/components/ui";
 
 export const metadata: Metadata = { title: "Impressum" };
 
 export default function Page() {
   return (
-    <div>
+    <div className="bg-[#0a0a0a]">
       <Navbar />
-      <section className="relative bg-ink pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
-        <div className="absolute top-[-20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-sp/8 blur-[100px]" />
-        <div className="wrap relative z-10 max-w-[600px]">
-          <h1 className="font-display text-3xl md:text-4xl text-white leading-tight">Impressum</h1>
-        </div>
-      </section>
-      <section className="bg-white py-14 md:py-20">
-        <div className="wrap max-w-[700px]">
-          <p className="text-ink-light text-base leading-relaxed">Schlaf-Platz e.G. — Inhaber: Viktor Brehm — E-Mail: info@schlaf-platz.com — Telefon: +49 160 95460613 — Mitglied im GvdL e.V.</p>
-          <div className="mt-10 pt-6 border-t border-surface-dim">
-            <p className="text-ink-muted text-sm">Kontakt: <a href="mailto:info@schlaf-platz.com" className="text-sp hover:underline no-underline">info@schlaf-platz.com</a> | <a href="tel:+4916095460613" className="text-sp hover:underline no-underline">+49 160 95460613</a></p>
-          </div>
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20"><div className="wrap max-w-[600px]"><h1 className="font-display text-3xl md:text-4xl text-white">Impressum</h1></div></section>
+      <section className="py-14 md:py-20 border-t border-white/[0.06]">
+        <div className="wrap max-w-[700px] text-white/50 text-base leading-relaxed space-y-4">
+          <p>Schlaf-Platz e.G. — Inhaber: Viktor Brehm</p>
+          <p>E-Mail: <a href="mailto:info@schlaf-platz.com" className="text-sp no-underline hover:underline">info@schlaf-platz.com</a></p>
+          <p>Telefon: <a href="tel:+4916095460613" className="text-sp no-underline hover:underline">+49 160 95460613</a></p>
+          <p>Mitglied im GvdL e.V.</p>
         </div>
       </section>
       <Footer />

@@ -9,7 +9,7 @@ export default function Footer() {
   ] as const;
 
   return (
-    <footer className="bg-ink pt-16 pb-8">
+    <footer className="bg-[#0a0a0a] border-t border-white/[0.06] pt-16 pb-8">
       <div className="wrap">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-14">
           {/* Brand col */}

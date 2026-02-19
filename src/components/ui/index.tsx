@@ -43,8 +43,8 @@ export const Arr = ({ s = 16 }: { s?: number }) => (
 
 /* ── Check icon ────────────────────────── */
 export const Chk = () => (
-  <div className="w-5 h-5 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
+  <div className="w-4 h-4 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg>
   </div>
 );
 
@@ -52,15 +52,15 @@ export const Chk = () => (
 export function Faq({ q, a }: { q: string; a: string }) {
   const [o, setO] = useState(false);
   return (
-    <div className={`border-b transition-colors ${o ? "border-sp-200" : "border-ink-faint/30"}`}>
+    <div className={`border-b transition-colors ${o ? "border-sp/30" : "border-white/[0.06]"}`}>
       <button onClick={() => setO(!o)} className="w-full py-5 bg-transparent border-none flex items-center justify-between gap-4 cursor-pointer text-left">
-        <span className="font-semibold text-[15px] text-ink">{q}</span>
-        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${o ? "bg-sp text-white rotate-45" : "bg-surface-cool text-ink-muted"}`}>
+        <span className="font-semibold text-[15px] text-white">{q}</span>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all ${o ? "bg-sp text-white rotate-45" : "bg-white/[0.06] text-white/40"}`}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 5v14M5 12h14"/></svg>
         </div>
       </button>
       <div className={`overflow-hidden transition-all duration-300 ${o ? "max-h-[400px] pb-5" : "max-h-0"}`}>
-        <p className="text-sm text-ink-light leading-relaxed m-0 pr-12">{a}</p>
+        <p className="text-sm text-white/50 leading-relaxed m-0 pr-12">{a}</p>
       </div>
     </div>
   );

@@ -50,6 +50,20 @@
   }
   .btn-ghost:hover { @apply bg-white/[0.18]; border-color: rgba(255,255,255,0.35); }
 
+  /* Green CTA - Candidate-Flow style */
+  .cta-green {
+    @apply inline-flex items-center justify-center gap-2.5 font-semibold rounded-full
+           px-7 py-3.5 text-[15px] text-white cursor-pointer
+           transition-all duration-300 no-underline border-none tracking-[-0.01em];
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow: 0 2px 8px rgba(16,185,129,0.3), 0 0 0 0 rgba(16,185,129,0);
+  }
+  .cta-green:hover {
+    box-shadow: 0 8px 28px rgba(16,185,129,0.35), 0 0 0 0 rgba(16,185,129,0);
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
   /* Cards */
   .card {
     @apply bg-white rounded-2xl p-7 transition-all duration-300;
@@ -71,4 +85,13 @@
   }
   .input-field:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.1); }
   .input-field::placeholder { @apply text-ink-muted; }
+
+  /* Dark input */
+  .input-dark {
+    @apply w-full px-4 py-3.5 border border-white/[0.08] rounded-xl text-sm
+           bg-white/[0.03] text-white font-body outline-none transition-all;
+  }
+  .input-dark:focus { @apply border-sp; box-shadow: 0 0 0 3px rgba(2,159,222,0.1); }
+  .input-dark::placeholder { @apply text-white/25; }
+  .input-dark option { @apply bg-[#111] text-white; }
 }
