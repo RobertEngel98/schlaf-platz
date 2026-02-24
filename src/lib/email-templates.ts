@@ -1,5 +1,5 @@
 /**
- * HTML E-Mail Templates fuer Schlaf-Platz
+ * HTML E-Mail Templates für Schlaf-Platz
  * Verwendung: import { anfrageBestaetigungMieter } from "@/lib/email-templates";
  */
 
@@ -11,7 +11,7 @@ interface AnfrageData {
   zeitraum: string;
 }
 
-/** Bestaetigung an den Mieter nach Anfrage */
+/** Bestätigung an den Mieter nach Anfrage */
 export function anfrageBestaetigungMieter(data: AnfrageData): string {
   return `<!DOCTYPE html>
 <html lang="de">
@@ -28,7 +28,7 @@ export function anfrageBestaetigungMieter(data: AnfrageData): string {
   <!-- Body -->
   <tr><td style="padding:32px 40px;">
     <p style="color:#0d1117;font-size:16px;line-height:1.6;margin:0 0 16px;">Guten Tag ${data.ansprechpartner},</p>
-    <p style="color:#484f58;font-size:15px;line-height:1.6;margin:0 0 24px;">vielen Dank fuer Ihre Anfrage. Ihr persoenlicher Berater wird sich innerhalb von <strong style="color:#029fde;">15 Minuten</strong> telefonisch bei Ihnen melden.</p>
+    <p style="color:#484f58;font-size:15px;line-height:1.6;margin:0 0 24px;">vielen Dank für Ihre Anfrage. Ihr persönlicher Berater wird sich innerhalb von <strong style="color:#029fde;">15 Minuten</strong> telefonisch bei Ihnen melden.</p>
     <!-- Details Box -->
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#f6f8fa;border-radius:12px;margin:0 0 24px;">
     <tr><td style="padding:20px 24px;">
@@ -41,17 +41,17 @@ export function anfrageBestaetigungMieter(data: AnfrageData): string {
       </table>
     </td></tr>
     </table>
-    <p style="color:#484f58;font-size:14px;line-height:1.6;margin:0 0 8px;">Was passiert als naechstes?</p>
+    <p style="color:#484f58;font-size:14px;line-height:1.6;margin:0 0 8px;">Was passiert als nächstes?</p>
     <ol style="color:#484f58;font-size:14px;line-height:1.8;margin:0 0 24px;padding-left:20px;">
-      <li>Ihr Berater prueft verfuegbare Apartments in ${data.stadt}</li>
-      <li>Sie erhalten einen persoenlichen Rueckruf mit Vorschlaegen</li>
-      <li>Sie waehlen das passende Apartment — fertig!</li>
+      <li>Ihr Berater prüft verfügbare Apartments in ${data.stadt}</li>
+      <li>Sie erhalten einen persönlichen Rückruf mit Vorschlägen</li>
+      <li>Sie wählen das passende Apartment — fertig!</li>
     </ol>
     <p style="color:#484f58;font-size:14px;line-height:1.6;margin:0;">Bei Fragen erreichen Sie uns jederzeit unter <a href="tel:+4916095460613" style="color:#029fde;text-decoration:none;font-weight:bold;">+49 160 95460613</a> oder <a href="mailto:info@schlaf-platz.com" style="color:#029fde;text-decoration:none;">info@schlaf-platz.com</a>.</p>
   </td></tr>
   <!-- Footer -->
   <tr><td style="padding:24px 40px;border-top:1px solid #f0f2f4;text-align:center;">
-    <p style="color:#8b949e;font-size:11px;margin:0;">Schlaf-Platz e.G. | Weyertal 109, 50931 Koeln | +49 160 95460613</p>
+    <p style="color:#8b949e;font-size:11px;margin:0;">Schlaf-Platz e.G. | Weyertal 109, 50931 Köln | +49 160 95460613</p>
     <p style="color:#c6cdd5;font-size:10px;margin:8px 0 0;">Diese E-Mail wurde automatisch versendet. Bitte antworten Sie nicht direkt auf diese Nachricht.</p>
   </td></tr>
 </table>
@@ -87,7 +87,7 @@ export function anfrageInternTeam(data: AnfrageData & { email: string; telefon: 
       </table>
     </td></tr>
     </table>
-    <p style="color:#029fde;font-size:14px;font-weight:bold;margin:20px 0 0;text-align:center;">Bitte innerhalb von 15 Minuten zurueckrufen!</p>
+    <p style="color:#029fde;font-size:14px;font-weight:bold;margin:20px 0 0;text-align:center;">Bitte innerhalb von 15 Minuten zurückrufen!</p>
   </td></tr>
 </table>
 </td></tr>
@@ -108,11 +108,11 @@ export function newsletterWillkommen(email: string): string {
     <h1 style="color:#ffffff;font-size:24px;margin:0;">Willkommen bei Schlaf-Platz!</h1>
   </td></tr>
   <tr><td style="padding:32px 40px;">
-    <p style="color:#0d1117;font-size:16px;line-height:1.6;margin:0 0 16px;">Vielen Dank fuer Ihre Newsletter-Anmeldung!</p>
+    <p style="color:#0d1117;font-size:16px;line-height:1.6;margin:0 0 16px;">Vielen Dank für Ihre Newsletter-Anmeldung!</p>
     <p style="color:#484f58;font-size:15px;line-height:1.6;margin:0 0 24px;">Ab sofort erhalten Sie monatlich:</p>
     <ul style="color:#484f58;font-size:14px;line-height:2;margin:0 0 24px;padding-left:20px;">
       <li>Aktuelle <strong style="color:#0d1117;">Markt-Updates</strong> zu Monteurzimmer-Preisen</li>
-      <li>Praktische <strong style="color:#0d1117;">Steuertipps</strong> fuer Unternehmen und Vermieter</li>
+      <li>Praktische <strong style="color:#0d1117;">Steuertipps</strong> für Unternehmen und Vermieter</li>
       <li>Exklusive <strong style="color:#0d1117;">Branchen-Insights</strong> und Trends</li>
       <li>Neue <strong style="color:#0d1117;">Blog-Artikel</strong> und Ratgeber</li>
     </ul>
@@ -121,7 +121,7 @@ export function newsletterWillkommen(email: string): string {
       <a href="https://monteurzimmerapartments.de/blog" style="color:#ffffff;font-size:14px;font-weight:bold;text-decoration:none;text-transform:uppercase;letter-spacing:1px;">Zum Blog</a>
     </td></tr>
     </table>
-    <p style="color:#8b949e;font-size:12px;line-height:1.6;margin:0;">Sie koennen sich jederzeit abmelden. Kein Spam — versprochen.</p>
+    <p style="color:#8b949e;font-size:12px;line-height:1.6;margin:0;">Sie können sich jederzeit abmelden. Kein Spam — versprochen.</p>
   </td></tr>
   <tr><td style="padding:24px 40px;border-top:1px solid #f0f2f4;text-align:center;">
     <p style="color:#8b949e;font-size:11px;margin:0;">Schlaf-Platz e.G. | info@schlaf-platz.com</p>

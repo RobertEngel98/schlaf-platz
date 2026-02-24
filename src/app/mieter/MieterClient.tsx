@@ -18,10 +18,10 @@ export default function MieterClient() {
         <div className="wrap relative z-10 pt-28 pb-12 md:pt-36 md:pb-14">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-5">Monteurzimmer anfragen</p>
           <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] text-white leading-[0.95] tracking-wide uppercase mb-5">
-            Unterkunft finden —<br /><span className="text-sp">schnell &amp; persoenlich.</span>
+            Unterkunft finden —<br /><span className="text-sp">schnell &amp; persönlich.</span>
           </h1>
           <p className="text-white/40 text-lg leading-relaxed max-w-[560px] mb-5">
-            Senden Sie Ihre Anfrage und erhalten Sie innerhalb von <strong className="text-white">15 Minuten</strong> einen persoenlichen Rueckruf von Ihrem Berater.
+            Senden Sie Ihre Anfrage und erhalten Sie innerhalb von <strong className="text-white">15 Minuten</strong> einen persönlichen Rückruf von Ihrem Berater.
           </p>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex items-center gap-1.5">
@@ -48,8 +48,8 @@ export default function MieterClient() {
           <h2 className="font-display text-4xl text-ink text-center uppercase tracking-wide mb-8">Fragen zur Anmietung</h2>
           {[
             { q: "Wie schnell bekomme ich eine Unterkunft?", a: "In der Regel innerhalb von 24-48 Stunden. Bei dringenden Anfragen oft noch am selben Tag." },
-            { q: "Was kostet ein Monteurzimmer?", a: "Die Preise variieren je nach Stadt und Ausstattung. Kontaktieren Sie uns fuer ein individuelles Angebot — die Vermittlung ist komplett kostenfrei." },
-            { q: "Kann ich die Buchung verlaengern oder stornieren?", a: "Ja, Verlaengerungen sind jederzeit moeglich und Stornierungen nach individueller Absprache." },
+            { q: "Was kostet ein Monteurzimmer?", a: "Die Preise variieren je nach Stadt und Ausstattung. Kontaktieren Sie uns für ein individuelles Angebot — die Vermittlung ist komplett kostenfrei." },
+            { q: "Kann ich die Buchung verlängern oder stornieren?", a: "Ja, Verlängerungen sind jederzeit möglich und Stornierungen nach individueller Absprache." },
           ].map((f, i) => <Faq key={i} q={f.q} a={f.a} />)}
         </div>
       </section>

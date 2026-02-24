@@ -43,11 +43,11 @@ export default function HomeClient() {
             <Link href="/mieter" className="group relative rounded-2xl p-6 md:p-8 overflow-hidden border border-sp/20 no-underline transition-all duration-300 hover:border-sp/40 hover:scale-[1.01]" style={{ background: "linear-gradient(135deg, rgba(2,159,222,0.1) 0%, rgba(2,159,222,0.03) 100%)" }}>
               <div className="absolute top-0 right-0 w-[180px] h-[180px] bg-sp/[0.08] rounded-full blur-[60px]" />
               <div className="relative z-10">
-                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp">Fuer Unternehmen &amp; Handwerker</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp">Für Unternehmen &amp; Handwerker</span>
                 <h2 className="font-display text-4xl md:text-5xl text-white leading-[0.95] uppercase tracking-wide mt-2 mb-3">Monteurzimmer<br />finden</h2>
-                <p className="text-white/35 text-[14px] leading-relaxed mb-5">Ob 3 oder 100 Mitarbeiter — persoenlicher Rueckruf in 15 Minuten. Komplett kostenlos.</p>
+                <p className="text-white/35 text-[14px] leading-relaxed mb-5">Ob 3 oder 100 Mitarbeiter — persönlicher Rückruf in 15 Minuten. Komplett kostenlos.</p>
                 <div className="space-y-2 mb-6">
-                  {["Persoenlicher Ansprechpartner","Rueckruf in 15 Minuten","Keine Buchungsgebuehren"].map(t => (
+                  {["Persönlicher Ansprechpartner","Rückruf in 15 Minuten","Keine Buchungsgebühren"].map(t => (
                     <div key={t} className="flex items-center gap-2.5">
                       <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
                       <span className="text-white/40 text-[13px]">{t}</span>
@@ -60,11 +60,11 @@ export default function HomeClient() {
 
             {/* Vermieter Card */}
             <Link href="/app" className="group rounded-2xl p-6 md:p-8 border border-white/[0.08] bg-white/[0.03] no-underline transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05] hover:scale-[1.01]">
-              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25">Fuer Vermieter &amp; Eigentuemer</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25">Für Vermieter &amp; Eigentümer</span>
               <h2 className="font-display text-4xl md:text-5xl text-white leading-[0.95] uppercase tracking-wide mt-2 mb-3">Kostenlos<br />inserieren</h2>
-              <p className="text-white/35 text-[14px] leading-relaxed mb-5">Erreichen Sie tausende Handwerksfirmen. Transparenzregister und persoenliche Betreuung inklusive.</p>
+              <p className="text-white/35 text-[14px] leading-relaxed mb-5">Erreichen Sie tausende Handwerksfirmen. Transparenzregister und persönliche Betreuung inklusive.</p>
               <div className="space-y-2 mb-6">
-                {["0 Euro Gebuehren — dauerhaft","Transparenzregister inklusive","Persoenliche Betreuung"].map(t => (
+                {["0 Euro Gebühren — dauerhaft","Transparenzregister inklusive","Persönliche Betreuung"].map(t => (
                   <div key={t} className="flex items-center gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
                     <span className="text-white/40 text-[13px]">{t}</span>
@@ -102,13 +102,13 @@ export default function HomeClient() {
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
               Jede Woche ohne Monteurzimmer kostet Sie <span className="text-red-500">bares Geld.</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-[560px] mb-10">Ihre Disponenten verschwenden wertvolle Arbeitszeit — waehrend Auftraege warten und Mitarbeiter frustriert sind.</p>
+            <p className="text-gray-400 text-lg max-w-[560px] mb-10">Ihre Disponenten verschwenden wertvolle Arbeitszeit — während Aufträge warten und Mitarbeiter frustriert sind.</p>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { n: "5h", sub: "pro Woche", t: "Zeitverlust bei der Suche", d: "Ihre Mitarbeiter verbringen durchschnittlich 5 Stunden pro Woche mit Telefonaten und Vergleichen — statt produktiv zu arbeiten." },
-              { n: "73%", sub: "der Anbieter", t: "Unzuverlaessige Unterkuenfte", d: "Fotos stimmen nicht, Stornierungen kommen kurzfristig, Qualitaet schwankt. Jede Buchung ist ein Gluecksspiel." },
-              { n: "0", sub: "Ueberblick", t: "Kein zentrales System", d: "Keine Bewertungen, keine Vergleichbarkeit, kein Schutz vor schwarzen Schafen. Fuer beide Seiten ein Risiko." },
+              { n: "73%", sub: "der Anbieter", t: "Unzuverlässige Unterkünfte", d: "Fotos stimmen nicht, Stornierungen kommen kurzfristig, Qualität schwankt. Jede Buchung ist ein Glücksspiel." },
+              { n: "0", sub: "Überblick", t: "Kein zentrales System", d: "Keine Bewertungen, keine Vergleichbarkeit, kein Schutz vor schwarzen Schafen. Für beide Seiten ein Risiko." },
             ].map((p, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -123,7 +123,7 @@ export default function HomeClient() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/mieter" className="cta-primary">Jetzt Problem loesen <Arr s={18} /></Link>
+            <Link href="/mieter" className="cta-primary">Jetzt Problem lösen <Arr s={18} /></Link>
           </div>
         </div>
       </section>
@@ -132,17 +132,17 @@ export default function HomeClient() {
       <section className="py-14 md:py-20 bg-gray-50/60 border-y border-gray-100">
         <div className="wrap">
           <FadeIn>
-            <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Die Loesung</p>
+            <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Die Lösung</p>
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
               In 3 Schritten zur <span className="text-sp">perfekten Unterkunft.</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-[540px] mb-10">Kein stundenlanges Suchen, kein Risiko. Wir uebernehmen alles — Sie lehnen sich zurueck.</p>
+            <p className="text-gray-400 text-lg max-w-[540px] mb-10">Kein stundenlanges Suchen, kein Risiko. Wir übernehmen alles — Sie lehnen sich zurück.</p>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { n: "01", t: "Anfrage in 60 Sekunden", d: "Stadt, Personenzahl und Zeitraum angeben — fertig. Keine Registrierung, kein Abo.", checks: ["Komplett kostenlose Anfrage","Kein Account noetig","DSGVO-konform"] },
-              { n: "02", t: "Persoenlicher Rueckruf", d: "Innerhalb von 15 Minuten meldet sich Ihr Berater mit passenden Wohnungsvorschlaegen.", checks: ["Rueckruf in 15 Minuten","Vorauswahl durch Experten","Transparente Preise"] },
-              { n: "03", t: "Einziehen & loslegen", d: "Komplett moeblierte Apartments mit Kueche, Bad, WLAN. Verlaengerungen jederzeit.", checks: ["Voll moebliert & ausgestattet","Flexible Verlaengerung","Persoenlicher Support"] },
+              { n: "01", t: "Anfrage in 60 Sekunden", d: "Stadt, Personenzahl und Zeitraum angeben — fertig. Keine Registrierung, kein Abo.", checks: ["Komplett kostenlose Anfrage","Kein Account nötig","DSGVO-konform"] },
+              { n: "02", t: "Persönlicher Rückruf", d: "Innerhalb von 15 Minuten meldet sich Ihr Berater mit passenden Wohnungsvorschlägen.", checks: ["Rückruf in 15 Minuten","Vorauswahl durch Experten","Transparente Preise"] },
+              { n: "03", t: "Einziehen & loslegen", d: "Komplett möblierte Apartments mit Küche, Bad, WLAN. Verlängerungen jederzeit.", checks: ["Voll möbliert & ausgestattet","Flexible Verlängerung","Persönlicher Support"] },
             ].map((s, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full flex flex-col group hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -170,14 +170,14 @@ export default function HomeClient() {
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Warum Schlaf-Platz</p>
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
-              3 Gruende, warum <span className="text-sp">1.500+ Partner</span> uns vertrauen.
+              3 Gründe, warum <span className="text-sp">1.500+ Partner</span> uns vertrauen.
             </h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { icon: "\uD83D\uDEE1\uFE0F", badge: "Einzigartig in DE", t: "Transparenzregister", d: "Vermieter bewerten Firmen, Firmen bewerten Vermieter. Vollstaendige Transparenz und Schutz — das gibt es nur bei uns." },
-              { icon: "\uD83D\uDCB0", badge: "100% Kostenfrei", t: "Null Euro. Immer.", d: "Waehrend Konkurrenten bis zu 300 Euro pro Jahr verlangen, ist Schlaf-Platz fuer Vermieter komplett kostenlos." },
-              { icon: "\uD83C\uDFE0", badge: "Premium-Standard", t: "Komplette Apartments", d: "Keine Mehrbettzimmer. Ihre Mitarbeiter wohnen in voll moeblierten Wohnungen mit eigener Kueche, Bad und WLAN." },
+              { icon: "\uD83D\uDEE1\uFE0F", badge: "Einzigartig in DE", t: "Transparenzregister", d: "Vermieter bewerten Firmen, Firmen bewerten Vermieter. Vollständige Transparenz und Schutz — das gibt es nur bei uns." },
+              { icon: "\uD83D\uDCB0", badge: "100% Kostenfrei", t: "Null Euro. Immer.", d: "Während Konkurrenten bis zu 300 Euro pro Jahr verlangen, ist Schlaf-Platz für Vermieter komplett kostenlos." },
+              { icon: "\uD83C\uDFE0", badge: "Premium-Standard", t: "Komplette Apartments", d: "Keine Mehrbettzimmer. Ihre Mitarbeiter wohnen in voll möblierten Wohnungen mit eigener Küche, Bad und WLAN." },
             ].map((v, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -242,9 +242,9 @@ export default function HomeClient() {
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { q: "Besonders hervorheben moechten wir Herrn Mansouri und Frau Schlaht, die stets freundlich, professionell und hilfsbereit sind. Absolut empfehlenswert!", name: "Schlegel GmbH", role: "Mieter seit 2022", init: "S" },
-              { q: "Die Kommunikation war einwandfrei, die Gaeste waren freundlich und anstaendig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", name: "Lisa Werkmeister", role: "Vermieterin seit 2021", init: "L" },
-              { q: "Von der Anfrage ueber die Reservierung bis zur Buchung immer einwandfrei. Zusagen wurden bis dato immer eingehalten. Top Service!", name: "Wohnraum KKBBG", role: "Vermieter seit 2023", init: "W" },
+              { q: "Besonders hervorheben möchten wir Herrn Mansouri und Frau Schlaht, die stets freundlich, professionell und hilfsbereit sind. Absolut empfehlenswert!", name: "Schlegel GmbH", role: "Mieter seit 2022", init: "S" },
+              { q: "Die Kommunikation war einwandfrei, die Gäste waren freundlich und anständig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", name: "Lisa Werkmeister", role: "Vermieterin seit 2021", init: "L" },
+              { q: "Von der Anfrage über die Reservierung bis zur Buchung immer einwandfrei. Zusagen wurden bis dato immer eingehalten. Top Service!", name: "Wohnraum KKBBG", role: "Vermieter seit 2023", init: "W" },
             ].map((t, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full flex flex-col hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -262,7 +262,7 @@ export default function HomeClient() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/mieter" className="cta-primary">Jetzt selbst ueberzeugen <Arr s={18} /></Link>
+            <Link href="/mieter" className="cta-primary">Jetzt selbst überzeugen <Arr s={18} /></Link>
           </div>
         </div>
       </section>
@@ -297,12 +297,12 @@ export default function HomeClient() {
       </section>
 
       {/* ═══ CITIES ═══ */}
-      <section className="py-14 md:py-20" id="staedte">
+      <section className="py-14 md:py-20" id="städte">
         <div className="wrap">
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Standorte</p>
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
-              Monteurzimmer in <span className="text-sp">ueber 50 Staedten.</span>
+              Monteurzimmer in <span className="text-sp">über 50 Städten.</span>
             </h2>
           </FadeIn>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -327,17 +327,17 @@ export default function HomeClient() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-14">
             <div className="md:col-span-4">
               <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">FAQ</p>
-              <h2 className="font-display text-4xl md:text-5xl text-ink leading-[0.95] uppercase tracking-wide mb-3">Haeufig gestellte Fragen</h2>
-              <p className="text-gray-400 text-[15px] leading-relaxed">Noch Fragen? Unser Team hilft Ihnen gerne persoenlich weiter.</p>
+              <h2 className="font-display text-4xl md:text-5xl text-ink leading-[0.95] uppercase tracking-wide mb-3">Häufig gestellte Fragen</h2>
+              <p className="text-gray-400 text-[15px] leading-relaxed">Noch Fragen? Unser Team hilft Ihnen gerne persönlich weiter.</p>
               <a href={`mailto:${BRAND.email}`} className="inline-flex items-center gap-2 text-sp font-bold text-sm mt-4 no-underline hover:underline uppercase tracking-wide">{BRAND.email} <Arr s={14} /></a>
             </div>
             <div className="md:col-span-8">
               {[
-                { q: "Ist Schlaf-Platz wirklich kostenlos?", a: "Ja — fuer Vermieter ist Schlaf-Platz zu 100% kostenlos. Keine Anmeldegebuehren, keine monatlichen Kosten. Fuer Mieter fallen nur die regulaeren Mietkosten an." },
-                { q: "Wie schnell bekomme ich eine Antwort?", a: "Ihr persoenlicher Berater meldet sich in der Regel innerhalb von 15 Minuten telefonisch bei Ihnen. Werktags von 08:00 bis 18:00 Uhr." },
-                { q: "Was ist das Transparenzregister?", a: "Vermieter bewerten Firmen, Firmen bewerten Vermieter. So schuetzen wir beide Seiten vor unzuverlaessigen Partnern — einzigartig in Deutschland." },
-                { q: "Wie unterscheiden sich Monteurzimmer von Hotels?", a: "Komplett moeblierte Apartments mit eigener Kueche, Bad und WLAN. Mehr Platz, mehr Komfort, guenstigere Preise — besonders bei laengeren Aufenthalten." },
-                { q: "Kann ich auch fuer groessere Teams buchen?", a: "Selbstverstaendlich. Ob 3 oder 100 Mitarbeiter — wir finden die passende Loesung, auch komplette Wohnkomplexe." },
+                { q: "Ist Schlaf-Platz wirklich kostenlos?", a: "Ja — für Vermieter ist Schlaf-Platz zu 100% kostenlos. Keine Anmeldegebühren, keine monatlichen Kosten. Für Mieter fallen nur die regulären Mietkosten an." },
+                { q: "Wie schnell bekomme ich eine Antwort?", a: "Ihr persönlicher Berater meldet sich in der Regel innerhalb von 15 Minuten telefonisch bei Ihnen. Werktags von 08:00 bis 18:00 Uhr." },
+                { q: "Was ist das Transparenzregister?", a: "Vermieter bewerten Firmen, Firmen bewerten Vermieter. So schützen wir beide Seiten vor unzuverlässigen Partnern — einzigartig in Deutschland." },
+                { q: "Wie unterscheiden sich Monteurzimmer von Hotels?", a: "Komplett möblierte Apartments mit eigener Küche, Bad und WLAN. Mehr Platz, mehr Komfort, günstigere Preise — besonders bei längeren Aufenthalten." },
+                { q: "Kann ich auch für größere Teams buchen?", a: "Selbstverständlich. Ob 3 oder 100 Mitarbeiter — wir finden die passende Lösung, auch komplette Wohnkomplexe." },
               ].map((f, i) => <Faq key={i} q={f.q} a={f.a} />)}
             </div>
           </div>
@@ -352,7 +352,7 @@ export default function HomeClient() {
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
               Monteurzimmer <span className="text-sp">kostenlos anfragen.</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-[540px] mb-10">Fuellen Sie das Formular aus — Ihr persoenlicher Berater meldet sich innerhalb von 15 Minuten.</p>
+            <p className="text-gray-400 text-lg max-w-[540px] mb-10">Füllen Sie das Formular aus — Ihr persönlicher Berater meldet sich innerhalb von 15 Minuten.</p>
           </FadeIn>
           <AnfrageForm />
         </div>
@@ -364,10 +364,10 @@ export default function HomeClient() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4 text-center">
             {[
               { v: "1.500+", l: "Partner in DE" },
-              { v: "50+", l: "Staedte" },
+              { v: "50+", l: "Städte" },
               { v: "266+", l: "5-Sterne Reviews" },
               { v: "23", l: "Mitarbeiter" },
-              { v: "\u2300 15 Min", l: "Rueckrufzeit" },
+              { v: "\u2300 15 Min", l: "Rückrufzeit" },
             ].map(s => (
               <div key={s.l}>
                 <p className="font-display text-4xl md:text-5xl text-white m-0 tracking-wide">{s.v}</p>
@@ -385,11 +385,11 @@ export default function HomeClient() {
             <div>
               <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Schlaf-Platz App</p>
               <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-4">
-                Monteurzimmer verwalten — <span className="text-sp">von ueberall.</span>
+                Monteurzimmer verwalten — <span className="text-sp">von überall.</span>
               </h2>
               <p className="text-gray-400 text-[15px] leading-relaxed mb-6">Mit der kostenlosen Schlaf-Platz App verwalten Sie Ihre Inserate, kommunizieren mit Mietern und behalten alle Buchungen im Blick.</p>
               <div className="space-y-3 mb-8">
-                {["Inserate erstellen & bearbeiten","Push-Benachrichtigungen fuer Anfragen","Direkter Chat mit Mietern","Buchungsuebersicht in Echtzeit"].map(t => (
+                {["Inserate erstellen & bearbeiten","Push-Benachrichtigungen für Anfragen","Direkter Chat mit Mietern","Buchungsübersicht in Echtzeit"].map(t => (
                   <div key={t} className="flex items-center gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-sp/15 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
                     <span className="text-gray-500 text-[14px]">{t}</span>
@@ -414,7 +414,7 @@ export default function HomeClient() {
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="1.5"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
                   </div>
                   <p className="font-display text-2xl text-ink uppercase tracking-wide">Schlaf-Platz</p>
-                  <p className="text-gray-400 text-sm mt-1">Kostenlos fuer iOS & Android</p>
+                  <p className="text-gray-400 text-sm mt-1">Kostenlos für iOS & Android</p>
                 </div>
               </div>
             </div>
@@ -426,7 +426,7 @@ export default function HomeClient() {
       <section className="py-14 md:py-20">
         <div className="wrap text-center max-w-[620px] mx-auto">
           <h2 className="font-display text-4xl md:text-6xl text-ink leading-[0.95] uppercase tracking-wide mb-4">Jetzt in 60 Sekunden <span className="text-sp">anfragen.</span></h2>
-          <p className="text-gray-400 text-lg leading-relaxed mb-7">Ob Unterkunft suchen oder Wohnung vermieten — unser Team steht Ihnen kostenlos und persoenlich zur Seite.</p>
+          <p className="text-gray-400 text-lg leading-relaxed mb-7">Ob Unterkunft suchen oder Wohnung vermieten — unser Team steht Ihnen kostenlos und persönlich zur Seite.</p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link href="/mieter" className="cta-primary text-base !px-8 !py-4">Unterkunft finden <Arr s={18}/></Link>
             <Link href="/app" className="cta-outline text-base !px-8 !py-4">Kostenlos inserieren</Link>

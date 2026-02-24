@@ -20,11 +20,11 @@ export default function CityClient({ city }: { city: CityData }) {
         </div>
         <div className="wrap relative z-10 pt-28 pb-12 md:pt-36 md:pb-14 max-w-[800px]">
           <div className="mb-5 [&_a]:text-white/30 [&_a:hover]:text-sp [&_span]:text-white/20 [&>nav>span:last-child>span]:text-white/50">
-            <Breadcrumbs items={[{ label: "Startseite", href: "/" }, { label: "Staedte", href: "/#staedte" }, { label: `Monteurzimmer ${city.name}` }]} />
+            <Breadcrumbs items={[{ label: "Startseite", href: "/" }, { label: "Städte", href: "/#staedte" }, { label: `Monteurzimmer ${city.name}` }]} />
           </div>
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-4">{city.emoji} {city.bundesland}</p>
           <h1 className="font-display text-5xl md:text-6xl text-white leading-[0.95] uppercase tracking-wide mb-4">Monteurzimmer in <span className="text-sp">{city.name}</span></h1>
-          <p className="text-white/40 text-lg leading-relaxed mb-6">{city.heroDesc} Komplett moeblierte Apartments fuer Ihre Monteure — persoenlicher Rueckruf in 15 Minuten. Kostenlose Vermittlung durch Schlaf-Platz.</p>
+          <p className="text-white/40 text-lg leading-relaxed mb-6">{city.heroDesc} Komplett möblierte Apartments für Ihre Monteure — persönlicher Rückruf in 15 Minuten. Kostenlose Vermittlung durch Schlaf-Platz.</p>
           <div className="flex items-center gap-3 flex-wrap mb-8">
             <div className="flex items-center gap-1.5">
               <div className="flex gap-0.5">{[...Array(5)].map((_, i) => <svg key={i} width={14} height={14} viewBox="0 0 20 20" fill="#f59e0b"><path d="M10 1l2.47 5.01L18 6.89l-4 3.9.94 5.51L10 13.56l-4.94 2.74.94-5.51-4-3.9 5.53-.88L10 1z"/></svg>)}</div>
@@ -40,7 +40,7 @@ export default function CityClient({ city }: { city: CityData }) {
       {/* ═══ STATS BAR ═══ */}
       <div className="border-b border-gray-100 py-5 bg-gray-50/50">
         <div className="wrap grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[{ v: city.einwohner, l: "Einwohner" }, { v: city.flaeche, l: "Flaeche" }, { v: city.autobahnen, l: "Autobahnen" }, { v: city.bahnhof, l: "Hauptbahnhof" }].map(s => (
+          {[{ v: city.einwohner, l: "Einwohner" }, { v: city.flaeche, l: "Fläche" }, { v: city.autobahnen, l: "Autobahnen" }, { v: city.bahnhof, l: "Hauptbahnhof" }].map(s => (
             <div key={s.l}>
               <p className="text-base md:text-lg font-bold text-ink m-0">{s.v}</p>
               <p className="text-[10px] text-gray-300 uppercase tracking-[0.15em] font-bold mt-1 m-0">{s.l}</p>
@@ -54,27 +54,27 @@ export default function CityClient({ city }: { city: CityData }) {
         <div className="wrap max-w-[800px]">
           <div className="prose max-w-none text-[16px] leading-relaxed [&_h2]:font-display [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:text-ink [&_h2]:uppercase [&_h2]:tracking-wide [&_h2]:mt-10 [&_h2]:mb-4 [&_h3]:text-ink [&_h3]:font-bold [&_h3]:text-lg [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:text-gray-500 [&_p]:mb-4 [&_ul]:text-gray-500 [&_li]:text-gray-500 [&_strong]:text-ink">
 
-            <h2>Monteurzimmer in {city.name} — moeblierte Apartments fuer Handwerker &amp; Monteure</h2>
+            <h2>Monteurzimmer in {city.name} — möblierte Apartments für Handwerker &amp; Monteure</h2>
             <p>
-              Sie suchen ein <strong>Monteurzimmer in {city.name}</strong>? Schlaf-Platz vermittelt Ihnen komplett moeblierte Apartments in {city.name} und Umgebung — kostenlos, persoenlich und innerhalb von 15 Minuten. Ob Einzelzimmer oder Unterkuenfte fuer grosse Teams: Wir finden die passende Loesung fuer Ihren Einsatz in {city.name}.
+              Sie suchen ein <strong>Monteurzimmer in {city.name}</strong>? Schlaf-Platz vermittelt Ihnen komplett möblierte Apartments in {city.name} und Umgebung — kostenlos, persönlich und innerhalb von 15 Minuten. Ob Einzelzimmer oder Unterkünfte für große Teams: Wir finden die passende Lösung für Ihren Einsatz in {city.name}.
             </p>
             <p>
-              {city.name} ({city.bundesland}) mit {city.einwohner} Einwohnern ist ein wichtiger Wirtschaftsstandort mit den Branchen {city.branchen}. Grosse Arbeitgeber wie {city.unternehmen} sorgen fuer eine hohe Nachfrage nach Monteurzimmern und moeblierten Apartments in der Region.
+              {city.name} ({city.bundesland}) mit {city.einwohner} Einwohnern ist ein wichtiger Wirtschaftsstandort mit den Branchen {city.branchen}. Große Arbeitgeber wie {city.unternehmen} sorgen für eine hohe Nachfrage nach Monteurzimmern und möblierten Apartments in der Region.
             </p>
 
-            <h2>Warum Monteurzimmer in {city.name} ueber Schlaf-Platz buchen?</h2>
+            <h2>Warum Monteurzimmer in {city.name} über Schlaf-Platz buchen?</h2>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li><strong>100% kostenlose Vermittlung</strong> — keine Gebuehren, keine Provision, keine versteckten Kosten</li>
-              <li><strong>Persoenlicher Rueckruf in 15 Minuten</strong> — Ihr Berater meldet sich mit passenden Vorschlaegen</li>
-              <li><strong>Komplett moeblierte Apartments</strong> — Kueche, Bad, WLAN, Bettzeug inklusive</li>
-              <li><strong>Transparenzregister</strong> — gegenseitige Bewertungen schuetzen Mieter und Vermieter</li>
+              <li><strong>100% kostenlose Vermittlung</strong> — keine Gebühren, keine Provision, keine versteckten Kosten</li>
+              <li><strong>Persönlicher Rückruf in 15 Minuten</strong> — Ihr Berater meldet sich mit passenden Vorschlägen</li>
+              <li><strong>Komplett möblierte Apartments</strong> — Küche, Bad, WLAN, Bettzeug inklusive</li>
+              <li><strong>Transparenzregister</strong> — gegenseitige Bewertungen schützen Mieter und Vermieter</li>
               <li><strong>Flexible Buchungsdauer</strong> — von einer Woche bis zu mehreren Monaten</li>
-              <li><strong>Ueber {BRAND.stats.partners.toLocaleString("de-DE")} verifizierte Partner</strong> in ganz Deutschland</li>
+              <li><strong>Über {BRAND.stats.partners.toLocaleString("de-DE")} verifizierte Partner</strong> in ganz Deutschland</li>
             </ul>
 
-            <h2>Beliebte Stadtteile fuer Monteurzimmer in {city.name}</h2>
+            <h2>Beliebte Stadtteile für Monteurzimmer in {city.name}</h2>
             <p>
-              Je nach Einsatzort in {city.name} bieten sich verschiedene Stadtteile fuer Ihr Monteurzimmer an. Unsere Empfehlungen fuer {city.name}:
+              Je nach Einsatzort in {city.name} bieten sich verschiedene Stadtteile für Ihr Monteurzimmer an. Unsere Empfehlungen für {city.name}:
             </p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function CityClient({ city }: { city: CityData }) {
               <FadeIn key={i} delay={i * 40}>
                 <div className="border border-gray-100 rounded-2xl p-5 bg-white hover:shadow-md hover:shadow-gray-100/80 transition-all">
                   <h3 className="text-ink font-bold mb-1.5">Monteurzimmer in {city.name}-{st.name}</h3>
-                  <p className="text-gray-400 text-[14px] leading-relaxed m-0">{st.desc} Moeblierte Apartments und Monteurzimmer sind hier gut verfuegbar.</p>
+                  <p className="text-gray-400 text-[14px] leading-relaxed m-0">{st.desc} Möblierte Apartments und Monteurzimmer sind hier gut verfügbar.</p>
                 </div>
               </FadeIn>
             ))}
@@ -103,7 +103,7 @@ export default function CityClient({ city }: { city: CityData }) {
       <section id="anfrage" className="py-14 md:py-20 border-b border-gray-100">
         <div className="wrap">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Kostenlose Anfrage</p>
-          <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Fuellung Sie das Formular aus und erhalten Sie innerhalb von 15 Minuten einen persoenlichen Rueckruf mit passenden Monteurzimmern in {city.name}.</p>
+          <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Füllen Sie das Formular aus und erhalten Sie innerhalb von 15 Minuten einen persönlichen Rückruf mit passenden Monteurzimmern in {city.name}.</p>
           <AnfrageForm defaultCity={city.slug} />
         </div>
       </section>
@@ -114,14 +114,14 @@ export default function CityClient({ city }: { city: CityData }) {
           <div className="max-w-[800px] mb-10">
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Industrie &amp; Wirtschaft</p>
             <h2 className="font-display text-4xl md:text-5xl text-ink leading-[0.95] uppercase tracking-wide mb-4">Warum Monteurzimmer in {city.name} <span className="text-sp">gefragt sind</span></h2>
-            <p className="text-gray-400 text-[15px] leading-relaxed">{city.name} ist ein bedeutender Standort fuer {city.branchen}. Unternehmen wie {city.unternehmen} beschaeftigen tausende Fachkraefte und sorgen fuer eine konstante Nachfrage nach moeblierten Apartments und Monteurzimmern.</p>
+            <p className="text-gray-400 text-[15px] leading-relaxed">{city.name} ist ein bedeutender Standort für {city.branchen}. Unternehmen wie {city.unternehmen} beschäftigen tausende Fachkräfte und sorgen für eine konstante Nachfrage nach möblierten Apartments und Monteurzimmern.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {city.industrie.map((ind, i) => (
               <FadeIn key={i} delay={i * 50}>
                 <div className="border border-gray-100 rounded-2xl p-5 bg-white hover:shadow-md hover:shadow-gray-100/80 transition-all">
                   <h3 className="text-ink font-bold mb-1.5">{ind.name}</h3>
-                  <p className="text-gray-400 text-[14px] leading-relaxed m-0">{ind.desc} Monteurzimmer in der Naehe sind ueber Schlaf-Platz verfuegbar.</p>
+                  <p className="text-gray-400 text-[14px] leading-relaxed m-0">{ind.desc} Monteurzimmer in der Nähe sind über Schlaf-Platz verfügbar.</p>
                 </div>
               </FadeIn>
             ))}
@@ -136,33 +136,33 @@ export default function CityClient({ city }: { city: CityData }) {
 
             <h2>Was kostet ein Monteurzimmer in {city.name}?</h2>
             <p>
-              Die Preise fuer <strong>Monteurzimmer in {city.name}</strong> variieren je nach Lage, Ausstattung und Buchungsdauer. Im Durchschnitt liegen die Kosten zwischen <strong>15 und 45 Euro pro Nacht und Person</strong>. Apartments in Randlagen oder bei Langzeitbuchungen (ab 4 Wochen) sind deutlich guenstiger.
+              Die Preise für <strong>Monteurzimmer in {city.name}</strong> variieren je nach Lage, Ausstattung und Buchungsdauer. Im Durchschnitt liegen die Kosten zwischen <strong>15 und 45 Euro pro Nacht und Person</strong>. Apartments in Randlagen oder bei Langzeitbuchungen (ab 4 Wochen) sind deutlich günstiger.
             </p>
             <p>
               {city.messen && city.messen.length > 0
-                ? `Waehrend grosser Messen und Events (${city.messen.slice(0, 3).join(", ")}) koennen die Preise in ${city.name} um 30-50% steigen. Wir empfehlen, fruehzeitig anzufragen.`
-                : `Die Preise bleiben in ${city.name} das ganze Jahr ueber relativ stabil. Fruehzeitige Anfragen sichern die besten Angebote.`
+                ? `Während großer Messen und Events (${city.messen.slice(0, 3).join(", ")}) können die Preise in ${city.name} um 30-50% steigen. Wir empfehlen, frühzeitig anzufragen.`
+                : `Die Preise bleiben in ${city.name} das ganze Jahr über relativ stabil. Frühzeitige Anfragen sichern die besten Angebote.`
               }
             </p>
             <p>
-              Bei Schlaf-Platz ist die Vermittlung von Monteurzimmern in {city.name} <strong>komplett kostenlos</strong> — Sie zahlen nur die reine Miete, ohne versteckte Gebuehren oder Provisionen. Fordern Sie jetzt ein individuelles Angebot an.
+              Bei Schlaf-Platz ist die Vermittlung von Monteurzimmern in {city.name} <strong>komplett kostenlos</strong> — Sie zahlen nur die reine Miete, ohne versteckte Gebühren oder Provisionen. Fordern Sie jetzt ein individuelles Angebot an.
             </p>
 
             <h2>Monteurzimmer in {city.name}: Ausstattung &amp; Standards</h2>
             <p>
-              Alle ueber Schlaf-Platz vermittelten Monteurzimmer in {city.name} erfuellen unsere Qualitaetsstandards:
+              Alle über Schlaf-Platz vermittelten Monteurzimmer in {city.name} erfüllen unsere Qualitätsstandards:
             </p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li><strong>Voll moebliert</strong> — Bett, Schrank, Tisch, Stuehle und komplette Ausstattung</li>
-              <li><strong>Eigene Kueche</strong> — Herd, Kuehlschrank, Geschirr und Kochutensilien</li>
-              <li><strong>Eigenes Bad</strong> — Dusche oder Badewanne, Handtuecher, Toilettenartikel</li>
-              <li><strong>Stabiles WLAN</strong> — fuer Berichte, Kommunikation und Freizeit</li>
-              <li><strong>Bettwaesche &amp; Handtuecher</strong> — inklusive regelmaessigem Wechsel</li>
+              <li><strong>Voll möbliert</strong> — Bett, Schrank, Tisch, Stühle und komplette Ausstattung</li>
+              <li><strong>Eigene Küche</strong> — Herd, Kühlschrank, Geschirr und Kochutensilien</li>
+              <li><strong>Eigenes Bad</strong> — Dusche oder Badewanne, Handtücher, Toilettenartikel</li>
+              <li><strong>Stabiles WLAN</strong> — für Berichte, Kommunikation und Freizeit</li>
+              <li><strong>Bettwäsche &amp; Handtücher</strong> — inklusive regelmäßigem Wechsel</li>
             </ul>
 
-            <h2>Monteurzimmer in {city.name} fuer grosse Teams</h2>
+            <h2>Monteurzimmer in {city.name} für große Teams</h2>
             <p>
-              Sie benoetigen Unterkuenfte fuer 10, 50 oder sogar 100 Mitarbeiter in {city.name}? Kein Problem. Schlaf-Platz organisiert <strong>Gruppenunterkuenfte in {city.name}</strong> — von einzelnen Apartments bis hin zu ganzen Wohnkomplexen. Unser Team koordiniert die gesamte Logistik, damit Sie sich auf Ihr Projekt konzentrieren koennen.
+              Sie benötigen Unterkünfte für 10, 50 oder sogar 100 Mitarbeiter in {city.name}? Kein Problem. Schlaf-Platz organisiert <strong>Gruppenunterkünfte in {city.name}</strong> — von einzelnen Apartments bis hin zu ganzen Wohnkomplexen. Unser Team koordiniert die gesamte Logistik, damit Sie sich auf Ihr Projekt konzentrieren können.
             </p>
           </div>
         </div>
@@ -173,8 +173,8 @@ export default function CityClient({ city }: { city: CityData }) {
         <section className="py-12 md:py-16 border-b border-gray-100 bg-gray-50/40">
           <div className="wrap">
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Messen &amp; Events</p>
-            <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Monteurzimmer in {city.name} waehrend Messen</h2>
-            <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Waehrend grosser Messen und Events steigt die Nachfrage nach Monteurzimmern in {city.name} deutlich. Fruehzeitig anfragen lohnt sich!</p>
+            <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Monteurzimmer in {city.name} während Messen</h2>
+            <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Während großer Messen und Events steigt die Nachfrage nach Monteurzimmern in {city.name} deutlich. Frühzeitig anfragen lohnt sich!</p>
             <div className="flex flex-wrap gap-2">
               {city.messen.map(m => (
                 <span key={m} className="text-[13px] text-ink font-medium border border-gray-100 rounded-full px-4 py-2 bg-white hover:border-sp/30 hover:text-sp transition-colors">{m}</span>
@@ -184,13 +184,13 @@ export default function CityClient({ city }: { city: CityData }) {
         </section>
       )}
 
-      {/* ═══ SEHENSWUERDIGKEITEN ═══ */}
+      {/* ═══ SEHENSWÜRDIGKEITEN ═══ */}
       {city.sights && city.sights.length > 0 && (
         <section className="py-12 md:py-16 border-b border-gray-100">
           <div className="wrap">
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Nach Feierabend</p>
-            <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">{city.name} entdecken — Tipps fuer Monteure</h2>
-            <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Nach der Arbeit gibt es in {city.name} einiges zu erleben. Hier sind die beliebtesten Sehenswuerdigkeiten:</p>
+            <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">{city.name} entdecken — Tipps für Monteure</h2>
+            <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Nach der Arbeit gibt es in {city.name} einiges zu erleben. Hier sind die beliebtesten Sehenswürdigkeiten:</p>
             <div className="flex flex-wrap gap-2">
               {city.sights.map(s => (
                 <span key={s} className="text-[13px] text-gray-500 border border-gray-100 rounded-full px-4 py-2 bg-gray-50/50 hover:border-sp/30 hover:text-sp transition-colors">{s}</span>
@@ -204,17 +204,17 @@ export default function CityClient({ city }: { city: CityData }) {
       <section className="py-12 md:py-16 border-b border-gray-100 bg-gray-50/40">
         <div className="wrap max-w-[700px]">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">FAQ</p>
-          <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-8">Haeufige Fragen zu Monteurzimmern in {city.name}</h2>
-          <Faq q={`Wie finde ich ein Monteurzimmer in ${city.name}?`} a={`Fuellung Sie unser kostenloses Anfrageformular auf dieser Seite aus oder rufen Sie uns an unter ${BRAND.phonePretty}. Sie erhalten innerhalb von 15 Minuten einen persoenlichen Rueckruf mit passenden Apartments in ${city.name}. Die Vermittlung ist komplett kostenlos.`} />
-          <Faq q={`Was kostet ein Monteurzimmer in ${city.name}?`} a={`Die Preise fuer Monteurzimmer in ${city.name} liegen zwischen 15 und 45 Euro pro Nacht und Person, je nach Lage und Ausstattung. Langzeitbuchungen ab 4 Wochen sind deutlich guenstiger. Fordern Sie ein individuelles Angebot an — kostenlos.`} />
-          <Faq q={`Welche Stadtteile in ${city.name} sind fuer Monteurzimmer empfehlenswert?`} a={`Beliebte Standorte fuer Monteurzimmer in ${city.name}: ${city.stadtteile.map(s => s.name).join(", ")}. Alle bieten gute Anbindung an die Industriegebiete und Autobahnen (${city.autobahnen}).`} />
-          <Faq q={`Gibt es Monteurzimmer in ${city.name} fuer groessere Teams?`} a={`Ja — ob 3 oder 100 Mitarbeiter, wir finden passende Loesungen in ${city.name}. Auch ganze Wohnkomplexe oder mehrere Apartments in einem Stadtteil. Fragen Sie einfach an.`} />
-          <Faq q={`Kann ich Monteurzimmer in ${city.name} von der Steuer absetzen?`} a={`Ja. Uebernachtungskosten fuer Monteurzimmer in ${city.name} sind als Betriebsausgaben absetzbar. Zudem gelten Verpflegungspauschalen (14€ ab 8h, 28€ ab 24h). Sie erhalten eine ordnungsgemaesse Rechnung.`} />
-          <Faq q={`Wie ist die Ausstattung der Monteurzimmer in ${city.name}?`} a={`Alle Apartments sind komplett moebliert: eigene Kueche mit Herd und Kuehlschrank, eigenes Bad, stabiles WLAN, Bettwaesche und Handtuecher. Viele bieten zusaetzlich Waschmaschine, TV und Parkplatz.`} />
+          <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-8">Häufige Fragen zu Monteurzimmern in {city.name}</h2>
+          <Faq q={`Wie finde ich ein Monteurzimmer in ${city.name}?`} a={`Füllen Sie unser kostenloses Anfrageformular auf dieser Seite aus oder rufen Sie uns an unter ${BRAND.phonePretty}. Sie erhalten innerhalb von 15 Minuten einen persönlichen Rückruf mit passenden Apartments in ${city.name}. Die Vermittlung ist komplett kostenlos.`} />
+          <Faq q={`Was kostet ein Monteurzimmer in ${city.name}?`} a={`Die Preise für Monteurzimmer in ${city.name} liegen zwischen 15 und 45 Euro pro Nacht und Person, je nach Lage und Ausstattung. Langzeitbuchungen ab 4 Wochen sind deutlich günstiger. Fordern Sie ein individuelles Angebot an — kostenlos.`} />
+          <Faq q={`Welche Stadtteile in ${city.name} sind für Monteurzimmer empfehlenswert?`} a={`Beliebte Standorte für Monteurzimmer in ${city.name}: ${city.stadtteile.map(s => s.name).join(", ")}. Alle bieten gute Anbindung an die Industriegebiete und Autobahnen (${city.autobahnen}).`} />
+          <Faq q={`Gibt es Monteurzimmer in ${city.name} für größere Teams?`} a={`Ja — ob 3 oder 100 Mitarbeiter, wir finden passende Lösungen in ${city.name}. Auch ganze Wohnkomplexe oder mehrere Apartments in einem Stadtteil. Fragen Sie einfach an.`} />
+          <Faq q={`Kann ich Monteurzimmer in ${city.name} von der Steuer absetzen?`} a={`Ja. Übernachtungskosten für Monteurzimmer in ${city.name} sind als Betriebsausgaben absetzbar. Zudem gelten Verpflegungspauschalen (14€ ab 8h, 28€ ab 24h). Sie erhalten eine ordnungsgemäße Rechnung.`} />
+          <Faq q={`Wie ist die Ausstattung der Monteurzimmer in ${city.name}?`} a={`Alle Apartments sind komplett möbliert: eigene Küche mit Herd und Kühlschrank, eigenes Bad, stabiles WLAN, Bettwäsche und Handtücher. Viele bieten zusätzlich Waschmaschine, TV und Parkplatz.`} />
         </div>
       </section>
 
-      {/* ═══ WEITERE STAEDTE IN DER NAEHE ═══ */}
+      {/* ═══ WEITERE STÄDTE IN DER NÄHE ═══ */}
       {(() => {
         const nearby = getNearbyCities(city.slug, 6);
         if (nearby.length === 0) return null;
@@ -222,8 +222,8 @@ export default function CityClient({ city }: { city: CityData }) {
           <section className="py-12 md:py-16 border-b border-gray-100">
             <div className="wrap">
               <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Weitere Standorte</p>
-              <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Monteurzimmer in der Naehe von <span className="text-sp">{city.name}</span></h2>
-              <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Sie suchen auch Monteurzimmer in anderen Staedten? Hier finden Sie weitere Standorte in der Region:</p>
+              <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Monteurzimmer in der Nähe von <span className="text-sp">{city.name}</span></h2>
+              <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Sie suchen auch Monteurzimmer in anderen Städten? Hier finden Sie weitere Standorte in der Region:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {nearby.map((nc, i) => (
                   <FadeIn key={nc.slug} delay={i * 40}>
@@ -238,7 +238,7 @@ export default function CityClient({ city }: { city: CityData }) {
                 ))}
               </div>
               <div className="mt-8">
-                <Link href="/#staedte" className="text-sp text-sm font-bold uppercase tracking-wide hover:underline inline-flex items-center gap-2">Alle Staedte anzeigen <Arr s={14} /></Link>
+                <Link href="/#staedte" className="text-sp text-sm font-bold uppercase tracking-wide hover:underline inline-flex items-center gap-2">Alle Städte anzeigen <Arr s={14} /></Link>
               </div>
             </div>
           </section>
@@ -250,7 +250,7 @@ export default function CityClient({ city }: { city: CityData }) {
         <div className="wrap">
           <div className="text-center max-w-[600px] mx-auto mb-10">
             <h2 className="font-display text-4xl md:text-5xl text-white leading-[0.95] uppercase tracking-wide mb-4">Monteurzimmer in {city.name} <span className="text-sp">jetzt anfragen</span></h2>
-            <p className="text-white/40 text-lg leading-relaxed">Kostenlos, persoenlich und in 15 Minuten. Fuellung Sie das Formular aus — wir kuemmern uns um den Rest.</p>
+            <p className="text-white/40 text-lg leading-relaxed">Kostenlos, persönlich und in 15 Minuten. Füllen Sie das Formular aus — wir kümmern uns um den Rest.</p>
           </div>
           <div className="max-w-[600px] mx-auto [&_label]:!text-white/40 [&_.input-light]:!bg-white/[0.06] [&_.input-light]:!border-white/[0.1] [&_.input-light]:!text-white [&_.input-light]:placeholder:!text-white/25 [&_.input-light]:focus:!border-sp [&_select]:!text-white [&_option]:!bg-[#111] [&_option]:!text-white">
             <AnfrageForm defaultCity={city.slug} compact />

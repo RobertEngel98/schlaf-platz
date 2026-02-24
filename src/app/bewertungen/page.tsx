@@ -11,18 +11,18 @@ export const metadata: Metadata = {
 };
 
 const REVIEWS = [
-  { name: "Schlegel GmbH", role: "Mieter seit 2022", stars: 5, text: "Besonders hervorheben moechten wir Herrn Mansouri und Frau Schlaht, die stets freundlich, professionell und hilfsbereit sind. Absolut empfehlenswert!", init: "S" },
-  { name: "Lisa Werkmeister", role: "Vermieterin seit 2021", stars: 5, text: "Die Kommunikation war einwandfrei, die Gaeste waren freundlich und anstaendig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", init: "L" },
-  { name: "Wohnraum KKBBG", role: "Vermieter seit 2023", stars: 5, text: "Von der Anfrage ueber die Reservierung bis zur Buchung immer einwandfrei. Zusagen wurden bis dato immer eingehalten. Top Service!", init: "W" },
-  { name: "Elektro Mueller GmbH", role: "Mieter seit 2020", stars: 5, text: "Seit ueber 4 Jahren buchen wir regelmaessig ueber Schlaf-Platz. Der persoenliche Service ist unschlagbar — wir bekommen immer genau die Unterkuenfte, die wir brauchen.", init: "E" },
-  { name: "Thomas Brauer", role: "Vermieter seit 2019", stars: 5, text: "Endlich eine Plattform ohne versteckte Kosten! Meine 3 Apartments sind staendig ausgelastet dank Schlaf-Platz. Die App macht die Verwaltung kinderleicht.", init: "T" },
-  { name: "Bau-Team Nordwest", role: "Mieter seit 2023", stars: 5, text: "Wir hatten 45 Mitarbeiter auf einer Grossbaustelle unterzubringen. Schlaf-Platz hat innerhalb von 2 Tagen alles organisiert. Hervorragende Koordination!", init: "B" },
-  { name: "Andrea Fischer", role: "Vermieterin seit 2022", stars: 5, text: "Das Transparenzregister gibt mir ein gutes Gefuehl. Ich weiss vorher, mit wem ich es zu tun habe. Keine boesen Ueberraschungen mehr seit ich bei Schlaf-Platz bin.", init: "A" },
-  { name: "Sanitaer Schmidt AG", role: "Mieter seit 2021", stars: 5, text: "Professionell, zuverlaessig und schnell. Was will man mehr? Der Rueckruf kam tatsaechlich nach 12 Minuten — nicht 15. Bestnote!", init: "S" },
+  { name: "Schlegel GmbH", role: "Mieter seit 2022", stars: 5, text: "Besonders hervorheben möchten wir Herrn Mansouri und Frau Schlaht, die stets freundlich, professionell und hilfsbereit sind. Absolut empfehlenswert!", init: "S" },
+  { name: "Lisa Werkmeister", role: "Vermieterin seit 2021", stars: 5, text: "Die Kommunikation war einwandfrei, die Gäste waren freundlich und anständig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", init: "L" },
+  { name: "Wohnraum KKBBG", role: "Vermieter seit 2023", stars: 5, text: "Von der Anfrage über die Reservierung bis zur Buchung immer einwandfrei. Zusagen wurden bis dato immer eingehalten. Top Service!", init: "W" },
+  { name: "Elektro Müller GmbH", role: "Mieter seit 2020", stars: 5, text: "Seit über 4 Jahren buchen wir regelmäßig über Schlaf-Platz. Der persönliche Service ist unschlagbar — wir bekommen immer genau die Unterkünfte, die wir brauchen.", init: "E" },
+  { name: "Thomas Brauer", role: "Vermieter seit 2019", stars: 5, text: "Endlich eine Plattform ohne versteckte Kosten! Meine 3 Apartments sind ständig ausgelastet dank Schlaf-Platz. Die App macht die Verwaltung kinderleicht.", init: "T" },
+  { name: "Bau-Team Nordwest", role: "Mieter seit 2023", stars: 5, text: "Wir hatten 45 Mitarbeiter auf einer Großbaustelle unterzubringen. Schlaf-Platz hat innerhalb von 2 Tagen alles organisiert. Hervorragende Koordination!", init: "B" },
+  { name: "Andrea Fischer", role: "Vermieterin seit 2022", stars: 5, text: "Das Transparenzregister gibt mir ein gutes Gefühl. Ich weiß vorher, mit wem ich es zu tun habe. Keine bösen Überraschungen mehr seit ich bei Schlaf-Platz bin.", init: "A" },
+  { name: "Sanitär Schmidt AG", role: "Mieter seit 2021", stars: 5, text: "Professionell, zuverlässig und schnell. Was will man mehr? Der Rückruf kam tatsächlich nach 12 Minuten — nicht 15. Bestnote!", init: "S" },
   { name: "Michael Krause", role: "Vermieter seit 2020", stars: 5, text: "Habe vorher bei einem kostenpflichtigen Portal inseriert. Bei Schlaf-Platz bekomme ich mehr Anfragen — und zahle nichts. Win-win.", init: "M" },
-  { name: "Haustechnik Vogel", role: "Mieter seit 2024", stars: 5, text: "Erste Anfrage, erster Rueckruf, erste Buchung — alles lief reibungslos. Die Wohnung war genau wie beschrieben. Gerne wieder!", init: "H" },
+  { name: "Haustechnik Vogel", role: "Mieter seit 2024", stars: 5, text: "Erste Anfrage, erster Rückruf, erste Buchung — alles lief reibungslos. Die Wohnung war genau wie beschrieben. Gerne wieder!", init: "H" },
   { name: "Petra Zimmermann", role: "Vermieterin seit 2023", stars: 5, text: "Super nettes Team! Frau Schlaht hat mir bei der Erstellung meines Inserats geholfen. Innerhalb einer Woche hatte ich die ersten Buchungen.", init: "P" },
-  { name: "Rohrbau GmbH & Co. KG", role: "Mieter seit 2019", stars: 5, text: "Wir setzen auf Schlaf-Platz fuer alle unsere Projekte in ganz Deutschland. Die Qualitaet der Unterkuenfte ist durchgehend hoch. Unsere Mitarbeiter sind zufrieden.", init: "R" },
+  { name: "Rohrbau GmbH & Co. KG", role: "Mieter seit 2019", stars: 5, text: "Wir setzen auf Schlaf-Platz für alle unsere Projekte in ganz Deutschland. Die Qualität der Unterkünfte ist durchgehend hoch. Unsere Mitarbeiter sind zufrieden.", init: "R" },
 ];
 
 export default function BewertungenPage() {
@@ -91,7 +91,7 @@ export default function BewertungenPage() {
 
       <section className="py-12 md:py-16 bg-gray-50/60 border-t border-gray-100">
         <div className="wrap text-center max-w-[500px] mx-auto">
-          <h2 className="font-display text-3xl md:text-4xl text-ink uppercase tracking-wide mb-3">Ueberzeugt?</h2>
+          <h2 className="font-display text-3xl md:text-4xl text-ink uppercase tracking-wide mb-3">Überzeugt?</h2>
           <p className="text-gray-400 text-[15px] leading-relaxed mb-6">Werden Sie Teil der Schlaf-Platz Community — als Mieter oder Vermieter.</p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link href="/mieter" className="cta-primary">Unterkunft finden</Link>

@@ -3,10 +3,10 @@ import VermieterClient from "./VermieterClient";
 
 export const metadata: Metadata = {
   title: "Kostenlos inserieren — Monteurzimmer vermieten auf Schlaf-Platz",
-  description: "Vermieten Sie Ihre Wohnung kostenlos auf Schlaf-Platz. Erreichen Sie tausende Handwerksfirmen in ganz Deutschland. Keine Gebuehren, Transparenzregister inklusive.",
+  description: "Vermieten Sie Ihre Wohnung kostenlos auf Schlaf-Platz. Erreichen Sie tausende Handwerksfirmen in ganz Deutschland. Keine Gebühren, Transparenzregister inklusive.",
   openGraph: {
     title: "Kostenlos inserieren — Monteurzimmer vermieten auf Schlaf-Platz",
-    description: "Vermieten Sie Ihre Wohnung kostenlos auf Schlaf-Platz. Keine Gebuehren, persoenliche Betreuung.",
+    description: "Vermieten Sie Ihre Wohnung kostenlos auf Schlaf-Platz. Keine Gebühren, persönliche Betreuung.",
   },
   alternates: { canonical: "/app" },
 };

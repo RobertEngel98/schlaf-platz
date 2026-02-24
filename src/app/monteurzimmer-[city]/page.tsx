@@ -12,8 +12,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const c = getCityBySlug(params.city);
   if (!c) return {};
-  const title = `Monteurzimmer ${c.name} - Moeblierte Apartments ab 15€/Nacht`;
-  const description = `Monteurzimmer in ${c.name} finden. ${c.heroDesc} Komplett moeblierte Apartments fuer Monteure & Handwerker. Kostenlose Vermittlung.`;
+  const title = `Monteurzimmer ${c.name} - Möblierte Apartments ab 15€/Nacht`;
+  const description = `Monteurzimmer in ${c.name} finden. ${c.heroDesc} Komplett möblierte Apartments für Monteure & Handwerker. Kostenlose Vermittlung.`;
   return {
     title,
     description,
@@ -42,9 +42,9 @@ export default function CityPage({ params }: P) {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
-      { "@type": "Question", name: `Wie finde ich ein Monteurzimmer in ${c.name}?`, acceptedAnswer: { "@type": "Answer", text: `Senden Sie eine kostenlose Anfrage ueber monteurzimmerapartments.de. Sie erhalten innerhalb von 15 Minuten einen persoenlichen Rueckruf mit passenden Apartments in ${c.name}.` } },
-      { "@type": "Question", name: `Was kostet ein Monteurzimmer in ${c.name}?`, acceptedAnswer: { "@type": "Answer", text: `Die Preise variieren je nach Lage und Ausstattung. Komplett moeblierte Apartments in ${c.name} sind ab ca. 15€ pro Nacht verfuegbar. Die Vermittlung durch Schlaf-Platz ist komplett kostenlos.` } },
-      { "@type": "Question", name: `Welche Stadtteile in ${c.name} sind fuer Monteure empfehlenswert?`, acceptedAnswer: { "@type": "Answer", text: `Beliebte Standorte fuer Monteurzimmer in ${c.name} sind: ${c.stadtteile.map(s => s.name).join(", ")}. Alle Stadtteile bieten gute Anbindung an Industrie- und Gewerbegebiete.` } },
+      { "@type": "Question", name: `Wie finde ich ein Monteurzimmer in ${c.name}?`, acceptedAnswer: { "@type": "Answer", text: `Senden Sie eine kostenlose Anfrage über monteurzimmerapartments.de. Sie erhalten innerhalb von 15 Minuten einen persönlichen Rückruf mit passenden Apartments in ${c.name}.` } },
+      { "@type": "Question", name: `Was kostet ein Monteurzimmer in ${c.name}?`, acceptedAnswer: { "@type": "Answer", text: `Die Preise variieren je nach Lage und Ausstattung. Komplett möblierte Apartments in ${c.name} sind ab ca. 15€ pro Nacht verfügbar. Die Vermittlung durch Schlaf-Platz ist komplett kostenlos.` } },
+      { "@type": "Question", name: `Welche Stadtteile in ${c.name} sind für Monteure empfehlenswert?`, acceptedAnswer: { "@type": "Answer", text: `Beliebte Standorte für Monteurzimmer in ${c.name} sind: ${c.stadtteile.map(s => s.name).join(", ")}. Alle Stadtteile bieten gute Anbindung an Industrie- und Gewerbegebiete.` } },
     ],
   };
 

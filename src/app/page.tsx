@@ -5,7 +5,7 @@ const jsonLd = {
   "@type": "WebSite",
   name: "Schlaf-Platz",
   url: "https://monteurzimmerapartments.de",
-  description: "Die kostenlose Plattform fuer Monteurzimmer in Deutschland. 1.500+ verifizierte Partner.",
+  description: "Die kostenlose Plattform für Monteurzimmer in Deutschland. 1.500+ verifizierte Partner.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://monteurzimmerapartments.de/mieter?q={search_term_string}",

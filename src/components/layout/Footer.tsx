@@ -18,7 +18,7 @@ function NewsletterForm() {
     } catch { setStatus("error"); }
   };
 
-  if (status === "success") return <p className="text-sp text-sm">Vielen Dank! Sie erhalten in Kuerze eine Bestaetigungs-E-Mail.</p>;
+  if (status === "success") return <p className="text-sp text-sm">Vielen Dank! Sie erhalten in Kürze eine Bestätigungs-E-Mail.</p>;
 
   return (
     <form onSubmit={submit} className="flex gap-2">
@@ -32,8 +32,8 @@ function NewsletterForm() {
 
 export default function Footer() {
   const cols = [
-    { t: "Fuer Mieter", l: FOOTER.mieter },
-    { t: "Fuer Vermieter", l: FOOTER.vermieter },
+    { t: "Für Mieter", l: FOOTER.mieter },
+    { t: "Für Vermieter", l: FOOTER.vermieter },
     { t: "Rechtliches", l: FOOTER.legal },
   ] as const;
 
@@ -55,7 +55,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
           <div className="md:col-span-4">
             <Image src={BRAND.logo} alt={BRAND.name} width={140} height={40} className="h-8 w-auto brightness-0 invert mb-4" />
-            <p className="text-white/35 text-sm leading-relaxed max-w-[280px] mb-5">Die kostenlose Plattform fuer Monteurzimmer in Deutschland. Seit 2014. Mitglied im GvdL e.V.</p>
+            <p className="text-white/35 text-sm leading-relaxed max-w-[280px] mb-5">Die kostenlose Plattform für Monteurzimmer in Deutschland. Seit 2014. Mitglied im GvdL e.V.</p>
             <div className="flex gap-2 mb-5">
               {[
                 { h: BRAND.social.facebook, d: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" },

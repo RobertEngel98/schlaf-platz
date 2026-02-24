@@ -56,12 +56,12 @@ export default function VermieterClient() {
           <div className="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-sp/[0.05] blur-[120px]" />
         </div>
         <div className="wrap relative z-10 pt-28 pb-14 md:pt-36 md:pb-16 max-w-[800px]">
-          <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-4">Fuer Vermieter &amp; Eigentuemer</p>
+          <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-4">Für Vermieter &amp; Eigentümer</p>
           <h1 className="font-display text-5xl md:text-6xl text-white leading-[0.95] uppercase tracking-wide mb-5">
             Monteurzimmer vermieten — <span className="text-sp">kostenlos.</span>
           </h1>
           <p className="text-white/40 text-lg leading-relaxed mb-6 max-w-[600px]">
-            Registrieren Sie Ihre Wohnung auf Schlaf-Platz und erreichen Sie tausende Handwerksfirmen in ganz Deutschland. <strong className="text-white">0 Euro Gebuehren — dauerhaft.</strong>
+            Registrieren Sie Ihre Wohnung auf Schlaf-Platz und erreichen Sie tausende Handwerksfirmen in ganz Deutschland. <strong className="text-white">0 Euro Gebühren — dauerhaft.</strong>
           </p>
           <div className="flex items-center gap-3 flex-wrap mb-8">
             <div className="flex items-center gap-1.5">
@@ -78,7 +78,7 @@ export default function VermieterClient() {
       {/* ═══ STATS BAR ═══ */}
       <div className="border-b border-gray-100 py-5 bg-gray-50/50">
         <div className="wrap grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {[{ v: "0€", l: "Gebuehren" }, { v: `${BRAND.stats.partners.toLocaleString("de-DE")}+`, l: "Partner" }, { v: "50+", l: "Staedte" }, { v: "15 Min", l: "Rueckrufzeit" }].map(s => (
+          {[{ v: "0€", l: "Gebühren" }, { v: `${BRAND.stats.partners.toLocaleString("de-DE")}+`, l: "Partner" }, { v: "50+", l: "Städte" }, { v: "15 Min", l: "Rückrufzeit" }].map(s => (
             <div key={s.l}>
               <p className="text-base md:text-lg font-bold text-ink m-0">{s.v}</p>
               <p className="text-[10px] text-gray-300 uppercase tracking-[0.15em] font-bold mt-1 m-0">{s.l}</p>
@@ -93,14 +93,14 @@ export default function VermieterClient() {
           <FadeIn>
             <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Ihre Vorteile</p>
             <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
-              Warum Vermieter <span className="text-sp">Schlaf-Platz waehlen.</span>
+              Warum Vermieter <span className="text-sp">Schlaf-Platz wählen.</span>
             </h2>
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { icon: "💰", badge: "100% Kostenfrei", t: "Null Euro. Immer.", d: "Waehrend andere Plattformen bis zu 300€ pro Jahr verlangen, ist Schlaf-Platz fuer Vermieter dauerhaft kostenlos. Keine Anmeldegebuehren, keine versteckten Kosten, keine Provisionen." },
-              { icon: "🛡️", badge: "Einzigartig in DE", t: "Transparenzregister", d: "Mieter bewerten Vermieter, Vermieter bewerten Mieter. Vollstaendige Transparenz und Schutz vor unzuverlaessigen Partnern — das gibt es nur bei Schlaf-Platz." },
-              { icon: "📱", badge: "Kostenlose App", t: "Verwaltung von ueberall", d: "Mit der Schlaf-Platz App verwalten Sie Inserate, erhalten Push-Benachrichtigungen und kommunizieren direkt mit Interessenten — alles von Ihrem Smartphone." },
+              { icon: "💰", badge: "100% Kostenfrei", t: "Null Euro. Immer.", d: "Während andere Plattformen bis zu 300€ pro Jahr verlangen, ist Schlaf-Platz für Vermieter dauerhaft kostenlos. Keine Anmeldegebühren, keine versteckten Kosten, keine Provisionen." },
+              { icon: "🛡️", badge: "Einzigartig in DE", t: "Transparenzregister", d: "Mieter bewerten Vermieter, Vermieter bewerten Mieter. Vollständige Transparenz und Schutz vor unzuverlässigen Partnern — das gibt es nur bei Schlaf-Platz." },
+              { icon: "📱", badge: "Kostenlose App", t: "Verwaltung von überall", d: "Mit der Schlaf-Platz App verwalten Sie Inserate, erhalten Push-Benachrichtigungen und kommunizieren direkt mit Interessenten — alles von Ihrem Smartphone." },
             ].map((v, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -128,9 +128,9 @@ export default function VermieterClient() {
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { n: "01", t: "Kostenlos registrieren", d: "Fuellen Sie das Formular aus oder laden Sie die App herunter. Innerhalb von 15 Minuten meldet sich Ihr Ansprechpartner.", checks: ["Keine Gebuehren", "Kein Vertrag", "In 2 Minuten erledigt"] },
-              { n: "02", t: "Inserat erstellen", d: "Beschreiben Sie Ihre Wohnung mit Fotos, Ausstattung und Preis. Unser Team unterstuetzt Sie bei der optimalen Praesentation.", checks: ["Professionelle Hilfe", "Optimale Sichtbarkeit", "Fotos & Beschreibung"] },
-              { n: "03", t: "Anfragen erhalten", d: "Sie erhalten qualifizierte Anfragen von geprueften Handwerksfirmen. Sie entscheiden, wen Sie annehmen — volle Kontrolle.", checks: ["Geprufte Anfragen", "Volle Kontrolle", "Persoenlicher Support"] },
+              { n: "01", t: "Kostenlos registrieren", d: "Füllen Sie das Formular aus oder laden Sie die App herunter. Innerhalb von 15 Minuten meldet sich Ihr Ansprechpartner.", checks: ["Keine Gebühren", "Kein Vertrag", "In 2 Minuten erledigt"] },
+              { n: "02", t: "Inserat erstellen", d: "Beschreiben Sie Ihre Wohnung mit Fotos, Ausstattung und Preis. Unser Team unterstützt Sie bei der optimalen Präsentation.", checks: ["Professionelle Hilfe", "Optimale Sichtbarkeit", "Fotos & Beschreibung"] },
+              { n: "03", t: "Anfragen erhalten", d: "Sie erhalten qualifizierte Anfragen von geprüften Handwerksfirmen. Sie entscheiden, wen Sie annehmen — volle Kontrolle.", checks: ["Geprüfte Anfragen", "Volle Kontrolle", "Persönlicher Support"] },
             ].map((s, i) => (
               <FadeIn key={i} delay={i * 80}>
                 <div className="border border-gray-100 rounded-2xl p-6 bg-white h-full flex flex-col group hover:shadow-lg hover:shadow-gray-100/80 transition-all">
@@ -169,12 +169,12 @@ export default function VermieterClient() {
               </thead>
               <tbody>
                 {[
-                  { f: "Kosten fuer Vermieter", sp: "0 € — dauerhaft", other: "Bis zu 300 €/Jahr" },
-                  { f: "Persoenlicher Ansprechpartner", sp: "Ja, immer", other: "Oft nur Ticket-System" },
+                  { f: "Kosten für Vermieter", sp: "0 € — dauerhaft", other: "Bis zu 300 €/Jahr" },
+                  { f: "Persönlicher Ansprechpartner", sp: "Ja, immer", other: "Oft nur Ticket-System" },
                   { f: "Transparenzregister", sp: "Gegenseitige Bewertungen", other: "Nicht vorhanden" },
-                  { f: "Rueckruf-Garantie", sp: "Innerhalb 15 Minuten", other: "Keine Garantie" },
+                  { f: "Rückruf-Garantie", sp: "Innerhalb 15 Minuten", other: "Keine Garantie" },
                   { f: "Provision pro Buchung", sp: "0 %", other: "Bis zu 15 %" },
-                  { f: "App fuer Verwaltung", sp: "iOS & Android", other: "Teilweise" },
+                  { f: "App für Verwaltung", sp: "iOS & Android", other: "Teilweise" },
                 ].map((r, i) => (
                   <tr key={i} className="border-t border-gray-100">
                     <td className="p-4 text-ink font-medium">{r.f}</td>
@@ -199,7 +199,7 @@ export default function VermieterClient() {
           </FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { q: "Die Kommunikation war einwandfrei, die Gaeste waren freundlich und anstaendig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", name: "Lisa Werkmeister", role: "Vermieterin seit 2021", init: "L" },
+              { q: "Die Kommunikation war einwandfrei, die Gäste waren freundlich und anständig. Wir freuen uns auf die weitere Zusammenarbeit mit Schlaf-Platz!", name: "Lisa Werkmeister", role: "Vermieterin seit 2021", init: "L" },
               { q: "Endlich eine Plattform ohne versteckte Kosten! Schlaf-Platz hat unser Vermieter-Leben deutlich einfacher gemacht. Klare Empfehlung.", name: "Thomas Fischer", role: "Vermieter seit 2022", init: "T" },
               { q: "Durch das Transparenzregister wissen wir genau, wen wir in unsere Wohnung lassen. Das gibt enorme Sicherheit. Top Service!", name: "Wohnraum KKBBG", role: "Vermieter seit 2023", init: "W" },
             ].map((t, i) => (
@@ -228,35 +228,35 @@ export default function VermieterClient() {
 
             <h2>Monteurzimmer vermieten — warum Schlaf-Platz die beste Wahl ist</h2>
             <p>
-              Sie besitzen eine Wohnung oder ein Apartment und moechten es an <strong>Monteure, Handwerker oder Geschaeftsreisende</strong> vermieten? Schlaf-Platz ist Deutschlands kostenlose Vermittlungsplattform fuer Monteurzimmer. Seit 2014 verbinden wir Vermieter mit geprueften Handwerksfirmen — persoenlich, transparent und ohne versteckte Kosten.
+              Sie besitzen eine Wohnung oder ein Apartment und möchten es an <strong>Monteure, Handwerker oder Geschäftsreisende</strong> vermieten? Schlaf-Platz ist Deutschlands kostenlose Vermittlungsplattform für Monteurzimmer. Seit 2014 verbinden wir Vermieter mit geprüften Handwerksfirmen — persönlich, transparent und ohne versteckte Kosten.
             </p>
             <p>
-              Mit ueber <strong>{BRAND.stats.partners.toLocaleString("de-DE")} Partnern</strong> in mehr als 50 Staedten ist Schlaf-Platz eines der groessten Netzwerke fuer moeblierte Unterkuenfte in Deutschland. Und das Beste: Als Vermieter zahlen Sie <strong>keinen Cent</strong> — weder Anmeldegebuehren noch Provisionen.
+              Mit über <strong>{BRAND.stats.partners.toLocaleString("de-DE")} Partnern</strong> in mehr als 50 Städten ist Schlaf-Platz eines der größten Netzwerke für möblierte Unterkünfte in Deutschland. Und das Beste: Als Vermieter zahlen Sie <strong>keinen Cent</strong> — weder Anmeldegebühren noch Provisionen.
             </p>
 
             <h2>Welche Wohnungen eignen sich als Monteurzimmer?</h2>
-            <p>Grundsaetzlich eignet sich jede moeblierte Wohnung:</p>
+            <p>Grundsätzlich eignet sich jede möblierte Wohnung:</p>
             <ul className="list-disc pl-6 space-y-2 mb-4">
-              <li><strong>1-Zimmer-Apartments</strong> — ideal fuer einzelne Monteure oder Geschaeftsreisende</li>
-              <li><strong>2-3 Zimmer-Wohnungen</strong> — perfekt fuer kleine Teams von 2-4 Personen</li>
-              <li><strong>Groessere Wohnungen</strong> — fuer Teams bis zu 8 Personen</li>
-              <li><strong>Ganze Haeuser oder Etagen</strong> — fuer Grossprojekte mit 10+ Mitarbeitern</li>
+              <li><strong>1-Zimmer-Apartments</strong> — ideal für einzelne Monteure oder Geschäftsreisende</li>
+              <li><strong>2-3 Zimmer-Wohnungen</strong> — perfekt für kleine Teams von 2-4 Personen</li>
+              <li><strong>Größere Wohnungen</strong> — für Teams bis zu 8 Personen</li>
+              <li><strong>Ganze Häuser oder Etagen</strong> — für Großprojekte mit 10+ Mitarbeitern</li>
             </ul>
             <p>
-              Wichtig ist eine Grundausstattung mit Kueche (oder Kochgelegenheit), Bad, WLAN und Bettzeug. Unser Team berät Sie gerne zur optimalen Ausstattung Ihrer Monteurunterkunft.
+              Wichtig ist eine Grundausstattung mit Küche (oder Kochgelegenheit), Bad, WLAN und Bettzeug. Unser Team berät Sie gerne zur optimalen Ausstattung Ihrer Monteurunterkunft.
             </p>
 
             <h2>Wie viel kann ich mit meinem Monteurzimmer verdienen?</h2>
             <p>
-              Die Einnahmen variieren je nach Stadt, Lage und Ausstattung. Im Durchschnitt erzielen Vermieter auf Schlaf-Platz <strong>15 bis 45 Euro pro Person und Nacht</strong>. Bei einer Wohnung fuer 4 Personen sind das bis zu <strong>5.400 Euro Mieteinnahmen pro Monat</strong>.
+              Die Einnahmen variieren je nach Stadt, Lage und Ausstattung. Im Durchschnitt erzielen Vermieter auf Schlaf-Platz <strong>15 bis 45 Euro pro Person und Nacht</strong>. Bei einer Wohnung für 4 Personen sind das bis zu <strong>5.400 Euro Mieteinnahmen pro Monat</strong>.
             </p>
             <p>
-              Monteurzimmer bieten oft hoehere Renditen als klassische Langzeitvermietung, da die Preise pro Nacht berechnet werden und Handwerksfirmen zuverlaessige, langfristige Mieter sind.
+              Monteurzimmer bieten oft höhere Renditen als klassische Langzeitvermietung, da die Preise pro Nacht berechnet werden und Handwerksfirmen zuverlässige, langfristige Mieter sind.
             </p>
 
             <h2>Sicherheit durch das Transparenzregister</h2>
             <p>
-              Das <strong>Schlaf-Platz Transparenzregister</strong> ist einzigartig in Deutschland. Vermieter bewerten Mieterfirmen, Firmen bewerten Vermieter. So entsteht ein Netzwerk des Vertrauens, das beide Seiten vor schwarzen Schafen schuetzt. Sie sehen vor der Annahme einer Anfrage, wie zuverlaessig eine Firma bei anderen Vermietern war.
+              Das <strong>Schlaf-Platz Transparenzregister</strong> ist einzigartig in Deutschland. Vermieter bewerten Mieterfirmen, Firmen bewerten Vermieter. So entsteht ein Netzwerk des Vertrauens, das beide Seiten vor schwarzen Schafen schützt. Sie sehen vor der Annahme einer Anfrage, wie zuverlässig eine Firma bei anderen Vermietern war.
             </p>
           </div>
         </div>
@@ -269,9 +269,9 @@ export default function VermieterClient() {
             <div className="lg:col-span-5">
               <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Jetzt registrieren</p>
               <h2 className="font-display text-4xl md:text-5xl text-white leading-[0.95] uppercase tracking-wide mb-4">Kostenlos inserieren — <span className="text-sp">in 2 Minuten.</span></h2>
-              <p className="text-white/40 text-[15px] leading-relaxed mb-8">Fuellen Sie das Formular aus und wir melden uns innerhalb von 15 Minuten. Oder laden Sie direkt die App herunter.</p>
+              <p className="text-white/40 text-[15px] leading-relaxed mb-8">Füllen Sie das Formular aus und wir melden uns innerhalb von 15 Minuten. Oder laden Sie direkt die App herunter.</p>
               <div className="space-y-3 mb-8">
-                {["0 Euro Gebuehren — dauerhaft", "Persoenlicher Ansprechpartner", "Transparenzregister inklusive", "Mehr als {0} Firmen suchen Unterkuenfte".replace("{0}", BRAND.stats.partners.toLocaleString("de-DE")), "Volle Kontrolle ueber Ihre Inserate"].map(t => (
+                {["0 Euro Gebühren — dauerhaft", "Persönlicher Ansprechpartner", "Transparenzregister inklusive", "Mehr als {0} Firmen suchen Unterkünfte".replace("{0}", BRAND.stats.partners.toLocaleString("de-DE")), "Volle Kontrolle über Ihre Inserate"].map(t => (
                   <div key={t} className="flex items-center gap-2.5">
                     <div className="w-4 h-4 rounded-full bg-sp/20 flex items-center justify-center shrink-0"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="4"><path d="M20 6L9 17l-5-5"/></svg></div>
                     <span className="text-white/50 text-[13px]">{t}</span>
@@ -296,7 +296,7 @@ export default function VermieterClient() {
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
                   </div>
                   <h3 className="font-display text-2xl text-white uppercase tracking-wide mb-2">Registrierung gesendet!</h3>
-                  <p className="text-white/40 text-sm">Wir melden uns innerhalb von 15 Minuten persoenlich bei Ihnen.</p>
+                  <p className="text-white/40 text-sm">Wir melden uns innerhalb von 15 Minuten persönlich bei Ihnen.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -343,13 +343,13 @@ export default function VermieterClient() {
       <section className="py-14 md:py-20 border-b border-gray-100">
         <div className="wrap max-w-[700px]">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3 text-center">FAQ</p>
-          <h2 className="font-display text-4xl text-ink text-center uppercase tracking-wide mb-8">Haeufige Fragen fuer Vermieter</h2>
-          <Faq q="Ist Schlaf-Platz wirklich kostenlos fuer Vermieter?" a="Ja — 100%. Keine Anmeldegebuehren, keine monatlichen Kosten, keine Provisionen pro Buchung. Schlaf-Platz ist und bleibt fuer Vermieter dauerhaft kostenlos." />
-          <Faq q="Wie erhalte ich Anfragen fuer mein Monteurzimmer?" a="Nach der Registrierung erhalten Sie qualifizierte Anfragen per Push-Benachrichtigung (App), E-Mail oder Telefon. Sie entscheiden selbst, welche Anfragen Sie annehmen." />
-          <Faq q="Was ist das Transparenzregister?" a="Mieter bewerten Vermieter, Vermieter bewerten Mieter. So sehen Sie vor der Annahme einer Anfrage, wie zuverlaessig eine Firma ist. Das gibt es nur bei Schlaf-Platz." />
-          <Faq q="Muss ich einen Vertrag unterschreiben?" a="Nein. Es gibt keinen Vertrag, keine Mindestlaufzeit und keine Kuendigungsfrist. Sie koennen Ihr Inserat jederzeit pausieren oder loeschen." />
-          <Faq q="Kann ich die Preise selbst festlegen?" a="Ja, Sie bestimmen Ihren Preis pro Nacht und Person. Unser Team berät Sie gerne zur optimalen Preisgestaltung fuer Ihre Region." />
-          <Faq q="Welche Ausstattung braucht mein Monteurzimmer?" a="Grundausstattung: Bett(en), Kueche oder Kochgelegenheit, Bad, WLAN und Bettzeug. Je besser die Ausstattung, desto hoeher die Nachfrage und die erzielbaren Preise." />
+          <h2 className="font-display text-4xl text-ink text-center uppercase tracking-wide mb-8">Häufige Fragen für Vermieter</h2>
+          <Faq q="Ist Schlaf-Platz wirklich kostenlos für Vermieter?" a="Ja — 100%. Keine Anmeldegebühren, keine monatlichen Kosten, keine Provisionen pro Buchung. Schlaf-Platz ist und bleibt für Vermieter dauerhaft kostenlos." />
+          <Faq q="Wie erhalte ich Anfragen für mein Monteurzimmer?" a="Nach der Registrierung erhalten Sie qualifizierte Anfragen per Push-Benachrichtigung (App), E-Mail oder Telefon. Sie entscheiden selbst, welche Anfragen Sie annehmen." />
+          <Faq q="Was ist das Transparenzregister?" a="Mieter bewerten Vermieter, Vermieter bewerten Mieter. So sehen Sie vor der Annahme einer Anfrage, wie zuverlässig eine Firma ist. Das gibt es nur bei Schlaf-Platz." />
+          <Faq q="Muss ich einen Vertrag unterschreiben?" a="Nein. Es gibt keinen Vertrag, keine Mindestlaufzeit und keine Kündigungsfrist. Sie können Ihr Inserat jederzeit pausieren oder löschen." />
+          <Faq q="Kann ich die Preise selbst festlegen?" a="Ja, Sie bestimmen Ihren Preis pro Nacht und Person. Unser Team berät Sie gerne zur optimalen Preisgestaltung für Ihre Region." />
+          <Faq q="Welche Ausstattung braucht mein Monteurzimmer?" a="Grundausstattung: Bett(en), Küche oder Kochgelegenheit, Bad, WLAN und Bettzeug. Je besser die Ausstattung, desto höher die Nachfrage und die erzielbaren Preise." />
         </div>
       </section>
 
@@ -357,7 +357,7 @@ export default function VermieterClient() {
       <section className="py-14 md:py-20">
         <div className="wrap text-center max-w-[620px] mx-auto">
           <h2 className="font-display text-4xl md:text-6xl text-ink leading-[0.95] uppercase tracking-wide mb-4">Jetzt kostenlos <span className="text-sp">inserieren.</span></h2>
-          <p className="text-gray-400 text-lg leading-relaxed mb-7">Erreichen Sie tausende Handwerksfirmen und vermieten Sie Ihre Wohnung ohne Gebuehren. Persoenliche Betreuung inklusive.</p>
+          <p className="text-gray-400 text-lg leading-relaxed mb-7">Erreichen Sie tausende Handwerksfirmen und vermieten Sie Ihre Wohnung ohne Gebühren. Persönliche Betreuung inklusive.</p>
           <div className="flex gap-3 justify-center flex-wrap">
             <a href="#registrieren" className="cta-primary text-base !px-8 !py-4">Kostenlos registrieren <Arr s={18}/></a>
             <Link href="/mieter" className="cta-outline text-base !px-8 !py-4">Unterkunft finden</Link>

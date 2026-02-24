@@ -20,7 +20,7 @@ export default function NotFound() {
             <div className="flex flex-wrap gap-2 justify-center">
               {[
                 { label: "Monteurzimmer Berlin", href: "/monteurzimmer-berlin" },
-                { label: "Monteurzimmer Muenchen", href: "/monteurzimmer-muenchen" },
+                { label: "Monteurzimmer München", href: "/monteurzimmer-muenchen" },
                 { label: "Monteurzimmer Hamburg", href: "/monteurzimmer-hamburg" },
                 { label: "Blog", href: "/blog" },
                 { label: "Kostenlos inserieren", href: "/app" },

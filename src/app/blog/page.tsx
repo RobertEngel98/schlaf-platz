@@ -20,7 +20,7 @@ export default function BlogPage() {
             Wissen rund um<br /><span className="text-sp">Monteurzimmer.</span>
           </h1>
           <p className="text-white/40 text-lg leading-relaxed max-w-[560px]">
-            Steuertipps, Preisvergleiche, Vermietungs-Guides und mehr — alles, was Sie ueber Monteurzimmer wissen muessen.
+            Steuertipps, Preisvergleiche, Vermietungs-Guides und mehr — alles, was Sie über Monteurzimmer wissen müssen.
           </p>
         </div>
       </section>

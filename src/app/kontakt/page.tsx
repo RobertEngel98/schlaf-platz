@@ -18,8 +18,8 @@ export default function KontaktPage() {
       <section className="bg-[#0b1220] pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="wrap max-w-[600px] text-center">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Kontakt</p>
-          <h1 className="font-display text-4xl md:text-6xl text-white uppercase tracking-wide leading-[0.95] mb-4">Wir sind fuer Sie da.</h1>
-          <p className="text-white/40 text-lg leading-relaxed">Persoenlicher Service ist unser Versprechen. Rufen Sie an, schreiben Sie uns oder nutzen Sie unser Kontaktformular.</p>
+          <h1 className="font-display text-4xl md:text-6xl text-white uppercase tracking-wide leading-[0.95] mb-4">Wir sind für Sie da.</h1>
+          <p className="text-white/40 text-lg leading-relaxed">Persönlicher Service ist unser Versprechen. Rufen Sie an, schreiben Sie uns oder nutzen Sie unser Kontaktformular.</p>
         </div>
       </section>
 
@@ -34,7 +34,7 @@ export default function KontaktPage() {
                 desc: "Mo-Fr 08:00 - 18:00 Uhr",
                 action: BRAND.phonePretty,
                 href: `tel:${BRAND.phone}`,
-                badge: "Rueckruf in 15 Min.",
+                badge: "Rückruf in 15 Min.",
               },
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
@@ -48,7 +48,7 @@ export default function KontaktPage() {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
                 title: "Adresse",
                 desc: "Schlaf-Platz e.G.",
-                action: "Weyertal 109, 50931 Koeln",
+                action: "Weyertal 109, 50931 Köln",
                 href: "https://maps.google.com/?q=Weyertal+109+50931+Koeln",
                 badge: null,
               },
@@ -69,8 +69,8 @@ export default function KontaktPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: "Unterkunft anfragen", href: "/mieter", desc: "Kostenloses Formular" },
-                { label: "Kostenlos inserieren", href: "/app", desc: "Fuer Vermieter" },
-                { label: "Haeufige Fragen", href: "/#faq", desc: "FAQ-Bereich" },
+                { label: "Kostenlos inserieren", href: "/app", desc: "Für Vermieter" },
+                { label: "Häufige Fragen", href: "/#faq", desc: "FAQ-Bereich" },
                 { label: "Blog & Ratgeber", href: "/blog", desc: "Tipps & Guides" },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-gray-100 hover:border-sp/30 hover:shadow-sm transition-all no-underline group">

@@ -28,9 +28,9 @@ export default function CookieConsent() {
           <div className="flex-1 min-w-0">
             <p className="font-bold text-ink text-[15px] mb-1">Wir nutzen Cookies</p>
             <p className="text-gray-400 text-[13px] leading-relaxed m-0">
-              Wir verwenden Cookies fuer Analysen (Google Analytics), Marketing (Meta Pixel) und Kundensupport (Crisp Chat).
+              Wir verwenden Cookies für Analysen (Google Analytics), Marketing (Meta Pixel) und Kundensupport (Crisp Chat).
               Mehr Infos in unserer{" "}
-              <a href="/datenschutzerklaerung" className="text-sp underline">Datenschutzerklaerung</a>.
+              <a href="/datenschutzerklaerung" className="text-sp underline">Datenschutzerklärung</a>.
             </p>
           </div>
           <div className="flex gap-2 shrink-0">

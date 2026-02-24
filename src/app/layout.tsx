@@ -32,7 +32,7 @@ const jsonLd = {
 
 export const metadata: Metadata = {
   title: { default: "Schlaf-Platz | Monteurzimmer in ganz Deutschland", template: "%s | Schlaf-Platz" },
-  description: "Die kostenlose Plattform fuer Monteurzimmer. 1.500+ verifizierte Partner, 50+ Staedte, 5.0 Google-Bewertung.",
+  description: "Die kostenlose Plattform für Monteurzimmer. 1.500+ verifizierte Partner, 50+ Städte, 5.0 Google-Bewertung.",
   metadataBase: new URL(`https://${BRAND.appDomain}`),
   openGraph: {
     type: "website",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Schlaf-Platz | Monteurzimmer in ganz Deutschland",
-    description: "Die kostenlose Plattform fuer Monteurzimmer. 1.500+ verifizierte Partner, 50+ Staedte.",
+    description: "Die kostenlose Plattform für Monteurzimmer. 1.500+ verifizierte Partner, 50+ Städte.",
   },
   alternates: {
     canonical: `https://${BRAND.appDomain}`,

@@ -58,7 +58,7 @@ export default function AnfrageForm({ defaultCity, compact }: Props) {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><path d="M20 6L9 17l-5-5"/></svg>
         </div>
         <h3 className="font-display text-2xl text-ink uppercase tracking-wide mb-2">Anfrage gesendet!</h3>
-        <p className="text-gray-400 text-sm">Wir melden uns innerhalb von 15 Minuten persoenlich bei Ihnen.</p>
+        <p className="text-gray-400 text-sm">Wir melden uns innerhalb von 15 Minuten persönlich bei Ihnen.</p>
       </div>
     );
   }
@@ -90,7 +90,7 @@ export default function AnfrageForm({ defaultCity, compact }: Props) {
         <div>
           <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Stadt *</label>
           <select required className="input-light appearance-none" value={form.stadt} onChange={set("stadt")}>
-            <option value="">Stadt waehlen</option>
+            <option value="">Stadt wählen</option>
             {CITIES.map(c => <option key={c.slug} value={c.slug}>{c.name}</option>)}
           </select>
         </div>
@@ -125,7 +125,7 @@ export default function AnfrageForm({ defaultCity, compact }: Props) {
         <div className="border border-gray-100 rounded-2xl bg-white p-6 mb-4">
           <h3 className="font-display text-xl text-ink uppercase tracking-wide mb-4">Ihre Vorteile</h3>
           <div className="space-y-3">
-            {["Persoenlicher Rueckruf in 15 Min.", "Komplett moeblierte Apartments", "Keine Buchungsgebuehren", "Transparenzregister fuer Sicherheit", "Flexible Verlaengerungen"].map(t => (
+            {["Persönlicher Rückruf in 15 Min.", "Komplett möblierte Apartments", "Keine Buchungsgebühren", "Transparenzregister für Sicherheit", "Flexible Verlängerungen"].map(t => (
               <div key={t} className="flex items-center gap-3"><Chk /><span className="text-sm text-gray-500">{t}</span></div>
             ))}
           </div>
