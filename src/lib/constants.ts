@@ -109,6 +109,17 @@ export const CITIES: CityData[] = [
 export function getCityBySlug(slug: string) { return CITIES.find(c => c.slug === slug); }
 export function getAllCitySlugs() { return CITIES.map(c => c.slug); }
 
+/** Returns nearby cities from the same bundesland (excluding the given slug), limited to `limit` results */
+export function getNearbyCities(slug: string, limit = 6): CityData[] {
+  const city = getCityBySlug(slug);
+  if (!city) return [];
+  const sameBundesland = CITIES.filter(c => c.slug !== slug && c.bundesland === city.bundesland);
+  if (sameBundesland.length >= limit) return sameBundesland.slice(0, limit);
+  // If not enough in same bundesland, fill with other cities
+  const others = CITIES.filter(c => c.slug !== slug && c.bundesland !== city.bundesland);
+  return [...sameBundesland, ...others].slice(0, limit);
+}
+
 // ═══ BLOG ═══
 
 export interface BlogArticle {

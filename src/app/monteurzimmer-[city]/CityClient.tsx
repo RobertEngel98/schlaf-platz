@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AnfrageForm from "@/components/AnfrageForm";
 import { Arr, Faq, FadeIn } from "@/components/ui";
-import { CityData, BRAND } from "@/lib/constants";
+import { CityData, BRAND, getNearbyCities } from "@/lib/constants";
 
 export default function CityClient({ city }: { city: CityData }) {
   return (
@@ -213,6 +213,37 @@ export default function CityClient({ city }: { city: CityData }) {
           <Faq q={`Wie ist die Ausstattung der Monteurzimmer in ${city.name}?`} a={`Alle Apartments sind komplett moebliert: eigene Kueche mit Herd und Kuehlschrank, eigenes Bad, stabiles WLAN, Bettwaesche und Handtuecher. Viele bieten zusaetzlich Waschmaschine, TV und Parkplatz.`} />
         </div>
       </section>
+
+      {/* ═══ WEITERE STAEDTE IN DER NAEHE ═══ */}
+      {(() => {
+        const nearby = getNearbyCities(city.slug, 6);
+        if (nearby.length === 0) return null;
+        return (
+          <section className="py-12 md:py-16 border-b border-gray-100">
+            <div className="wrap">
+              <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Weitere Standorte</p>
+              <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Monteurzimmer in der Naehe von <span className="text-sp">{city.name}</span></h2>
+              <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Sie suchen auch Monteurzimmer in anderen Staedten? Hier finden Sie weitere Standorte in der Region:</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {nearby.map((nc, i) => (
+                  <FadeIn key={nc.slug} delay={i * 40}>
+                    <Link href={`/monteurzimmer-${nc.slug}`} className="group flex items-start gap-4 rounded-2xl border border-gray-100 p-5 bg-white no-underline hover:border-sp/30 hover:shadow-md hover:shadow-sp/5 transition-all">
+                      <span className="text-2xl mt-0.5">{nc.emoji}</span>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-ink text-base group-hover:text-sp transition-colors m-0">Monteurzimmer {nc.name}</h3>
+                        <p className="text-gray-400 text-[13px] mt-1 m-0 line-clamp-2">{nc.tagline} — {nc.bundesland}</p>
+                      </div>
+                    </Link>
+                  </FadeIn>
+                ))}
+              </div>
+              <div className="mt-8">
+                <Link href="/#staedte" className="text-sp text-sm font-bold uppercase tracking-wide hover:underline inline-flex items-center gap-2">Alle Staedte anzeigen <Arr s={14} /></Link>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ═══ FORMULAR (2. Einbettung — vor Footer) ═══ */}
       <section className="py-14 md:py-20 bg-[#0b1220]">

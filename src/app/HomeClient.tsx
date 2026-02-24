@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import AnfrageForm from "@/components/AnfrageForm";
 import { Stars, Arr, Chk, Faq, FadeIn } from "@/components/ui";
 import { BRAND, CITIES } from "@/lib/constants";
 
@@ -340,6 +341,20 @@ export default function HomeClient() {
               ].map((f, i) => <Faq key={i} q={f.q} a={f.a} />)}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ ANFRAGE-FORMULAR ═══ */}
+      <section id="anfrage" className="py-14 md:py-20">
+        <div className="wrap">
+          <FadeIn>
+            <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Jetzt anfragen</p>
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-3">
+              Monteurzimmer <span className="text-sp">kostenlos anfragen.</span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-[540px] mb-10">Fuellen Sie das Formular aus — Ihr persoenlicher Berater meldet sich innerhalb von 15 Minuten.</p>
+          </FadeIn>
+          <AnfrageForm />
         </div>
       </section>
 
