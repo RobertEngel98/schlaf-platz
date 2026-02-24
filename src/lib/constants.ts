@@ -141,7 +141,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: "5 Min.",
     date: "2026-02-20",
     content: `<h2>Monteurzimmer als Betriebsausgabe</h2>
-<p>Unternehmen, die ihre Mitarbeiter auf Montage oder zu Projekten in andere Städte entsenden, können die Kosten für Monteurzimmer in der Regel als Betriebsausgaben steuerlich geltend machen. Dies gilt sowohl für die reine Unterkunft als auch für damit verbundene Nebenkosten.</p>
+<p>Unternehmen, die ihre Mitarbeiter auf Montage oder zu Projekten in andere Städte entsenden — etwa nach <a href="/monteurzimmer-muenchen">München</a>, <a href="/monteurzimmer-berlin">Berlin</a> oder <a href="/monteurzimmer-hamburg">Hamburg</a> — können die Kosten für Monteurzimmer in der Regel als Betriebsausgaben steuerlich geltend machen. Dies gilt sowohl für die reine Unterkunft als auch für damit verbundene Nebenkosten.</p>
 <h2>Welche Kosten sind absetzbar?</h2>
 <ul>
 <li><strong>Übernachtungskosten:</strong> Die tatsächlichen Kosten für das Monteurzimmer sind vollständig als Betriebsausgabe absetzbar.</li>
@@ -150,9 +150,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <li><strong>Nebenkosten:</strong> WLAN, Parkplatzgebühren und Reinigungskosten können ebenfalls geltend gemacht werden.</li>
 </ul>
 <h2>Doppelte Haushaltsführung</h2>
-<p>Bei längeren Einsätzen kann eine doppelte Haushaltsführung vorliegen. In diesem Fall sind die Unterkunftskosten bis zu 1.000 Euro monatlich absetzbar. Voraussetzung ist, dass der Arbeitnehmer am Heimatort einen eigenen Haushalt unterhält.</p>
+<p>Bei <a href="/blog/monteurzimmer-langzeitmiete-vorteile">längeren Einsätzen</a> kann eine doppelte Haushaltsführung vorliegen. In diesem Fall sind die Unterkunftskosten bis zu 1.000 Euro monatlich absetzbar. Voraussetzung ist, dass der Arbeitnehmer am Heimatort einen eigenen Haushalt unterhält.</p>
 <h2>Tipps für die Praxis</h2>
-<p>Bewahren Sie alle Belege sorgfältig auf. Bei Monteurzimmern über Schlaf-Platz erhalten Sie automatisch eine ordnungsgemäße Rechnung, die alle steuerlich relevanten Angaben enthält. Fragen Sie im Zweifel Ihren Steuerberater — die Investition in professionelle Beratung lohnt sich bei regelmäßigen Montage-Einsätzen.</p>`,
+<p>Bewahren Sie alle Belege sorgfältig auf. Bei Monteurzimmern über Schlaf-Platz erhalten Sie automatisch eine ordnungsgemäße Rechnung, die alle steuerlich relevanten Angaben enthält. Achten Sie auch auf die <a href="/blog/monteurzimmer-recht-mietvertrag">rechtlichen Grundlagen im Mietvertrag</a>. Fragen Sie im Zweifel Ihren Steuerberater — die Investition in professionelle Beratung lohnt sich bei regelmäßigen Montage-Einsätzen.</p>`,
   },
   {
     slug: "monteurzimmer-preise-2026",
@@ -165,17 +165,17 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <p>Die Preise für Monteurzimmer in Deutschland variieren je nach Stadt, Lage, Ausstattung und Buchungsdauer erheblich. Im Durchschnitt liegen die Kosten zwischen 15 und 45 Euro pro Nacht und Person.</p>
 <h2>Preise nach Städten</h2>
 <ul>
-<li><strong>Berlin:</strong> 18-35 EUR/Nacht — Große Auswahl, besonders günstig in Randlagen wie Marzahn oder Spandau.</li>
-<li><strong>München:</strong> 25-50 EUR/Nacht — Höchstes Preisniveau, hohe Nachfrage durch BMW, Siemens und Messe-Events.</li>
-<li><strong>Hamburg:</strong> 20-40 EUR/Nacht — Gute Verfügbarkeit, besonders im Hafenumfeld.</li>
-<li><strong>Köln/Düsseldorf:</strong> 18-35 EUR/Nacht — Während großer Messen (gamescom, MEDICA) deutlich teurer.</li>
-<li><strong>Stuttgart:</strong> 22-42 EUR/Nacht — Automobilindustrie treibt die Nachfrage.</li>
-<li><strong>Leipzig/Dortmund/Essen:</strong> 15-28 EUR/Nacht — Günstigstes Preisniveau unter den Großstädten.</li>
+<li><strong><a href="/monteurzimmer-berlin">Berlin</a>:</strong> 18-35 EUR/Nacht — Große Auswahl, besonders günstig in Randlagen wie Marzahn oder Spandau.</li>
+<li><strong><a href="/monteurzimmer-muenchen">München</a>:</strong> 25-50 EUR/Nacht — Höchstes Preisniveau, hohe Nachfrage durch BMW, Siemens und Messe-Events.</li>
+<li><strong><a href="/monteurzimmer-hamburg">Hamburg</a>:</strong> 20-40 EUR/Nacht — Gute Verfügbarkeit, besonders im Hafenumfeld.</li>
+<li><strong><a href="/monteurzimmer-koeln">Köln</a>/<a href="/monteurzimmer-duesseldorf">Düsseldorf</a>:</strong> 18-35 EUR/Nacht — Während großer Messen (gamescom, MEDICA) deutlich teurer.</li>
+<li><strong><a href="/monteurzimmer-stuttgart">Stuttgart</a>:</strong> 22-42 EUR/Nacht — Automobilindustrie treibt die Nachfrage.</li>
+<li><strong><a href="/monteurzimmer-leipzig">Leipzig</a>/<a href="/monteurzimmer-dortmund">Dortmund</a>/<a href="/monteurzimmer-essen">Essen</a>:</strong> 15-28 EUR/Nacht — Günstigstes Preisniveau unter den Großstädten.</li>
 </ul>
 <h2>Was beeinflusst den Preis?</h2>
 <p>Die wichtigsten Preisfaktoren sind die Buchungsdauer (längere Aufenthalte sind pro Nacht günstiger), die Apartment-Größe, die Nähe zu Industriegebieten und die Jahreszeit. Während großer Messen und Events können Preise um 30-50% steigen.</p>
 <h2>Spartipps</h2>
-<p>Buchen Sie frühzeitig, wählen Sie Randlagen mit guter ÖPNV-Anbindung, und fragen Sie nach Langzeit-Rabatten. Bei Schlaf-Platz ist die Vermittlung komplett kostenlos — Sie zahlen nur die reine Miete, ohne versteckte Gebühren oder Provisionen.</p>`,
+<p>Buchen Sie frühzeitig, wählen Sie Randlagen mit guter ÖPNV-Anbindung, und fragen Sie nach <a href="/blog/monteurzimmer-langzeitmiete-vorteile">Langzeit-Rabatten</a>. Bei Schlaf-Platz ist die Vermittlung komplett kostenlos — Sie zahlen nur die reine Miete, ohne versteckte Gebühren oder Provisionen. Übrigens: Unterkunftskosten sind in vielen Fällen <a href="/blog/monteurzimmer-steuer-absetzen">steuerlich absetzbar</a>.</p>`,
   },
   {
     slug: "monteurzimmer-vermieten-leitfaden",
@@ -188,16 +188,16 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <p>Die Vermietung von möblierten Apartments an Monteure und Handwerker ist ein lukratives Geschäftsmodell. Die Nachfrage ist hoch, die Mieten liegen deutlich über dem regulären Wohnungsmarkt, und die Auslastung ist bei professioneller Vermarktung nahezu ganzjährig gewährleistet.</p>
 <h2>Voraussetzungen für Ihr Apartment</h2>
 <ul>
-<li><strong>Voll möbliert:</strong> Bett, Schrank, Tisch, Stühle — alles, was man zum Wohnen braucht.</li>
+<li><strong>Voll möbliert:</strong> Bett, Schrank, Tisch, Stühle — alles, was man zum Wohnen braucht. Unsere <a href="/blog/monteurzimmer-ausstattung-checkliste">Ausstattungs-Checkliste</a> zeigt alle Details.</li>
 <li><strong>Küche:</strong> Mindestens eine Kochgelegenheit mit Herd, Kühlschrank und Grundausstattung (Töpfe, Geschirr, Besteck).</li>
 <li><strong>Bad:</strong> Eigenes Bad mit Dusche oder Badewanne, Handtücher und Grundhygieneartikel.</li>
 <li><strong>WLAN:</strong> Stabiles Internet ist heute Pflicht — Monteure müssen Berichte schreiben und mit der Familie kommunizieren.</li>
 <li><strong>Waschmöglichkeit:</strong> Waschmaschine im Apartment oder Zugang zu einer Gemeinschaftswaschmaschine.</li>
 </ul>
 <h2>Rechtliche Rahmenbedingungen</h2>
-<p>Informieren Sie sich über lokale Vorschriften zur Kurzzeitvermietung. In manchen Städten ist eine Genehmigung oder Registrierung erforderlich. Steuerlich gelten Einnahmen aus Monteurzimmer-Vermietung als Einnahmen aus Vermietung und Verpachtung.</p>
+<p>Informieren Sie sich über lokale Vorschriften zur Kurzzeitvermietung. In manchen Städten ist eine Genehmigung oder Registrierung erforderlich. Lesen Sie dazu auch unseren Artikel über <a href="/blog/monteurzimmer-recht-mietvertrag">rechtliche Grundlagen und den Mietvertrag</a>. Steuerlich gelten Einnahmen aus Monteurzimmer-Vermietung als Einnahmen aus Vermietung und Verpachtung — mehr dazu im Ratgeber <a href="/blog/monteurzimmer-steuer-absetzen">Monteurzimmer von der Steuer absetzen</a>.</p>
 <h2>Vermarktung über Schlaf-Platz</h2>
-<p>Bei Schlaf-Platz ist das Inserieren Ihres Monteurzimmers dauerhaft und zu 100% kostenlos. Sie profitieren von unserer Reichweite mit über 1.500 verifizierten Partnern, dem einzigartigen Transparenzregister und persönlicher Betreuung durch unser Team.</p>`,
+<p>Bei Schlaf-Platz ist das <a href="/app">Inserieren Ihres Monteurzimmers</a> dauerhaft und zu 100% kostenlos. Sie profitieren von unserer Reichweite mit über 1.500 verifizierten Partnern, dem einzigartigen Transparenzregister und persönlicher Betreuung durch unser Team. Sehen Sie sich auch unseren <a href="/blog/monteurzimmer-portale-vergleich-2026">Portalvergleich 2026</a> an.</p>`,
   },
   {
     slug: "monteurzimmer-ausstattung-checkliste",
@@ -207,6 +207,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: "5 Min.",
     date: "2026-02-05",
     content: `<h2>Grundausstattung (Pflicht)</h2>
+<p>Wer ein <a href="/blog/monteurzimmer-vermieten-leitfaden">Monteurzimmer vermieten</a> möchte, sollte diese Grundausstattung sicherstellen:</p>
 <ul>
 <li><strong>Schlafzimmer:</strong> Bett (mind. 90x200), Matratze, Bettzeug, Kissen, Bettwäsche, Nachttisch, Kleiderschrank</li>
 <li><strong>Küche:</strong> Kühlschrank, Herd/Kochplatte, Töpfe, Pfanne, Geschirr, Besteck, Wasserkocher, Grundgewürze</li>
@@ -220,10 +221,10 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <li><strong>Komfort:</strong> Waschmaschine, Trockner, Bügeleisen, Föhnen</li>
 <li><strong>Küche Plus:</strong> Mikrowelle, Geschirrspüler, Kaffeemaschine, Toaster</li>
 <li><strong>Outdoor:</strong> Parkplatz, Fahrradstellplatz, Balkon/Terrasse</li>
-<li><strong>Service:</strong> Regelmäßige Reinigung, Bettwäsche-Wechsel, Willkommenspaket</li>
+<li><strong>Service:</strong> Regelmäßige Reinigung, Bettwäsche-Wechsel, Willkommenspaket — <a href="/app">jetzt kostenlos inserieren</a></li>
 </ul>
-<h2>Tipps für 5-Sterne-Bewertungen</h2>
-<p>Kleine Aufmerksamkeiten machen den Unterschied: Ein Willkommenspaket mit Kaffee, Tee und Snacks, eine Mappe mit lokalen Informationen (Supermärkte, Restaurants, ÖPNV), und schnelle Reaktionszeit bei Problemen. Monteure schätzen Zuverlässigkeit und Sauberkeit über luxuriöse Ausstattung.</p>`,
+<h2>Tipps für 5-Sterne-<a href="/bewertungen">Bewertungen</a></h2>
+<p>Kleine Aufmerksamkeiten machen den Unterschied: Ein Willkommenspaket mit Kaffee, Tee und Snacks, eine Mappe mit lokalen Informationen (Supermärkte, Restaurants, ÖPNV), und schnelle Reaktionszeit bei Problemen. Monteure schätzen Zuverlässigkeit und Sauberkeit über luxuriöse Ausstattung. Weitere Tipps zum Thema Kochen auf Montage finden Sie in unserem Artikel <a href="/blog/monteurzimmer-kuechentipps-fuer-monteure">Küchentipps für Monteure</a>.</p>`,
   },
   {
     slug: "monteurzimmer-portale-vergleich-2026",
@@ -250,12 +251,12 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <h2>Schlaf-Platz (monteurzimmerapartments.de)</h2>
 <ul>
 <li><strong>Alleinstellungsmerkmale:</strong> Einziges Transparenzregister, 100% kostenlos für Vermieter, eigene App (iOS & Android), Full-Service statt reines Listing</li>
-<li><strong>Bewertungen:</strong> 5.0 Sterne bei 266 Google-Bewertungen</li>
+<li><strong>Bewertungen:</strong> <a href="/bewertungen">5.0 Sterne bei 266 Google-Bewertungen</a></li>
 <li><strong>Kosten für Vermieter:</strong> Dauerhaft kostenlos</li>
 <li><strong>Schwäche:</strong> Noch geringere Markenbekanntheit als DMZ</li>
 </ul>
 <h2>Fazit</h2>
-<p>Für Vermieter bietet Schlaf-Platz das beste Gesamtpaket: kostenlos, mit persönlicher Betreuung und dem einzigartigen Transparenzregister. Für Mieter bedeutet die Full-Service-Vermittlung weniger Aufwand und mehr Sicherheit als bei reinen Listing-Portalen.</p>`,
+<p>Für Vermieter bietet Schlaf-Platz das beste Gesamtpaket: <a href="/app">kostenlos inserieren</a>, mit persönlicher Betreuung und dem einzigartigen Transparenzregister. Für Mieter bedeutet die Full-Service-Vermittlung weniger Aufwand und mehr <a href="/blog/monteurzimmer-sicherheit-tipps">Sicherheit</a> als bei reinen Listing-Portalen. Einen detaillierten Überblick über aktuelle Kosten finden Sie in unserem <a href="/blog/monteurzimmer-preise-2026">Preisvergleich 2026</a>.</p>`,
   },
   {
     slug: "monteurzimmer-langzeitmiete-vorteile",
@@ -268,16 +269,16 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <p>Wer Mitarbeiter für mehrere Wochen oder Monate auf Montage schickt, steht vor der Frage: Hotel oder Monteurzimmer? Auf den ersten Blick wirkt das Hotel bequem — doch bei längeren Aufenthalten überwiegen die Vorteile einer Langzeitmiete im Monteurzimmer deutlich. Sowohl finanziell als auch in Bezug auf Lebensqualität und Produktivität.</p>
 <h2>Kostenvergleich: Monteurzimmer vs. Hotel</h2>
 <ul>
-<li><strong>Hotelkosten:</strong> In deutschen Großstädten liegen einfache Business-Hotels bei 70-120 EUR pro Nacht. Bei einem 4-Wochen-Aufenthalt summiert sich das auf 2.000-3.400 EUR — ohne Verpflegung.</li>
+<li><strong>Hotelkosten:</strong> In deutschen Großstädten wie <a href="/monteurzimmer-muenchen">München</a> oder <a href="/monteurzimmer-frankfurt">Frankfurt</a> liegen einfache Business-Hotels bei 70-120 EUR pro Nacht. Bei einem 4-Wochen-Aufenthalt summiert sich das auf 2.000-3.400 EUR — ohne Verpflegung.</li>
 <li><strong>Monteurzimmer:</strong> Langzeitmieten starten ab 15-30 EUR pro Nacht, bei monatlicher Buchung oft noch günstiger. Vier Wochen kosten somit nur 420-840 EUR inklusive Küche und Nebenkosten.</li>
-<li><strong>Ersparnis:</strong> Unternehmen sparen bei Langzeitbuchungen im Monteurzimmer bis zu 70% gegenüber vergleichbaren Hotelkosten.</li>
+<li><strong>Ersparnis:</strong> Unternehmen sparen bei Langzeitbuchungen im Monteurzimmer bis zu 70% gegenüber vergleichbaren Hotelkosten. Einen detaillierten Überblick finden Sie im <a href="/blog/monteurzimmer-preise-2026">Preisvergleich 2026</a>.</li>
 </ul>
 <h2>Mehr Komfort und Eigenständigkeit</h2>
-<p>Ein Monteurzimmer bietet deutlich mehr Platz als ein Hotelzimmer. Die eigene Küche ermöglicht es, selbst zu kochen — das spart nicht nur Geld, sondern ist auf Dauer auch gesünder als tägliches Essen im Restaurant. Waschmaschine, separater Wohnbereich und oft ein eigener Parkplatz gehören bei guten Monteurzimmern zum Standard.</p>
+<p>Ein Monteurzimmer bietet deutlich mehr Platz als ein Hotelzimmer. Die eigene Küche ermöglicht es, <a href="/blog/monteurzimmer-kuechentipps-fuer-monteure">selbst zu kochen</a> — das spart nicht nur Geld, sondern ist auf Dauer auch gesünder als tägliches Essen im Restaurant. Waschmaschine, separater Wohnbereich und oft ein eigener Parkplatz gehören bei guten Monteurzimmern zum Standard.</p>
 <h2>Produktivität und Mitarbeiterzufriedenheit</h2>
 <p>Studien zeigen, dass Mitarbeiter auf längeren Montage-Einsätzen in wohnungsähnlichen Unterkünften zufriedener und produktiver sind. Ein eigenes Zuhause auf Zeit reduziert Stress und fördert die Erholung nach anstrengenden Arbeitstagen. Für Arbeitgeber bedeutet das: weniger Krankheitstage und höhere Motivation.</p>
 <h2>Vertragliche Flexibilität</h2>
-<p>Anders als bei Hotels mit starren Stornierungsbedingungen bieten viele Monteurzimmer-Vermieter flexible Vertragslaufzeiten. Bei Schlaf-Platz können Langzeitmieten individuell angepasst werden — ob 2 Wochen oder 6 Monate. Änderungen der Personenzahl oder Verlängerungen sind unkompliziert möglich.</p>`,
+<p>Anders als bei Hotels mit starren Stornierungsbedingungen bieten viele Monteurzimmer-Vermieter flexible Vertragslaufzeiten. Bei Schlaf-Platz können Langzeitmieten individuell angepasst werden — ob 2 Wochen oder 6 Monate. Änderungen der Personenzahl oder Verlängerungen sind unkompliziert möglich. Für große Teams lesen Sie auch unseren Ratgeber <a href="/blog/monteurzimmer-fuer-teams">Gruppenunterkünfte für Teams</a>.</p>`,
   },
   {
     slug: "monteurzimmer-fuer-teams",
@@ -287,7 +288,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: "6 Min.",
     date: "2026-01-15",
     content: `<h2>Große Teams, große Herausforderung</h2>
-<p>Wenn ein Unternehmen 10, 30 oder sogar 100 Mitarbeiter gleichzeitig an einen Projektstandort entsendet, wird die Unterkunftssuche zur logistischen Herausforderung. Hotels sind in dieser Größenordnung oft nicht verfügbar oder unbezahlbar. Monteurzimmer und Gruppenunterkünfte bieten hier die ideale Lösung.</p>
+<p>Wenn ein Unternehmen 10, 30 oder sogar 100 Mitarbeiter gleichzeitig an einen Projektstandort entsendet, wird die Unterkunftssuche zur logistischen Herausforderung. Hotels sind in dieser Größenordnung oft nicht verfügbar oder unbezahlbar. <a href="/blog/monteurzimmer-langzeitmiete-vorteile">Monteurzimmer und Gruppenunterkünfte</a> bieten hier die ideale Lösung.</p>
 <h2>Welche Unterkunftstypen eignen sich?</h2>
 <ul>
 <li><strong>Monteurwohnungen (3-6 Personen):</strong> Ideal für kleine Teams. Jede Einheit hat Küche, Bad und Gemeinschaftsraum. Mehrere Wohnungen im selben Gebäude ermöglichen Teamnähe.</li>
@@ -298,9 +299,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <h2>Planung und Organisation</h2>
 <p>Bei der Unterbringung großer Teams kommt es auf frühzeitige Planung an. Beginnen Sie mindestens 4-6 Wochen vor Projektstart mit der Suche. Klären Sie vorab: Wie viele Einzelzimmer werden benötigt? Gibt es Schichtarbeit, sodass Betten geteilt werden können? Welche Infrastruktur (Parkplätze, ÖPNV, Einkaufsmöglichkeiten) muss in der Nähe sein?</p>
 <h2>Kosten im Griff behalten</h2>
-<p>Bei großen Gruppen lohnt es sich, Mengenrabatte zu verhandeln. Viele Vermieter bieten ab 10 Personen Sonderkonditionen. Rechnen Sie mit 12-25 EUR pro Person und Nacht bei Langzeitbuchungen für größere Gruppen. Vergleichen Sie unbedingt die Gesamtkosten inklusive Nebenkosten, Reinigung und Bettwäsche.</p>
+<p>Bei großen Gruppen lohnt es sich, Mengenrabatte zu verhandeln. Viele Vermieter bieten ab 10 Personen Sonderkonditionen. Rechnen Sie mit 12-25 EUR pro Person und Nacht bei Langzeitbuchungen für größere Gruppen — aktuelle Zahlen im <a href="/blog/monteurzimmer-preise-2026">Preisvergleich 2026</a>. Vergleichen Sie unbedingt die Gesamtkosten inklusive Nebenkosten, Reinigung und Bettwäsche. Die Kosten lassen sich zudem häufig <a href="/blog/monteurzimmer-steuer-absetzen">steuerlich absetzen</a>.</p>
 <h2>So hilft Schlaf-Platz</h2>
-<p>Über Schlaf-Platz können Unternehmen kostenlos Gruppenanfragen stellen. Unser Team übernimmt die komplette Recherche und Koordination — von der Bedarfsanalyse über die Angebotserstellung bis zur Buchungsbestätigung. Mit über 1.500 Partnern in ganz Deutschland finden wir auch für große Teams passende Unterkünfte, oft innerhalb von 15 Minuten.</p>`,
+<p>Über Schlaf-Platz können Unternehmen kostenlos <a href="/mieter">Gruppenanfragen stellen</a>. Unser Team übernimmt die komplette Recherche und Koordination — von der Bedarfsanalyse über die Angebotserstellung bis zur Buchungsbestätigung. Mit über 1.500 Partnern in ganz Deutschland finden wir auch für große Teams passende Unterkünfte, oft innerhalb von 15 Minuten.</p>`,
   },
   {
     slug: "monteurzimmer-sicherheit-tipps",
@@ -313,9 +314,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <p>Der Markt für Monteurzimmer ist groß und leider nicht frei von schwarzen Schafen. Ob Sie ein Zimmer suchen oder eines vermieten — mit den richtigen Vorsichtsmaßnahmen schützen Sie sich vor Betrug, Schäden und unangenehmen Überraschungen.</p>
 <h2>Tipps für Mieter</h2>
 <ul>
-<li><strong>Nur über seriöse Plattformen buchen:</strong> Nutzen Sie bekannte Portale mit Bewertungssystem und Verifizierung. Schlaf-Platz bietet als einzige Plattform ein Transparenzregister, das die Identität aller Vermieter prüft.</li>
+<li><strong>Nur über seriöse Plattformen buchen:</strong> Nutzen Sie bekannte Portale mit <a href="/bewertungen">Bewertungssystem</a> und Verifizierung. Schlaf-Platz bietet als einzige Plattform ein Transparenzregister, das die Identität aller Vermieter prüft — mehr dazu im <a href="/blog/monteurzimmer-portale-vergleich-2026">Portalvergleich 2026</a>.</li>
 <li><strong>Vorauszahlung begrenzen:</strong> Zahlen Sie maximal eine Monatsmiete im Voraus. Seriöse Vermieter verlangen keine hohen Vorauszahlungen oder Kautionen per Überweisung an Privatkonten.</li>
-<li><strong>Mietvertrag verlangen:</strong> Bestehen Sie auf einem schriftlichen Mietvertrag, der Mietdauer, Preis, Nebenkosten und Kündigungsfristen klar regelt.</li>
+<li><strong>Mietvertrag verlangen:</strong> Bestehen Sie auf einem <a href="/blog/monteurzimmer-recht-mietvertrag">schriftlichen Mietvertrag</a>, der Mietdauer, Preis, Nebenkosten und Kündigungsfristen klar regelt.</li>
 <li><strong>Besichtigung oder aktuelle Fotos:</strong> Wenn möglich, besichtigen Sie die Unterkunft vorab. Alternativ fordern Sie aktuelle Fotos oder einen Video-Rundgang an.</li>
 <li><strong>Kontaktdaten prüfen:</strong> Der Vermieter sollte telefonisch erreichbar sein und eine vollständige Adresse angeben.</li>
 </ul>
@@ -327,7 +328,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <li><strong>Versicherung prüfen:</strong> Stellen Sie sicher, dass Ihre Haftpflicht- und Gebäudeversicherung die Vermietung an Monteure abdeckt.</li>
 </ul>
 <h2>Warnsignale erkennen</h2>
-<p>Seien Sie misstrauisch bei unrealistisch niedrigen Preisen, fehlenden Kontaktdaten, Druck zur schnellen Zahlung oder Angeboten, die nur per E-Mail kommuniziert werden. Im Zweifel nutzen Sie eine Plattform wie Schlaf-Platz, die alle Vermieter verifiziert und bei Problemen als Ansprechpartner zur Verfügung steht.</p>`,
+<p>Seien Sie misstrauisch bei unrealistisch niedrigen Preisen, fehlenden Kontaktdaten, Druck zur schnellen Zahlung oder Angeboten, die nur per E-Mail kommuniziert werden. Im Zweifel nutzen Sie eine Plattform wie Schlaf-Platz, die alle Vermieter verifiziert und bei Problemen als Ansprechpartner zur Verfügung steht. Weitere Antworten finden Sie in unseren <a href="/faq">häufig gestellten Fragen</a>.</p>`,
   },
   {
     slug: "monteurzimmer-kuechentipps-fuer-monteure",
@@ -337,8 +338,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     readTime: "4 Min.",
     date: "2026-01-05",
     content: `<h2>Kochen auf Montage — Warum es sich lohnt</h2>
-<p>Wer wochen- oder monatelang auf Montage ist, gibt beim täglichen Essen im Restaurant oder an der Imbissbude schnell 15-25 EUR pro Tag aus. Das sind 300-500 EUR im Monat allein für Verpflegung. Selbst kochen im Monteurzimmer spart nicht nur Geld, sondern ist auch deutlich gesünder und steigert das Wohlbefinden auf längeren Einsätzen.</p>
+<p>Wer wochen- oder monatelang auf Montage ist, gibt beim täglichen Essen im Restaurant oder an der Imbissbude schnell 15-25 EUR pro Tag aus. Das sind 300-500 EUR im Monat allein für Verpflegung. Selbst kochen im Monteurzimmer spart nicht nur Geld, sondern ist auch deutlich gesünder und steigert das Wohlbefinden auf <a href="/blog/monteurzimmer-langzeitmiete-vorteile">längeren Einsätzen</a>.</p>
 <h2>Grundausstattung für die Monteursküche</h2>
+<p>Achten Sie bei der Wahl des Monteurzimmers auf eine vollständig eingerichtete Küche — unsere <a href="/blog/monteurzimmer-ausstattung-checkliste">Ausstattungs-Checkliste</a> hilft bei der Auswahl.</p>
 <ul>
 <li><strong>Basics:</strong> Salz, Pfeffer, Öl, Nudeln, Reis, Kartoffeln, Eier, Brot — damit lassen sich dutzende einfache Gerichte zubereiten.</li>
 <li><strong>Frischware:</strong> Kaufen Sie 2-3 Mal pro Woche frisches Gemüse, Obst und Fleisch oder Wurst ein. Ein kleiner Wochenplan hilft gegen Lebensmittelverschwendung.</li>
@@ -355,7 +357,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <h2>Meal Prep: Vorkochen am Wochenende</h2>
 <p>Nutzen Sie den Sonntag, um größere Portionen vorzukochen. Chili con Carne, Gulasch oder Eintopf lassen sich gut portionieren und halten im Kühlschrank 3-4 Tage. So müssen Sie unter der Woche nach einem langen Arbeitstag nur aufwärmen — und sparen trotzdem Geld und essen gesund.</p>
 <h2>Gemeinsam kochen im Team</h2>
-<p>Wenn Sie mit Kollegen im selben Monteurzimmer oder Haus wohnen, teilen Sie die Kocharbeit auf. Jeder kocht an einem anderen Abend für die Gruppe — das spart Zeit, macht mehr Spaß und stärkt den Teamzusammenhalt auf Montage.</p>`,
+<p>Wenn Sie mit Kollegen im selben Monteurzimmer oder Haus wohnen, teilen Sie die Kocharbeit auf. Jeder kocht an einem anderen Abend für die Gruppe — das spart Zeit, macht mehr Spaß und stärkt den Teamzusammenhalt auf Montage. Tipps zur <a href="/blog/monteurzimmer-fuer-teams">Unterkunft für große Teams</a> finden Sie in unserem separaten Ratgeber. <a href="/mieter">Jetzt passende Unterkunft finden</a>.</p>`,
   },
   {
     slug: "monteurzimmer-recht-mietvertrag",
@@ -376,9 +378,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <li><strong>Hausordnung:</strong> Verweis auf eine beiliegende Hausordnung mit Regeln zu Ruhezeiten, Rauchen, Tierhaltung und Gästen.</li>
 </ul>
 <h2>Besonderheiten bei Monteurzimmern</h2>
-<p>Die Vermietung von Monteurzimmern unterscheidet sich rechtlich von normaler Wohnraumvermietung. Bei möblierter Kurzzeitvermietung (unter 6 Monate) gelten gelockerte Kündigungsschutzregeln. Der Mieterschutz des BGB greift bei vorübergehender Unterbringung von Monteuren nur eingeschränkt. Dennoch sollten Vermieter die Zweckbindung (gewerbliche Nutzung) im Vertrag klar festhalten.</p>
+<p>Die Vermietung von Monteurzimmern unterscheidet sich rechtlich von normaler Wohnraumvermietung. Bei möblierter Kurzzeitvermietung (unter 6 Monate) gelten gelockerte Kündigungsschutzregeln. Der Mieterschutz des BGB greift bei vorübergehender Unterbringung von Monteuren nur eingeschränkt. Dennoch sollten <a href="/blog/monteurzimmer-vermieten-leitfaden">Vermieter</a> die Zweckbindung (gewerbliche Nutzung) im Vertrag klar festhalten. Worauf es bei der <a href="/blog/monteurzimmer-sicherheit-tipps">Sicherheit für beide Seiten</a> ankommt, erfahren Sie in unserem separaten Ratgeber.</p>
 <h2>Steuerliche Pflichten</h2>
-<p>Einnahmen aus der Vermietung von Monteurzimmern sind steuerpflichtig und müssen in der Einkommensteuererklärung angegeben werden. Bei kurzfristiger Beherbergung (unter 6 Monate) fällt zudem der ermäßigte Umsatzsteuersatz von 7% an, sofern der Vermieter umsatzsteuerpflichtig ist. Zusatzleistungen wie Reinigung oder Bettwäsche werden mit 19% besteuert.</p>
+<p>Einnahmen aus der Vermietung von Monteurzimmern sind steuerpflichtig und müssen in der Einkommensteuererklärung angegeben werden — alle Details dazu im Artikel <a href="/blog/monteurzimmer-steuer-absetzen">Monteurzimmer von der Steuer absetzen</a>. Bei kurzfristiger Beherbergung (unter 6 Monate) fällt zudem der ermäßigte Umsatzsteuersatz von 7% an, sofern der Vermieter umsatzsteuerpflichtig ist. Zusatzleistungen wie Reinigung oder Bettwäsche werden mit 19% besteuert.</p>
 <h2>Häufige Fehler vermeiden</h2>
 <ul>
 <li><strong>Fehlende Inventarliste:</strong> Ohne dokumentierten Zustand bei Einzug sind Schäden schwer nachzuweisen. Erstellen Sie ein Übergabeprotokoll mit Fotos.</li>
@@ -387,9 +389,22 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 <li><strong>Fehlende Meldepflicht:</strong> In Deutschland müssen Gäste, die länger als 3 Tage bleiben, beim Einwohnermeldeamt angemeldet werden. Vermieter sind verpflichtet, eine Wohnungsgeberbescheinigung auszustellen.</li>
 </ul>
 <h2>Mustervertrag nutzen</h2>
-<p>Nutzen Sie einen geprüften Mustervertrag als Basis und passen Sie ihn an Ihre Situation an. Schlaf-Platz stellt seinen Vermietern kostenlos eine Vertragsvorlage zur Verfügung, die alle relevanten Klauseln enthält und regelmäßig von Juristen aktualisiert wird.</p>`,
+<p>Nutzen Sie einen geprüften Mustervertrag als Basis und passen Sie ihn an Ihre Situation an. Schlaf-Platz stellt seinen Vermietern kostenlos eine Vertragsvorlage zur Verfügung, die alle relevanten Klauseln enthält und regelmäßig von Juristen aktualisiert wird. <a href="/app">Jetzt kostenlos inserieren</a> und von unseren Vorlagen profitieren. Antworten auf weitere Fragen finden Sie in unseren <a href="/faq">FAQ</a>.</p>`,
   },
 ];
 
 export function getBlogBySlug(slug: string) { return BLOG_ARTICLES.find(a => a.slug === slug); }
 export function getAllBlogSlugs() { return BLOG_ARTICLES.map(a => a.slug); }
+
+/** Returns blog articles relevant to a city (matching by bundesland keyword or general) */
+export function getRelatedBlogArticles(cityName: string, limit = 3): BlogArticle[] {
+  const cityLower = cityName.toLowerCase();
+  // First try articles that mention the city
+  const mentioning = BLOG_ARTICLES.filter(a =>
+    a.content.toLowerCase().includes(cityLower) || a.title.toLowerCase().includes(cityLower)
+  );
+  if (mentioning.length >= limit) return mentioning.slice(0, limit);
+  // Fill with general articles
+  const general = BLOG_ARTICLES.filter(a => !mentioning.includes(a));
+  return [...mentioning, ...general].slice(0, limit);
+}

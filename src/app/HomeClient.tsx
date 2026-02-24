@@ -4,7 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnfrageForm from "@/components/AnfrageForm";
 import { Stars, Arr, Chk, Faq, FadeIn } from "@/components/ui";
-import { BRAND, CITIES } from "@/lib/constants";
+import { BRAND, CITIES, BLOG_ARTICLES } from "@/lib/constants";
 
 function TrustBadge({ dark = true }: { dark?: boolean }) {
   const t = dark ? "text-white/50" : "text-gray-400";
@@ -317,6 +317,36 @@ export default function HomeClient() {
                 </Link>
               </FadeIn>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ BLOG / RATGEBER ═══ */}
+      <section className="py-14 md:py-20 border-t border-gray-100">
+        <div className="wrap">
+          <FadeIn>
+            <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Ratgeber</p>
+            <h2 className="font-display text-[clamp(2rem,5vw,3.25rem)] text-ink leading-[0.95] uppercase tracking-wide mb-10">
+              Aktuelle <span className="text-sp">Ratgeber & Tipps.</span>
+            </h2>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {BLOG_ARTICLES.slice(0, 3).map((a, i) => (
+              <FadeIn key={a.slug} delay={i * 80}>
+                <Link href={`/blog/${a.slug}`} className="group border border-gray-100 rounded-2xl bg-white p-6 no-underline hover:shadow-lg hover:shadow-gray-100/80 transition-all h-full flex flex-col">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp bg-sp/8 px-3 py-1 rounded-full">{a.category}</span>
+                    <span className="text-gray-300 text-[11px]">{a.readTime}</span>
+                  </div>
+                  <h3 className="text-ink font-bold text-lg mb-2 group-hover:text-sp transition-colors">{a.title}</h3>
+                  <p className="text-gray-400 text-[14px] leading-relaxed flex-1">{a.excerpt}</p>
+                  <span className="text-sp text-[13px] font-bold uppercase tracking-wide mt-4 inline-flex items-center gap-1.5">Weiterlesen <Arr s={12} /></span>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+          <div className="mt-8">
+            <Link href="/blog" className="cta-outline">Alle Ratgeber ansehen <Arr s={16} /></Link>
           </div>
         </div>
       </section>

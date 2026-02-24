@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AnfrageForm from "@/components/AnfrageForm";
 import { Arr, Faq, FadeIn } from "@/components/ui";
-import { CityData, BRAND, getNearbyCities } from "@/lib/constants";
+import { CityData, BRAND, getNearbyCities, getRelatedBlogArticles } from "@/lib/constants";
 
 export default function CityClient({ city }: { city: CityData }) {
   return (
@@ -199,6 +199,33 @@ export default function CityClient({ city }: { city: CityData }) {
           </div>
         </section>
       )}
+
+      {/* ═══ RELEVANTE RATGEBER ═══ */}
+      {(() => {
+        const articles = getRelatedBlogArticles(city.name, 3);
+        if (articles.length === 0) return null;
+        return (
+          <section className="py-12 md:py-16 border-b border-gray-100">
+            <div className="wrap">
+              <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Ratgeber</p>
+              <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-4">Tipps rund um Monteurzimmer in <span className="text-sp">{city.name}</span></h2>
+              <p className="text-gray-400 text-[15px] mb-8 max-w-[600px]">Hilfreiche Ratgeber und aktuelle Informationen für Ihren Aufenthalt in {city.name}:</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {articles.map((a, i) => (
+                  <FadeIn key={a.slug} delay={i * 40}>
+                    <Link href={`/blog/${a.slug}`} className="group border border-gray-100 rounded-2xl bg-white p-5 no-underline hover:shadow-md hover:shadow-gray-100/80 transition-all h-full flex flex-col">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp bg-sp/8 px-3 py-1 rounded-full self-start mb-3">{a.category}</span>
+                      <h3 className="text-ink font-bold text-base mb-2 group-hover:text-sp transition-colors">{a.title}</h3>
+                      <p className="text-gray-400 text-[13px] leading-relaxed flex-1">{a.excerpt}</p>
+                      <span className="text-sp text-[12px] font-bold uppercase tracking-wide mt-3 inline-flex items-center gap-1.5">Weiterlesen <Arr s={12} /></span>
+                    </Link>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ═══ FAQ ═══ */}
       <section className="py-12 md:py-16 border-b border-gray-100 bg-gray-50/40">
