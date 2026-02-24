@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bebas_Neue } from "next/font/google";
 import "@/styles/globals.css";
 import { BRAND } from "@/lib/constants";
+import CookieConsent from "@/components/CookieConsent";
 
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], display: "swap", variable: "--font-display" });
 
@@ -61,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <script dangerouslySetInnerHTML={{ __html: `window.$crisp=[];window.CRISP_WEBSITE_ID="${process.env.NEXT_PUBLIC_CRISP_ID}";(function(){var d=document;var s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();` }} />
         )}
       </head>
-      <body>{children}</body>
+      <body>{children}<CookieConsent /></body>
     </html>
   );
 }
