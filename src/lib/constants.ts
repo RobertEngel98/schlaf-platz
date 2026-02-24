@@ -26,11 +26,13 @@ export const FOOTER = {
   mieter: [
     { label: "Unterkunft finden", href: "/mieter" },
     { label: "Alle Staedte", href: "/#staedte" },
+    { label: "Blog", href: "/blog" },
     { label: "Kontakt", href: "/mieter" },
   ],
   vermieter: [
     { label: "Kostenlos inserieren", href: "/app" },
     { label: "Schlaf-Platz App", href: "/app" },
+    { label: "Online Shop", href: "/online-shop" },
     { label: "Karriere", href: "/karriere" },
   ],
   legal: [
