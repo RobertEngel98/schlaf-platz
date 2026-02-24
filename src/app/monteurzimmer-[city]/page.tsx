@@ -12,9 +12,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const c = getCityBySlug(params.city);
   if (!c) return {};
+  const title = `Monteurzimmer ${c.name} - Moeblierte Apartments ab 15€/Nacht`;
+  const description = `Monteurzimmer in ${c.name} finden. ${c.heroDesc} Komplett moeblierte Apartments fuer Monteure & Handwerker. Kostenlose Vermittlung.`;
   return {
-    title: `Monteurzimmer ${c.name} - Moeblierte Apartments ab 15€/Nacht`,
-    description: `Monteurzimmer in ${c.name} finden. ${c.heroDesc} Komplett moeblierte Apartments fuer Monteure & Handwerker. Kostenlose Vermittlung.`,
+    title,
+    description,
+    openGraph: { title, description },
+    alternates: { canonical: `/monteurzimmer-${c.slug}` },
   };
 }
 

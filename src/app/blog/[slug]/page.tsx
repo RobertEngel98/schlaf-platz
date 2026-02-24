@@ -15,7 +15,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: P): Promise<Metadata> {
   const a = getBlogBySlug(params.slug);
   if (!a) return {};
-  return { title: a.title, description: a.excerpt };
+  return {
+    title: a.title,
+    description: a.excerpt,
+    openGraph: { title: a.title, description: a.excerpt, type: "article", publishedTime: a.date },
+    alternates: { canonical: `/blog/${a.slug}` },
+  };
 }
 
 export default function BlogArticlePage({ params }: P) {

@@ -68,6 +68,21 @@ export default function CityClient({ city }: { city: CityData }) {
         </div>
       </section>
 
+      {city.messen && city.messen.length > 0 && (
+        <section className="py-12 md:py-16 border-b border-gray-100 bg-gray-50/40">
+          <div className="wrap">
+            <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">Messen &amp; Events</p>
+            <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-8">Wichtige Messen in {city.name}</h2>
+            <div className="flex flex-wrap gap-2">
+              {city.messen.map(m => (
+                <span key={m} className="text-[13px] text-ink font-medium border border-gray-100 rounded-full px-4 py-2 bg-white hover:border-sp/30 hover:text-sp transition-colors">{m}</span>
+              ))}
+            </div>
+            <p className="text-gray-400 text-[14px] mt-4 m-0">Waehrend grosser Messen steigt die Nachfrage nach Monteurzimmern in {city.name} deutlich. Fruehzeitig anfragen lohnt sich!</p>
+          </div>
+        </section>
+      )}
+
       {city.sights && city.sights.length > 0 && (
         <section className="py-12 md:py-16 border-b border-gray-100">
           <div className="wrap">
@@ -81,6 +96,18 @@ export default function CityClient({ city }: { city: CityData }) {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <section className="py-12 md:py-16 border-b border-gray-100">
+        <div className="wrap max-w-[700px]">
+          <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3">FAQ</p>
+          <h2 className="font-display text-4xl text-ink uppercase tracking-wide mb-8">Haeufige Fragen zu {city.name}</h2>
+          <Faq q={`Wie finde ich ein Monteurzimmer in ${city.name}?`} a={`Senden Sie eine kostenlose Anfrage ueber unser Formular. Sie erhalten innerhalb von 15 Minuten einen persoenlichen Rueckruf mit passenden Apartments in ${city.name}. Die Vermittlung ist komplett kostenlos.`} />
+          <Faq q={`Was kostet ein Monteurzimmer in ${city.name}?`} a={`Die Preise variieren je nach Lage und Ausstattung. Komplett moeblierte Apartments in ${city.name} sind ab ca. 15 Euro pro Nacht verfuegbar. Langzeitbuchungen sind guenstiger.`} />
+          <Faq q={`Welche Stadtteile in ${city.name} sind empfehlenswert?`} a={`Beliebte Standorte fuer Monteurzimmer in ${city.name}: ${city.stadtteile.map(s => s.name).join(", ")}. Alle Stadtteile bieten gute Anbindung an Industrie- und Gewerbegebiete.`} />
+          <Faq q={`Gibt es Monteurzimmer in ${city.name} fuer groessere Teams?`} a={`Ja, ob 3 oder 100 Mitarbeiter — wir finden passende Loesungen in ${city.name}. Auch ganze Wohnkomplexe oder mehrere Apartments in einem Stadtteil.`} />
+        </div>
+      </section>
 
       <section className="py-14 md:py-20 bg-gray-50/50 border-t border-gray-100">
         <div className="wrap text-center max-w-[550px] mx-auto">
