@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { getBlogBySlug, getAllBlogSlugs, BLOG_ARTICLES } from "@/lib/constants";
 import type { Metadata } from "next";
 
@@ -42,7 +43,9 @@ export default function BlogArticlePage({ params }: P) {
           <div className="absolute top-[-15%] right-[-5%] w-[500px] h-[500px] rounded-full bg-sp/[0.08] blur-[120px]" />
         </div>
         <div className="wrap relative z-10 pt-28 pb-12 md:pt-36 md:pb-14 max-w-[720px]">
-          <Link href="/blog" className="text-white/30 text-[13px] font-bold uppercase tracking-wider no-underline hover:text-sp transition-colors mb-5 inline-block">&larr; Zurueck zum Blog</Link>
+          <div className="mb-5 [&_a]:text-white/30 [&_a:hover]:text-sp [&_span]:text-white/20 [&>nav>span:last-child>span]:text-white/50">
+            <Breadcrumbs items={[{ label: "Startseite", href: "/" }, { label: "Blog", href: "/blog" }, { label: article.title }]} />
+          </div>
           <div className="flex items-center gap-3 mb-4">
             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-sp bg-sp/15 px-3 py-1 rounded-full">{article.category}</span>
             <span className="text-white/25 text-[12px]">{article.readTime}</span>

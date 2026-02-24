@@ -38,6 +38,20 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: BRAND.name,
+    images: [{ url: BRAND.logo, width: 400, height: 120, alt: "Schlaf-Platz Logo" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Schlaf-Platz | Monteurzimmer in ganz Deutschland",
+    description: "Die kostenlose Plattform fuer Monteurzimmer. 1.500+ verifizierte Partner, 50+ Staedte.",
+  },
+  alternates: {
+    canonical: `https://${BRAND.appDomain}`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
 };
 

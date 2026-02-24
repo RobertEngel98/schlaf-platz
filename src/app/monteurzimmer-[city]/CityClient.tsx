@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Arr, Faq, FadeIn } from "@/components/ui";
 import { CityData } from "@/lib/constants";
 
@@ -12,6 +13,9 @@ export default function CityClient({ city }: { city: CityData }) {
 
       <section className="pt-32 pb-10 md:pt-40 md:pb-12">
         <div className="wrap max-w-[700px]">
+          <div className="mb-5">
+            <Breadcrumbs items={[{ label: "Startseite", href: "/" }, { label: "Staedte", href: "/#staedte" }, { label: `Monteurzimmer ${city.name}` }]} />
+          </div>
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-4">{city.emoji} {city.bundesland}</p>
           <h1 className="font-display text-5xl md:text-6xl text-ink leading-[0.95] uppercase tracking-wide mb-4">Monteurzimmer in <span className="text-sp">{city.name}</span></h1>
           <p className="text-gray-400 text-lg leading-relaxed mb-6">{city.heroDesc} Komplett moeblierte Apartments fuer Ihre Monteure — persoenlicher Rueckruf in 15 Minuten.</p>

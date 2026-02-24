@@ -26,6 +26,8 @@ export const FOOTER = {
   mieter: [
     { label: "Unterkunft finden", href: "/mieter" },
     { label: "Alle Staedte", href: "/#staedte" },
+    { label: "Bewertungen", href: "/bewertungen" },
+    { label: "FAQ", href: "/faq" },
     { label: "Blog", href: "/blog" },
     { label: "Kontakt", href: "/kontakt" },
   ],
