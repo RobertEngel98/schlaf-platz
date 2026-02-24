@@ -22,7 +22,7 @@ module.exports = {
         surface: { DEFAULT: "#ffffff", warm: "#fafaf9", cool: "#f6f8fa", dim: "#f0f2f4" },
       },
       fontFamily: {
-        display: ["'Bebas Neue'", "Impact", "sans-serif"],
+        display: ["var(--font-display)", "'Bebas Neue'", "Impact", "sans-serif"],
         body: ["Arial", "Helvetica", "sans-serif"],
       },
       borderRadius: { "4xl": "2rem", "5xl": "2.5rem" },
