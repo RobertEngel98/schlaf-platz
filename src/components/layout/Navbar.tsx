@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { NAV, BRAND } from "@/lib/constants";
 
 export default function Navbar() {
@@ -17,8 +18,7 @@ export default function Navbar() {
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${sc ? "bg-white/95 backdrop-blur-2xl shadow-[0_1px_0_rgba(0,0,0,0.06)] py-3" : "bg-transparent py-5"}`}>
       <div className="wrap flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5 no-underline">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={BRAND.logo} alt={BRAND.name} className={`h-8 w-auto transition-all duration-500 ${sc ? "" : "brightness-0 invert"}`} />
+          <Image src={BRAND.logo} alt={BRAND.name} width={140} height={40} priority className={`h-8 w-auto transition-all duration-500 ${sc ? "" : "brightness-0 invert"}`} />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1">

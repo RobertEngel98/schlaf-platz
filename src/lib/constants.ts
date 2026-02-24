@@ -19,7 +19,7 @@ export const NAV = [
   { label: "Startseite", href: "/" },
   { label: "Unterkunft finden", href: "/mieter" },
   { label: "Karriere", href: "/karriere" },
-  { label: "Online Shop", href: "/online-shop" },
+  { label: "Blog", href: "/blog" },
 ] as const;
 
 export const FOOTER = {
@@ -65,3 +65,145 @@ export const CITIES: CityData[] = [
 
 export function getCityBySlug(slug: string) { return CITIES.find(c => c.slug === slug); }
 export function getAllCitySlugs() { return CITIES.map(c => c.slug); }
+
+// ═══ BLOG ═══
+
+export interface BlogArticle {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+  date: string;
+  content: string;
+}
+
+export const BLOG_ARTICLES: BlogArticle[] = [
+  {
+    slug: "monteurzimmer-steuer-absetzen",
+    title: "Monteurzimmer von der Steuer absetzen — So geht's",
+    excerpt: "Erfahren Sie, welche Kosten fuer Monteurzimmer steuerlich absetzbar sind und worauf Unternehmen und Arbeitnehmer achten muessen.",
+    category: "Steuern & Recht",
+    readTime: "5 Min.",
+    date: "2026-02-20",
+    content: `<h2>Monteurzimmer als Betriebsausgabe</h2>
+<p>Unternehmen, die ihre Mitarbeiter auf Montage oder zu Projekten in andere Staedte entsenden, koennen die Kosten fuer Monteurzimmer in der Regel als Betriebsausgaben steuerlich geltend machen. Dies gilt sowohl fuer die reine Unterkunft als auch fuer damit verbundene Nebenkosten.</p>
+<h2>Welche Kosten sind absetzbar?</h2>
+<ul>
+<li><strong>Uebernachtungskosten:</strong> Die tatsaechlichen Kosten fuer das Monteurzimmer sind vollstaendig als Betriebsausgabe absetzbar.</li>
+<li><strong>Verpflegungsmehraufwand:</strong> Fuer die ersten drei Monate einer Auswaeertstaetigkeit gelten Pauschalen — 14 Euro bei mehr als 8 Stunden, 28 Euro bei 24 Stunden Abwesenheit.</li>
+<li><strong>Fahrtkosten:</strong> An- und Abreise zum Montageort sowie Fahrten zwischen Unterkunft und Einsatzort sind absetzbar.</li>
+<li><strong>Nebenkosten:</strong> WLAN, Parkplatzgebuehren und Reinigungskosten koennen ebenfalls geltend gemacht werden.</li>
+</ul>
+<h2>Doppelte Haushaltsfuehrung</h2>
+<p>Bei laengeren Einsaetzen kann eine doppelte Haushaltsfuehrung vorliegen. In diesem Fall sind die Unterkunftskosten bis zu 1.000 Euro monatlich absetzbar. Voraussetzung ist, dass der Arbeitnehmer am Heimatort einen eigenen Haushalt unterhaeelt.</p>
+<h2>Tipps fuer die Praxis</h2>
+<p>Bewahren Sie alle Belege sorgfaeltig auf. Bei Monteurzimmern ueber Schlaf-Platz erhalten Sie automatisch eine ordnungsgemaesse Rechnung, die alle steuerlich relevanten Angaben enthaelt. Fragen Sie im Zweifel Ihren Steuerberater — die Investition in professionelle Beratung lohnt sich bei regelmaessigen Montage-Einsaetzen.</p>`,
+  },
+  {
+    slug: "monteurzimmer-preise-2026",
+    title: "Monteurzimmer Preise 2026 — Was kostet ein Monteurzimmer?",
+    excerpt: "Aktuelle Preise fuer Monteurzimmer in Deutschland: Von guenstigen Angeboten ab 15€/Nacht bis zu Premium-Apartments in Grossstaedten.",
+    category: "Preise & Markt",
+    readTime: "4 Min.",
+    date: "2026-02-15",
+    content: `<h2>Aktuelle Preisspanne 2026</h2>
+<p>Die Preise fuer Monteurzimmer in Deutschland variieren je nach Stadt, Lage, Ausstattung und Buchungsdauer erheblich. Im Durchschnitt liegen die Kosten zwischen 15 und 45 Euro pro Nacht und Person.</p>
+<h2>Preise nach Staedten</h2>
+<ul>
+<li><strong>Berlin:</strong> 18-35 EUR/Nacht — Grosse Auswahl, besonders guenstig in Randlagen wie Marzahn oder Spandau.</li>
+<li><strong>Muenchen:</strong> 25-50 EUR/Nacht — Hoechstes Preisniveau, hohe Nachfrage durch BMW, Siemens und Messe-Events.</li>
+<li><strong>Hamburg:</strong> 20-40 EUR/Nacht — Gute Verfuegbarkeit, besonders im Hafenumfeld.</li>
+<li><strong>Koeln/Duesseldorf:</strong> 18-35 EUR/Nacht — Waehrend grosser Messen (gamescom, MEDICA) deutlich teurer.</li>
+<li><strong>Stuttgart:</strong> 22-42 EUR/Nacht — Automobilindustrie treibt die Nachfrage.</li>
+<li><strong>Leipzig/Dortmund/Essen:</strong> 15-28 EUR/Nacht — Guenstigstes Preisniveau unter den Grossstaedten.</li>
+</ul>
+<h2>Was beeinflusst den Preis?</h2>
+<p>Die wichtigsten Preisfaktoren sind die Buchungsdauer (laengere Aufenthalte sind pro Nacht guenstiger), die Apartment-Groesse, die Naehe zu Industriegebieten und die Jahreszeit. Waehrend grosser Messen und Events koennen Preise um 30-50% steigen.</p>
+<h2>Spartipps</h2>
+<p>Buchen Sie fruehzeitig, waehlen Sie Randlagen mit guter OEPNV-Anbindung, und fragen Sie nach Langzeit-Rabatten. Bei Schlaf-Platz ist die Vermittlung komplett kostenlos — Sie zahlen nur die reine Miete, ohne versteckte Gebuehren oder Provisionen.</p>`,
+  },
+  {
+    slug: "monteurzimmer-vermieten-leitfaden",
+    title: "Monteurzimmer vermieten — Der komplette Leitfaden",
+    excerpt: "Von der Einrichtung bis zur ersten Buchung: Alles, was Vermieter ueber die Vermietung von Monteurzimmern wissen muessen.",
+    category: "Fuer Vermieter",
+    readTime: "7 Min.",
+    date: "2026-02-10",
+    content: `<h2>Warum Monteurzimmer vermieten?</h2>
+<p>Die Vermietung von moeblierten Apartments an Monteure und Handwerker ist ein lukratives Geschaeftsmodell. Die Nachfrage ist hoch, die Mieten liegen deutlich ueber dem regulaeren Wohnungsmarkt, und die Auslastung ist bei professioneller Vermarktung nahezu ganzjaehrig gewaehrleistet.</p>
+<h2>Voraussetzungen fuer Ihr Apartment</h2>
+<ul>
+<li><strong>Voll moebliert:</strong> Bett, Schrank, Tisch, Stuehle — alles, was man zum Wohnen braucht.</li>
+<li><strong>Kueche:</strong> Mindestens eine Kochgelegenheit mit Herd, Kuehlschrank und Grundausstattung (Toepfe, Geschirr, Besteck).</li>
+<li><strong>Bad:</strong> Eigenes Bad mit Dusche oder Badewanne, Handtuecher und Grundhygieneartikel.</li>
+<li><strong>WLAN:</strong> Stabiles Internet ist heute Pflicht — Monteure muessen Berichte schreiben und mit der Familie kommunizieren.</li>
+<li><strong>Waschmoeglichkeit:</strong> Waschmaschine im Apartment oder Zugang zu einer Gemeinschaftswaschmaschine.</li>
+</ul>
+<h2>Rechtliche Rahmenbedingungen</h2>
+<p>Informieren Sie sich ueber lokale Vorschriften zur Kurzzeitvermietung. In manchen Staedten ist eine Genehmigung oder Registrierung erforderlich. Steuerlich gelten Einnahmen aus Monteurzimmer-Vermietung als Einnahmen aus Vermietung und Verpachtung.</p>
+<h2>Vermarktung ueber Schlaf-Platz</h2>
+<p>Bei Schlaf-Platz ist das Inserieren Ihres Monteurzimmers dauerhaft und zu 100% kostenlos. Sie profitieren von unserer Reichweite mit ueber 1.500 verifizierten Partnern, dem einzigartigen Transparenzregister und persoenlicher Betreuung durch unser Team.</p>`,
+  },
+  {
+    slug: "monteurzimmer-ausstattung-checkliste",
+    title: "Monteurzimmer Ausstattung — Die komplette Checkliste",
+    excerpt: "Was gehoert in ein gutes Monteurzimmer? Die ultimative Checkliste fuer Vermieter, die ihre Gaeste begeistern wollen.",
+    category: "Fuer Vermieter",
+    readTime: "5 Min.",
+    date: "2026-02-05",
+    content: `<h2>Grundausstattung (Pflicht)</h2>
+<ul>
+<li><strong>Schlafzimmer:</strong> Bett (mind. 90x200), Matratze, Bettzeug, Kissen, Bettwaesche, Nachttisch, Kleiderschrank</li>
+<li><strong>Kueche:</strong> Kuehlschrank, Herd/Kochplatte, Toepfe, Pfanne, Geschirr, Besteck, Wasserkocher, Grundgewaerze</li>
+<li><strong>Bad:</strong> Dusche/Badewanne, Toilette, Waschbecken, Spiegel, Handtuecher, Toilettenpapier, Seife</li>
+<li><strong>Wohnbereich:</strong> Tisch, Stuehle, Beleuchtung, Muellbeutel, Staubsauger/Besen</li>
+<li><strong>Technik:</strong> WLAN (mind. 16 Mbit/s), Steckdosen, Rauchmelder</li>
+</ul>
+<h2>Komfort-Extras (empfohlen)</h2>
+<ul>
+<li><strong>Unterhaltung:</strong> TV, Streaming-Zugang</li>
+<li><strong>Komfort:</strong> Waschmaschine, Trockner, Buegeleisen, Foehen</li>
+<li><strong>Kueche Plus:</strong> Mikrowelle, Geschirrspueler, Kaffeemaschine, Toaster</li>
+<li><strong>Outdoor:</strong> Parkplatz, Fahrradstellplatz, Balkon/Terrasse</li>
+<li><strong>Service:</strong> Regelmaessige Reinigung, Bettwaesche-Wechsel, Willkommenspaket</li>
+</ul>
+<h2>Tipps fuer 5-Sterne-Bewertungen</h2>
+<p>Kleine Aufmerksamkeiten machen den Unterschied: Ein Willkommenspaket mit Kaffee, Tee und Snacks, eine Mappe mit lokalen Informationen (Supermaerkte, Restaurants, OEPNV), und schnelle Reaktionszeit bei Problemen. Monteure schaetzen Zuverlaessigkeit und Sauberkeit ueber luxurioese Ausstattung.</p>`,
+  },
+  {
+    slug: "monteurzimmer-portale-vergleich-2026",
+    title: "Monteurzimmer-Portale im Vergleich 2026",
+    excerpt: "DMZ, Monteurzimmer.de oder Schlaf-Platz? Wir vergleichen die groessten Plattformen fuer Monteurzimmer in Deutschland.",
+    category: "Ratgeber",
+    readTime: "6 Min.",
+    date: "2026-01-28",
+    content: `<h2>Die drei groessten Portale</h2>
+<p>Der deutsche Markt fuer Monteurzimmer wird von drei Plattformen dominiert: Deutschland-Monteurzimmer.de (DMZ), Monteurzimmer.de und Schlaf-Platz (monteurzimmerapartments.de). Jede Plattform hat ihre Staerken und Schwaechen.</p>
+<h2>Deutschland-Monteurzimmer.de (DMZ)</h2>
+<ul>
+<li><strong>Reichweite:</strong> Marktfuehrer mit ueber 825.000 Besuchern/Monat</li>
+<li><strong>Listings:</strong> 14.000+ Unterkuenfte</li>
+<li><strong>Kosten fuer Vermieter:</strong> Kostenpflichtig (bis zu 300 EUR/Jahr)</li>
+<li><strong>Schwaechen:</strong> Veraltetes Design, kein echtes Buchungssystem, keine App</li>
+</ul>
+<h2>Monteurzimmer.de</h2>
+<ul>
+<li><strong>Traeger:</strong> FUNKE Mediengruppe (starkes SEO-Backing)</li>
+<li><strong>Kosten fuer Vermieter:</strong> Kostenpflichtig</li>
+<li><strong>Schwaechen:</strong> Hohe Gebuehren, keine native App, reines Listing-Portal</li>
+</ul>
+<h2>Schlaf-Platz (monteurzimmerapartments.de)</h2>
+<ul>
+<li><strong>Alleinstellungsmerkmale:</strong> Einziges Transparenzregister, 100% kostenlos fuer Vermieter, eigene App (iOS & Android), Full-Service statt reines Listing</li>
+<li><strong>Bewertungen:</strong> 5.0 Sterne bei 266 Google-Bewertungen</li>
+<li><strong>Kosten fuer Vermieter:</strong> Dauerhaft kostenlos</li>
+<li><strong>Schwaeche:</strong> Noch geringere Markenbekanntheit als DMZ</li>
+</ul>
+<h2>Fazit</h2>
+<p>Fuer Vermieter bietet Schlaf-Platz das beste Gesamtpaket: kostenlos, mit persoenlicher Betreuung und dem einzigartigen Transparenzregister. Fuer Mieter bedeutet die Full-Service-Vermittlung weniger Aufwand und mehr Sicherheit als bei reinen Listing-Portalen.</p>`,
+  },
+];
+
+export function getBlogBySlug(slug: string) { return BLOG_ARTICLES.find(a => a.slug === slug); }
+export function getAllBlogSlugs() { return BLOG_ARTICLES.map(a => a.slug); }

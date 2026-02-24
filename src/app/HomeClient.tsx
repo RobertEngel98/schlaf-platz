@@ -193,6 +193,43 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* ═══ BEKANNT AUS / TRUST CREDENTIALS ═══ */}
+      <section className="py-8 md:py-10 border-y border-gray-100 bg-gray-50/40">
+        <div className="wrap">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-sp/10 flex items-center justify-center shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div>
+                <p className="text-ink font-bold text-[13px] m-0">Genossenschaft seit 2014</p>
+                <p className="text-gray-400 text-[11px] m-0">Schlaf-Platz e.G.</p>
+              </div>
+            </div>
+            <div className="hidden sm:block w-px h-8 bg-gray-200" />
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-sp/10 flex items-center justify-center shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <p className="text-ink font-bold text-[13px] m-0">Mitglied im GvdL e.V.</p>
+                <p className="text-gray-400 text-[11px] m-0">Gastgewerbe-Verband</p>
+              </div>
+            </div>
+            <div className="hidden sm:block w-px h-8 bg-gray-200" />
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-lg bg-sp/10 flex items-center justify-center shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#029fde" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <p className="text-ink font-bold text-[13px] m-0">DSGVO-konform</p>
+                <p className="text-gray-400 text-[11px] m-0">Datenschutz zertifiziert</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ TESTIMONIALS ═══ */}
       <section className="py-14 md:py-20 bg-gray-50/60 border-y border-gray-100">
         <div className="wrap">
@@ -226,6 +263,35 @@ export default function HomeClient() {
           <div className="mt-8">
             <Link href="/mieter" className="cta-primary">Jetzt selbst ueberzeugen <Arr s={18} /></Link>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ GOOGLE REVIEW BADGE ═══ */}
+      <section className="py-10 md:py-14">
+        <div className="wrap">
+          <FadeIn>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 rounded-2xl border border-gray-100 bg-white p-6 md:p-8 shadow-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white shadow-md shadow-gray-200/60 flex items-center justify-center shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 001 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-3xl font-bold text-ink">5.0</span>
+                    <Stars size={16} />
+                  </div>
+                  <p className="text-gray-400 text-[13px] m-0 mt-0.5"><strong className="text-ink">{BRAND.stats.reviews}</strong> Bewertungen auf Google</p>
+                </div>
+              </div>
+              <div className="hidden sm:block w-px h-12 bg-gray-100" />
+              <span className="text-sp text-[13px] font-bold uppercase tracking-wider flex items-center gap-2">Alle Bewertungen lesen <Arr s={14} /></span>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

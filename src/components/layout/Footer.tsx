@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BRAND, FOOTER } from "@/lib/constants";
 
 export default function Footer() {
@@ -13,8 +14,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
           <div className="md:col-span-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={BRAND.logo} alt={BRAND.name} className="h-8 w-auto brightness-0 invert mb-4" />
+            <Image src={BRAND.logo} alt={BRAND.name} width={140} height={40} className="h-8 w-auto brightness-0 invert mb-4" />
             <p className="text-white/35 text-sm leading-relaxed max-w-[280px] mb-5">Die kostenlose Plattform fuer Monteurzimmer in Deutschland. Seit 2014. Mitglied im GvdL e.V.</p>
             <div className="flex gap-2">
               {[

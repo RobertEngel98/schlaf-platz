@@ -5,14 +5,52 @@ import Footer from "@/components/layout/Footer";
 import { Stars, Faq, Chk, Arr } from "@/components/ui";
 import { BRAND, CITIES } from "@/lib/constants";
 
+interface FormData {
+  firma: string;
+  ansprechpartner: string;
+  email: string;
+  telefon: string;
+  stadt: string;
+  personen: string;
+  zeitraum: string;
+  nachricht: string;
+}
+
+const INITIAL: FormData = { firma: "", ansprechpartner: "", email: "", telefon: "", stadt: "", personen: "", zeitraum: "", nachricht: "" };
+
 export default function MieterClient() {
+  const [form, setForm] = useState<FormData>(INITIAL);
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const set = (key: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+    setForm(prev => ({ ...prev, [key]: e.target.value }));
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/anfrage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Fehler beim Senden");
+      setSent(true);
+    } catch {
+      setError("Es gab einen Fehler. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="bg-white">
       <Navbar />
 
-      {/* ═══ HERO — dark, same style as homepage ═══ */}
+      {/* HERO */}
       <section className="relative bg-[#0b1220] overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-[-15%] right-[-5%] w-[500px] h-[500px] rounded-full bg-sp/[0.08] blur-[120px]" />
@@ -36,7 +74,7 @@ export default function MieterClient() {
         </div>
       </section>
 
-      {/* ═══ FORM SECTION — light ═══ */}
+      {/* FORM SECTION */}
       <section className="py-12 md:py-16">
         <div className="wrap">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
@@ -51,49 +89,54 @@ export default function MieterClient() {
                   <p className="text-gray-400 text-sm">Wir melden uns innerhalb von 15 Minuten persoenlich bei Ihnen.</p>
                 </div>
               ) : (
-                <form onSubmit={e => { e.preventDefault(); setSent(true); }} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="border border-red-200 rounded-xl p-4 bg-red-50 text-red-600 text-sm">{error}</div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Firma *</label>
-                      <input type="text" required placeholder="Mustermann GmbH" className="input-light" />
+                      <input type="text" required placeholder="Mustermann GmbH" className="input-light" value={form.firma} onChange={set("firma")} />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Ansprechpartner *</label>
-                      <input type="text" required placeholder="Max Mustermann" className="input-light" />
+                      <input type="text" required placeholder="Max Mustermann" className="input-light" value={form.ansprechpartner} onChange={set("ansprechpartner")} />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">E-Mail *</label>
-                      <input type="email" required placeholder="max@firma.de" className="input-light" />
+                      <input type="email" required placeholder="max@firma.de" className="input-light" value={form.email} onChange={set("email")} />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Telefon *</label>
-                      <input type="tel" required placeholder="+49 170 1234567" className="input-light" />
+                      <input type="tel" required placeholder="+49 170 1234567" className="input-light" value={form.telefon} onChange={set("telefon")} />
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Stadt *</label>
-                      <select required className="input-light appearance-none">
+                      <select required className="input-light appearance-none" value={form.stadt} onChange={set("stadt")}>
                         <option value="">Stadt waehlen</option>
                         {CITIES.map(c => <option key={c.slug} value={c.slug}>{c.name}</option>)}
                       </select>
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Personen *</label>
-                      <input type="number" required min="1" placeholder="z.B. 5" className="input-light" />
+                      <input type="number" required min="1" placeholder="z.B. 5" className="input-light" value={form.personen} onChange={set("personen")} />
                     </div>
                     <div>
                       <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Zeitraum</label>
-                      <input type="text" placeholder="z.B. 3 Monate" className="input-light" />
+                      <input type="text" placeholder="z.B. 3 Monate" className="input-light" value={form.zeitraum} onChange={set("zeitraum")} />
                     </div>
                   </div>
                   <div>
                     <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em] mb-2">Nachricht</label>
-                    <textarea rows={3} placeholder="Weitere Informationen..." className="input-light resize-none" />
+                    <textarea rows={3} placeholder="Weitere Informationen..." className="input-light resize-none" value={form.nachricht} onChange={set("nachricht")} />
                   </div>
-                  <button type="submit" className="cta-primary w-full sm:w-auto !py-4 !px-10 text-base mt-2">Anfrage absenden <Arr s={16} /></button>
+                  <button type="submit" disabled={loading} className="cta-primary w-full sm:w-auto !py-4 !px-10 text-base mt-2 disabled:opacity-50">
+                    {loading ? "Wird gesendet..." : <>Anfrage absenden <Arr s={16} /></>}
+                  </button>
                 </form>
               )}
             </div>
@@ -118,7 +161,7 @@ export default function MieterClient() {
         </div>
       </section>
 
-      {/* ═══ FAQ ═══ */}
+      {/* FAQ */}
       <section className="py-10 md:py-14 border-t border-gray-100">
         <div className="wrap max-w-[700px] mx-auto">
           <p className="text-sp text-[13px] font-bold uppercase tracking-[0.2em] mb-3 text-center">FAQ</p>
