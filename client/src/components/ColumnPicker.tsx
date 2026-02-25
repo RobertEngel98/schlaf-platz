@@ -54,7 +54,7 @@ export default function ColumnPicker({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 top-full right-0 mt-1 w-[260px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
+        <div className="absolute z-50 top-full right-0 mt-1 w-[calc(100vw-2rem)] sm:w-[260px] max-w-[260px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
           <div className="px-3 py-2 border-b border-[#e5e5e5] bg-[#fafaf9] flex items-center justify-between">
             <p className="text-[11px] font-bold text-[#706e6b] uppercase tracking-wider">
               Spalten anpassen

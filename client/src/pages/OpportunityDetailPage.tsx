@@ -99,7 +99,7 @@ export default function OpportunityDetailPage() {
 
   const update = (f: string, v: any) => setOpp((p: any) => ({ ...p, [f]: v }));
 
-  if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
+  if (loading) return <div className="p-4 sm:p-8 text-gray-500">Laden...</div>;
 
   // --- Resolve account name for highlight ---
   const accountName =

@@ -112,7 +112,7 @@ export default function AccountDetailPage() {
 
   const update = (field: string, value: any) => setAccount((prev) => ({ ...prev, [field]: value }));
 
-  if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
+  if (loading) return <div className="p-4 sm:p-8 text-gray-500">Laden...</div>;
 
   const highlightFields = [
     {

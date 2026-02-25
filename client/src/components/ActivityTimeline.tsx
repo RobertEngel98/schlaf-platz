@@ -141,14 +141,14 @@ export default function ActivityTimeline({
   return (
     <div className="bg-white rounded-lg border border-[#e5e5e5] overflow-hidden">
       {/* ---- Header ---- */}
-      <div className="px-5 py-3 border-b border-[#e5e5e5]">
+      <div className="px-3 sm:px-5 py-3 border-b border-[#e5e5e5]">
         <h3 className="text-[13px] font-bold text-[#181818] uppercase tracking-wider">
           Aktivitäten
         </h3>
       </div>
 
       {/* ---- Comment input ---- */}
-      <div className="px-5 py-4 border-b border-[#e5e5e5]">
+      <div className="px-3 sm:px-5 py-3 sm:py-4 border-b border-[#e5e5e5]">
         <textarea
           className="w-full border border-[#c9c7c5] rounded-md px-3 py-2 text-[13px] text-[#181818] placeholder-[#706e6b] resize-none focus:outline-none focus:ring-2 focus:ring-[#0176d3] focus:border-[#0176d3] transition-colors"
           rows={3}
@@ -174,7 +174,7 @@ export default function ActivityTimeline({
       </div>
 
       {/* ---- Timeline ---- */}
-      <div className="px-5 py-4">
+      <div className="px-3 sm:px-5 py-3 sm:py-4">
         {loading ? (
           <div className="text-[13px] text-[#706e6b] text-center py-6">
             Laden...

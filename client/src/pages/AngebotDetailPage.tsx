@@ -102,7 +102,7 @@ export default function AngebotDetailPage() {
     }
   }, [angebot.checkIn, angebot.checkOut]);
 
-  if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
+  if (loading) return <div className="p-4 sm:p-8 text-gray-500">Laden...</div>;
 
   // --- Highlight fields ---
   const highlightFields = [

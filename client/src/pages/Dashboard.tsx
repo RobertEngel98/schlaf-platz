@@ -110,9 +110,9 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="p-8 bg-[#f3f3f3] min-h-full">
+    <div className="p-4 sm:p-6 lg:p-8 bg-[#f3f3f3] min-h-full">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4 sm:mb-6 lg:mb-8">
         <h1 className="text-2xl font-bold text-[#181818]">Dashboard</h1>
         <p className="text-sm text-[#706e6b] mt-1">
           Übersicht über alle CRM-Aktivitäten
@@ -145,7 +145,7 @@ export default function Dashboard() {
             {/* ============================================================= */}
             {/* Top row – 4 stat cards                                        */}
             {/* ============================================================= */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
               <StatCard
                 label="Accounts"
                 value={stats.counts.accounts}
@@ -176,9 +176,9 @@ export default function Dashboard() {
             {/* ============================================================= */}
             {/* Second row – Distribution charts                              */}
             {/* ============================================================= */}
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="mt-4 sm:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
               {/* Opportunity Pipeline */}
-              <div className="bg-white rounded-lg border border-[#e5e5e5] p-6">
+              <div className="bg-white rounded-lg border border-[#e5e5e5] p-4 sm:p-6">
                 <h2 className="text-base font-semibold text-[#181818] mb-4">
                   Opportunity Pipeline
                 </h2>
@@ -202,7 +202,7 @@ export default function Dashboard() {
               </div>
 
               {/* Lead-Status Verteilung */}
-              <div className="bg-white rounded-lg border border-[#e5e5e5] p-6">
+              <div className="bg-white rounded-lg border border-[#e5e5e5] p-4 sm:p-6">
                 <h2 className="text-base font-semibold text-[#181818] mb-4">
                   Lead-Status Verteilung
                 </h2>
@@ -229,9 +229,9 @@ export default function Dashboard() {
             {/* ============================================================= */}
             {/* Third row – Recent activity tables                            */}
             {/* ============================================================= */}
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="mt-4 sm:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
               {/* Letzte Buchungen */}
-              <div className="bg-white rounded-lg border border-[#e5e5e5] p-6">
+              <div className="bg-white rounded-lg border border-[#e5e5e5] p-4 sm:p-6">
                 <h2 className="text-base font-semibold text-[#181818] mb-4">
                   Letzte Buchungen
                 </h2>
@@ -300,7 +300,7 @@ export default function Dashboard() {
               </div>
 
               {/* Letzte Leads */}
-              <div className="bg-white rounded-lg border border-[#e5e5e5] p-6">
+              <div className="bg-white rounded-lg border border-[#e5e5e5] p-4 sm:p-6">
                 <h2 className="text-base font-semibold text-[#181818] mb-4">
                   Letzte Leads
                 </h2>
@@ -366,11 +366,11 @@ export default function Dashboard() {
             {/* ============================================================= */}
             {/* Quick Actions                                                 */}
             {/* ============================================================= */}
-            <div className="mt-6 bg-white rounded-lg border border-[#e5e5e5] p-6">
-              <h2 className="text-base font-semibold text-[#181818] mb-4">
+            <div className="mt-4 sm:mt-6 bg-white rounded-lg border border-[#e5e5e5] p-4 sm:p-6">
+              <h2 className="text-base font-semibold text-[#181818] mb-3 sm:mb-4">
                 Schnellzugriff
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                 <QuickAction
                   label="Neuer Account"
                   icon={Building2}

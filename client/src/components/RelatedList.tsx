@@ -44,7 +44,7 @@ export default function RelatedList<T>({
   return (
     <div className="bg-white rounded-lg border border-[#e5e5e5] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[#e5e5e5]">
+      <div className="flex items-center justify-between px-3 sm:px-5 py-3 border-b border-[#e5e5e5]">
         <div className="flex items-center gap-2">
           {icon && (
             <div
@@ -80,7 +80,7 @@ export default function RelatedList<T>({
                 {columns.map((col) => (
                   <th
                     key={col.key}
-                    className={`px-4 py-2 text-left text-[11px] font-bold text-[#706e6b] uppercase tracking-wider ${col.className || ""}`}
+                    className={`px-3 sm:px-4 py-2 text-left text-[11px] font-bold text-[#706e6b] uppercase tracking-wider ${col.className || ""}`}
                   >
                     {col.header}
                   </th>
@@ -97,7 +97,7 @@ export default function RelatedList<T>({
                     className="border-t border-[#e5e5e5] hover:bg-[#f3f3f3] transition-colors"
                   >
                     {columns.map((col) => (
-                      <td key={col.key} className={`px-4 py-2.5 text-[#181818] ${col.className || ""}`}>
+                      <td key={col.key} className={`px-3 sm:px-4 py-2.5 text-[#181818] ${col.className || ""}`}>
                         {col.render(row)}
                       </td>
                     ))}
@@ -115,14 +115,14 @@ export default function RelatedList<T>({
           </table>
         </div>
       ) : (
-        <div className="px-5 py-8 text-center text-[13px] text-[#706e6b]">
+        <div className="px-3 sm:px-5 py-8 text-center text-[13px] text-[#706e6b]">
           Keine Einträge vorhanden
         </div>
       )}
 
       {/* View All */}
       {viewAllPath && data.length > limit && (
-        <div className="border-t border-[#e5e5e5] px-5 py-2.5 text-center">
+        <div className="border-t border-[#e5e5e5] px-3 sm:px-5 py-2.5 text-center">
           <Link
             to={viewAllPath}
             className="text-[12px] font-medium text-[#0176d3] hover:underline"

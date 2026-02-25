@@ -20,14 +20,14 @@ export default function RecordTabs({ tabs, defaultTab }: RecordTabsProps) {
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
       {/* Tab bar */}
-      <div className="bg-white border-b border-[#e5e5e5] px-6">
-        <div className="flex items-center gap-0">
+      <div className="bg-white border-b border-[#e5e5e5] px-3 sm:px-6 overflow-x-auto">
+        <div className="flex items-center gap-0 min-w-max">
           {tabs.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`
-                relative px-4 py-3 text-[13px] font-medium transition-colors
+                relative px-3 sm:px-4 py-3 text-[13px] font-medium transition-colors whitespace-nowrap
                 ${
                   activeTab === tab.key
                     ? "text-[#0176d3]"
@@ -50,7 +50,7 @@ export default function RecordTabs({ tabs, defaultTab }: RecordTabsProps) {
       </div>
 
       {/* Tab content */}
-      <div className="flex-1 overflow-auto bg-[#f3f3f3] p-6">
+      <div className="flex-1 overflow-auto bg-[#f3f3f3] p-3 sm:p-4 lg:p-6">
         {activeContent}
       </div>
     </div>

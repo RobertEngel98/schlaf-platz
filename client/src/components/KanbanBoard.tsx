@@ -100,7 +100,7 @@ export default function KanbanBoard<T>({
   };
 
   return (
-    <div className="flex gap-4 overflow-x-auto pb-4 min-h-[400px]">
+    <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 min-h-[400px] snap-x snap-mandatory sm:snap-none">
       {columns.map((col) => {
         const colItems = items.filter((item) => getColumnKey(item) === col.key);
         const isOver = dragOverCol === col.key;
@@ -108,7 +108,7 @@ export default function KanbanBoard<T>({
         return (
           <div
             key={col.key}
-            className={`flex-shrink-0 w-[300px] flex flex-col rounded-xl border transition-colors ${
+            className={`flex-shrink-0 w-[80vw] sm:w-[300px] snap-center flex flex-col rounded-xl border transition-colors ${
               isOver
                 ? "border-brand bg-brand-light/30"
                 : "border-gray-200 bg-gray-50/50"

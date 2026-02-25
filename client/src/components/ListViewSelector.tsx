@@ -64,14 +64,14 @@ export default function ListViewSelector({
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 text-[18px] font-bold text-[#181818] hover:text-[#0176d3] transition-colors"
       >
-        <span className="truncate max-w-[280px]">
+        <span className="truncate max-w-[160px] sm:max-w-[280px]">
           {currentView ? currentView.name : `Alle ${entityLabel}`}
         </span>
         <ChevronDown className="w-4 h-4 text-[#706e6b] shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 top-full left-0 mt-1 w-[320px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
+        <div className="absolute z-50 top-full left-0 mt-1 w-[calc(100vw-2rem)] sm:w-[320px] max-w-[320px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
           {/* Search */}
           <div className="p-2 border-b border-[#e5e5e5]">
             <div className="relative">

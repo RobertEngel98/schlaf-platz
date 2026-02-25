@@ -20,8 +20,8 @@ export default function RecordPath({
   const currentIndex = stages.findIndex((s) => s.key === currentStage);
 
   return (
-    <div className="bg-white border-b border-[#e5e5e5] px-6 py-3">
-      <div className="flex items-center">
+    <div className="bg-white border-b border-[#e5e5e5] px-3 sm:px-6 py-2 sm:py-3">
+      <div className="flex items-center overflow-x-auto">
         {stages.map((stage, i) => {
           const isCurrent = stage.key === currentStage;
           const isCompleted = linear && currentIndex > i;
@@ -53,7 +53,7 @@ export default function RecordPath({
                 onClick={() => onStageClick?.(stage.key)}
                 disabled={!onStageClick}
                 className={`
-                  relative flex items-center justify-center px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider
+                  relative flex items-center justify-center px-2 sm:px-4 py-1.5 text-[9px] sm:text-[11px] font-bold uppercase tracking-wider
                   ${bg} ${text} ${border}
                   ${i === 0 ? "rounded-l-full" : ""}
                   ${i === stages.length - 1 ? "rounded-r-full" : ""}

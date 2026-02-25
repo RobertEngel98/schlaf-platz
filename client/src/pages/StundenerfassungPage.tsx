@@ -113,9 +113,9 @@ export default function StundenerfassungPage() {
   ];
 
   return (
-    <div className="p-8">
+    <div className="p-3 sm:p-4 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
             Stundenerfassung
