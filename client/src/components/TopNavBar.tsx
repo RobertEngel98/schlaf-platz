@@ -112,7 +112,7 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
     setSearchOpen(true);
 
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { credentials: "include" });
       if (res.ok) {
         const data = await res.json();
         setSearchResults(data.results || []);

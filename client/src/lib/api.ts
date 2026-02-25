@@ -24,6 +24,7 @@ async function fetchApi<T = unknown>(
 
   const res = await fetch(url, {
     ...fetchOpts,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...fetchOpts.headers,
@@ -43,7 +44,11 @@ async function fetchApi<T = unknown>(
 function createCrudApi<T>(entity: string) {
   return {
     list: (params?: Record<string, string | number | undefined>) =>
-      fetchApi<{ data: T[]; total: number }>(`/${entity}`, { params }),
+      fetchApi<{ data: T[]; total?: number; pagination?: { total: number } }>(`/${entity}`, { params })
+        .then(res => ({
+          data: res.data,
+          total: res.total ?? res.pagination?.total ?? 0,
+        })),
     get: (id: string) => fetchApi<T>(`/${entity}/${id}`),
     create: (data: Partial<T>) =>
       fetchApi<T>(`/${entity}`, {

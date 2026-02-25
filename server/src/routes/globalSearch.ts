@@ -79,7 +79,7 @@ export default async function globalSearchRoutes(app: FastifyInstance) {
         id: row.id,
         title: [row.firstName, row.lastName].filter(Boolean).join(" "),
         subtitle: row.email || row.phone || "",
-        url: `/contacts/${row.id}`,
+        url: `/kontakte/${row.id}`,
       });
     }
 
