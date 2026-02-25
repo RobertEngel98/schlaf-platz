@@ -1,10 +1,23 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, CheckSquare } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Save, Trash2, CheckSquare } from "lucide-react";
 import Badge, { getStatusVariant } from "../components/Badge";
+import RecordHighlights from "../components/RecordHighlights";
+import RecordPath from "../components/RecordPath";
+import RecordTabs from "../components/RecordTabs";
+import DetailSection, { DetailField } from "../components/DetailSection";
+import {
+  SldsPrimaryButton,
+  SldsOutlineButton,
+  sldsInput,
+  sldsSelect,
+  sldsTextarea,
+} from "../components/SalesforceField";
 
 const STATUSES = ["Offen", "In Bearbeitung", "Erledigt", "Abgebrochen"];
 const PRIORITIES = ["Niedrig", "Mittel", "Hoch"];
+
+const PATH_STAGES = STATUSES.map((s) => ({ key: s, label: s }));
 
 export default function TaskDetailPage() {
   const { id } = useParams();
@@ -52,60 +65,159 @@ export default function TaskDetailPage() {
 
   if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
 
+  // --- Highlight fields ---
+  const highlightFields = [
+    {
+      label: "Status",
+      value: <Badge variant={getStatusVariant(task.status)}>{task.status}</Badge>,
+    },
+    {
+      label: "Priorität",
+      value: task.priority || "—",
+    },
+    {
+      label: "Fällig am",
+      value: task.dueDate
+        ? new Date(task.dueDate).toLocaleDateString("de-DE")
+        : "—",
+    },
+  ];
+
+  // --- Actions ---
+  const actions = (
+    <>
+      {!isNew && (
+        <SldsOutlineButton onClick={handleDelete} danger>
+          <Trash2 className="w-4 h-4" /> Löschen
+        </SldsOutlineButton>
+      )}
+      <SldsPrimaryButton onClick={handleSave} disabled={saving}>
+        <Save className="w-4 h-4" /> {saving ? "Speichert..." : "Speichern"}
+      </SldsPrimaryButton>
+    </>
+  );
+
+  // --- Details tab content ---
+  const detailsContent = (
+    <div className="space-y-4">
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-[13px]">
+          {error}
+        </div>
+      )}
+
+      {/* Aufgabe Section */}
+      <DetailSection
+        title="Aufgabe"
+        icon={<CheckSquare className="w-4 h-4" />}
+      >
+        <DetailField label="Betreff" required fullWidth>
+          <input
+            value={task.subject || ""}
+            onChange={(e) => update("subject", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Status">
+          <select
+            value={task.status || "Offen"}
+            onChange={(e) => update("status", e.target.value)}
+            className={sldsSelect}
+          >
+            {STATUSES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </DetailField>
+
+        <DetailField label="Priorität">
+          <select
+            value={task.priority || "Mittel"}
+            onChange={(e) => update("priority", e.target.value)}
+            className={sldsSelect}
+          >
+            {PRIORITIES.map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
+        </DetailField>
+
+        <DetailField label="Fällig am">
+          <input
+            type="date"
+            value={task.dueDate || ""}
+            onChange={(e) => update("dueDate", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Opportunity-ID">
+          <input
+            value={task.opportunityId || ""}
+            onChange={(e) => update("opportunityId", e.target.value)}
+            className={sldsInput}
+            placeholder="Optional"
+          />
+        </DetailField>
+      </DetailSection>
+
+      {/* Beschreibung Section */}
+      <DetailSection title="Beschreibung">
+        <DetailField label="Beschreibung" fullWidth>
+          <textarea
+            value={task.description || ""}
+            onChange={(e) => update("description", e.target.value)}
+            rows={5}
+            className={sldsTextarea}
+          />
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
+
+  // --- Related tab content ---
+  const relatedContent = (
+    <div className="bg-white rounded-lg border border-[#e5e5e5] p-8 text-center text-[13px] text-[#706e6b]">
+      Keine verknüpften Datensätze vorhanden
+    </div>
+  );
+
+  // --- Tabs ---
+  const tabs = [
+    { key: "details", label: "Details", content: detailsContent },
+    { key: "related", label: "Verknüpft", content: relatedContent },
+  ];
+
   return (
-    <div className="p-6 max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/tasks" className="p-2 hover:bg-gray-100 rounded-lg"><ArrowLeft className="w-5 h-5" /></Link>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold">{isNew ? "Neue Aufgabe" : task.subject}</h1>
-          {!isNew && <Badge variant={getStatusVariant(task.status)}>{task.status}</Badge>}
-        </div>
-        <div className="flex gap-2">
-          {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
-            <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Record Highlights */}
+      <RecordHighlights
+        backPath="/tasks"
+        icon={<CheckSquare className="w-5 h-5 text-white" />}
+        iconColor="#2E844A"
+        entityLabel="Aufgabe"
+        title={isNew ? "Neue Aufgabe" : task.subject}
+        highlightFields={highlightFields}
+        actions={actions}
+      />
 
-      {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
+      {/* Record Path (only for existing records) */}
+      {!isNew && (
+        <RecordPath
+          stages={PATH_STAGES}
+          currentStage={task.status}
+          onStageClick={(stageKey) => update("status", stageKey)}
+          linear
+        />
+      )}
 
-      <div className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><CheckSquare className="w-5 h-5 text-[#0176d3]" /> Aufgabe</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Betreff *</label>
-              <input value={task.subject || ""} onChange={e => update("subject", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select value={task.status || "Offen"} onChange={e => update("status", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Priorität</label>
-              <select value={task.priority || "Mittel"} onChange={e => update("priority", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                {PRIORITIES.map(p => <option key={p} value={p}>{p}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fällig am</label>
-              <input type="date" value={task.dueDate || ""} onChange={e => update("dueDate", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Opportunity-ID</label>
-              <input value={task.opportunityId || ""} onChange={e => update("opportunityId", e.target.value)} className="w-full px-3 py-2 border rounded-lg" placeholder="Optional" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4">Beschreibung</h2>
-          <textarea value={task.description || ""} onChange={e => update("description", e.target.value)} rows={5} className="w-full px-3 py-2 border rounded-lg" />
-        </div>
-      </div>
+      {/* Record Tabs */}
+      <RecordTabs tabs={tabs} defaultTab="details" />
     </div>
   );
 }

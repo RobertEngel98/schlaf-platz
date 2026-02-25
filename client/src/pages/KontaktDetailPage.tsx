@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, Users, MapPin } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Save, Trash2, Users, MapPin } from "lucide-react";
+import RecordHighlights from "../components/RecordHighlights";
+import RecordTabs from "../components/RecordTabs";
+import DetailSection, { DetailField } from "../components/DetailSection";
+import {
+  SldsPrimaryButton,
+  SldsOutlineButton,
+  sldsInput,
+  sldsSelect,
+  sldsTextarea,
+} from "../components/SalesforceField";
 
 export default function KontaktDetailPage() {
   const { id } = useParams();
@@ -50,110 +60,218 @@ export default function KontaktDetailPage() {
 
   if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
 
+  const fullName = isNew
+    ? "Neuer Kontakt"
+    : `${kontakt.firstName || ""} ${kontakt.lastName || ""}`.trim() || "Kontakt";
+
   return (
-    <div className="p-6 max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/kontakte" className="p-2 hover:bg-gray-100 rounded-lg"><ArrowLeft className="w-5 h-5" /></Link>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold">{isNew ? "Neuer Kontakt" : `${kontakt.firstName || ""} ${kontakt.lastName}`}</h1>
-          {!isNew && kontakt.account && <p className="text-sm text-gray-500">{kontakt.account.name}</p>}
-        </div>
-        <div className="flex gap-2">
-          {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
-            <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Record Highlights */}
+      <RecordHighlights
+        backPath="/kontakte"
+        icon={<Users className="w-5 h-5 text-white" />}
+        iconColor="#1B96FF"
+        entityLabel="Kontakt"
+        title={fullName}
+        highlightFields={[
+          { label: "Account", value: kontakt.account?.name || "—" },
+          { label: "E-Mail", value: kontakt.email || "—" },
+          { label: "Telefon", value: kontakt.phone || "—" },
+          { label: "Mobil", value: kontakt.mobilePhone || "—" },
+          { label: "Position", value: kontakt.title || "—" },
+        ]}
+        actions={
+          <>
+            {!isNew && (
+              <SldsOutlineButton onClick={handleDelete} danger>
+                <Trash2 className="w-4 h-4" /> Löschen
+              </SldsOutlineButton>
+            )}
+            <SldsPrimaryButton onClick={handleSave} disabled={saving}>
+              <Save className="w-4 h-4" /> {saving ? "Speichert..." : "Speichern"}
+            </SldsPrimaryButton>
+          </>
+        }
+      />
 
-      {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
-
-      <div className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-[#0176d3]" /> Kontaktdaten</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Anrede</label>
-              <select value={kontakt.salutation || ""} onChange={e => update("salutation", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                <option value="">-- Wählen --</option>
-                <option value="Herr">Herr</option>
-                <option value="Frau">Frau</option>
-                <option value="Divers">Divers</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Account</label>
-              <select value={kontakt.accountId || ""} onChange={e => update("accountId", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                <option value="">-- Kein Account --</option>
-                {accounts.map((a: any) => <option key={a.id} value={a.id}>{a.name}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Vorname</label>
-              <input value={kontakt.firstName || ""} onChange={e => update("firstName", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nachname *</label>
-              <input value={kontakt.lastName || ""} onChange={e => update("lastName", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-              <input type="email" value={kontakt.email || ""} onChange={e => update("email", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-              <input value={kontakt.phone || ""} onChange={e => update("phone", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Mobil</label>
-              <input value={kontakt.mobilePhone || ""} onChange={e => update("mobilePhone", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Titel / Position</label>
-              <input value={kontakt.title || ""} onChange={e => update("title", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Baustellenleiter/Capo</label>
-              <input value={kontakt.baustellenleiterCapo || ""} onChange={e => update("baustellenleiterCapo", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Kontakt Unterkunft</label>
-              <input value={kontakt.kontaktUnterkunft || ""} onChange={e => update("kontaktUnterkunft", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-          </div>
+      {/* Error banner */}
+      {error && (
+        <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-[13px]">
+          {error}
         </div>
+      )}
 
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-[#0176d3]" /> Adresse</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Straße</label>
-              <input value={kontakt.mailingStreet || ""} onChange={e => update("mailingStreet", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">PLZ</label>
-              <input value={kontakt.mailingPostalCode || ""} onChange={e => update("mailingPostalCode", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Stadt</label>
-              <input value={kontakt.mailingCity || ""} onChange={e => update("mailingCity", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bundesland</label>
-              <input value={kontakt.mailingState || ""} onChange={e => update("mailingState", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Land</label>
-              <input value={kontakt.mailingCountry || ""} onChange={e => update("mailingCountry", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-          </div>
-        </div>
+      {/* Tabs */}
+      <RecordTabs
+        defaultTab="details"
+        tabs={[
+          {
+            key: "details",
+            label: "Details",
+            content: (
+              <div className="space-y-4">
+                {/* Kontaktdaten */}
+                <DetailSection title="Kontaktdaten" icon={<Users className="w-4 h-4" />}>
+                  <DetailField label="Anrede">
+                    <select
+                      value={kontakt.salutation || ""}
+                      onChange={e => update("salutation", e.target.value)}
+                      className={sldsSelect}
+                    >
+                      <option value="">-- Wählen --</option>
+                      <option value="Herr">Herr</option>
+                      <option value="Frau">Frau</option>
+                      <option value="Divers">Divers</option>
+                    </select>
+                  </DetailField>
 
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4">Beschreibung</h2>
-          <textarea value={kontakt.description || ""} onChange={e => update("description", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg" />
-        </div>
-      </div>
+                  <DetailField label="Account">
+                    <select
+                      value={kontakt.accountId || ""}
+                      onChange={e => update("accountId", e.target.value)}
+                      className={sldsSelect}
+                    >
+                      <option value="">-- Kein Account --</option>
+                      {accounts.map((a: any) => (
+                        <option key={a.id} value={a.id}>{a.name}</option>
+                      ))}
+                    </select>
+                  </DetailField>
+
+                  <DetailField label="Vorname">
+                    <input
+                      value={kontakt.firstName || ""}
+                      onChange={e => update("firstName", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Nachname" required>
+                    <input
+                      value={kontakt.lastName || ""}
+                      onChange={e => update("lastName", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="E-Mail">
+                    <input
+                      type="email"
+                      value={kontakt.email || ""}
+                      onChange={e => update("email", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Telefon">
+                    <input
+                      value={kontakt.phone || ""}
+                      onChange={e => update("phone", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Mobil">
+                    <input
+                      value={kontakt.mobilePhone || ""}
+                      onChange={e => update("mobilePhone", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Titel / Position">
+                    <input
+                      value={kontakt.title || ""}
+                      onChange={e => update("title", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Baustellenleiter/Capo">
+                    <input
+                      value={kontakt.baustellenleiterCapo || ""}
+                      onChange={e => update("baustellenleiterCapo", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Kontakt Unterkunft">
+                    <input
+                      value={kontakt.kontaktUnterkunft || ""}
+                      onChange={e => update("kontaktUnterkunft", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+                </DetailSection>
+
+                {/* Adresse */}
+                <DetailSection title="Adresse" icon={<MapPin className="w-4 h-4" />}>
+                  <DetailField label="Straße" fullWidth>
+                    <input
+                      value={kontakt.mailingStreet || ""}
+                      onChange={e => update("mailingStreet", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="PLZ">
+                    <input
+                      value={kontakt.mailingPostalCode || ""}
+                      onChange={e => update("mailingPostalCode", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Stadt">
+                    <input
+                      value={kontakt.mailingCity || ""}
+                      onChange={e => update("mailingCity", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Bundesland">
+                    <input
+                      value={kontakt.mailingState || ""}
+                      onChange={e => update("mailingState", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+
+                  <DetailField label="Land">
+                    <input
+                      value={kontakt.mailingCountry || ""}
+                      onChange={e => update("mailingCountry", e.target.value)}
+                      className={sldsInput}
+                    />
+                  </DetailField>
+                </DetailSection>
+
+                {/* Beschreibung */}
+                <DetailSection title="Beschreibung">
+                  <DetailField label="Beschreibung" fullWidth>
+                    <textarea
+                      value={kontakt.description || ""}
+                      onChange={e => update("description", e.target.value)}
+                      rows={4}
+                      className={sldsTextarea}
+                    />
+                  </DetailField>
+                </DetailSection>
+              </div>
+            ),
+          },
+          {
+            key: "related",
+            label: "Verknüpft",
+            content: (
+              <div className="bg-white rounded-lg border border-[#e5e5e5] p-8 text-center text-[13px] text-[#706e6b]">
+                Keine Related Lists vorhanden
+              </div>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 }

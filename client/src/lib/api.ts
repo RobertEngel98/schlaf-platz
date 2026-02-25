@@ -333,12 +333,30 @@ export interface Stundenerfassung {
 }
 
 export interface DashboardStats {
-  totalAccounts: number;
-  activeLeads: number;
-  openOpportunities: number;
-  opportunitiesAmount: number;
-  activeBuchungen: number;
-  totalUnterkuenfte: number;
+  counts: {
+    accounts: number;
+    contacts: number;
+    leads: number;
+    opportunities: number;
+    unterkuenfte: number;
+    buchungen: number;
+    openLeads: number;
+    activeBuchungen: number;
+  };
+  revenue: {
+    totalRevenue: number;
+    totalProvision: number;
+  };
+  recentActivity: {
+    accounts: { id: string; name: string; recordType: string; createdAt: string }[];
+    leads: { id: string; firstName: string | null; lastName: string; company: string | null; status: string; createdAt: string }[];
+    buchungen: { id: string; buchungsNummer: string | null; buchungsphase: string; gastName: string | null; checkIn: string | null; checkOut: string | null; gesamtPreis: number | null; createdAt: string }[];
+  };
+  distributions: {
+    buchungenByPhase: { buchungsphase: string; count: number }[];
+    leadsByStatus: { status: string; count: number }[];
+    opportunitiesByStage: { stage: string; count: number }[];
+  };
 }
 
 // API endpoints

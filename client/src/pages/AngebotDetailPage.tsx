@@ -1,9 +1,28 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, FileText, Euro } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Save, Trash2, FileText, Euro } from "lucide-react";
 import Badge, { getStatusVariant } from "../components/Badge";
+import RecordHighlights from "../components/RecordHighlights";
+import RecordPath from "../components/RecordPath";
+import RecordTabs from "../components/RecordTabs";
+import DetailSection, { DetailField } from "../components/DetailSection";
+import {
+  SldsPrimaryButton,
+  SldsOutlineButton,
+  sldsInput,
+  sldsInputReadonly,
+  sldsSelect,
+  sldsTextarea,
+} from "../components/SalesforceField";
 
 const STATUS_OPTIONS = ["Entwurf", "Gesendet", "Angenommen", "Abgelehnt", "Abgelaufen"];
+
+const PATH_STAGES = STATUS_OPTIONS.map((s) => ({ key: s, label: s }));
+
+const formatCurrency = (amount: number | null | undefined) =>
+  amount != null
+    ? new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(amount)
+    : "\u2014";
 
 export default function AngebotDetailPage() {
   const { id } = useParams();
@@ -17,18 +36,29 @@ export default function AngebotDetailPage() {
   const [unterkuenfte, setUnterkuenfte] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("/api/accounts?limit=500", { credentials: "include" }).then(r => r.json()).then(d => setAccounts(d.data || []));
-    fetch("/api/unterkuenfte?limit=500", { credentials: "include" }).then(r => r.json()).then(d => setUnterkuenfte(d.data || []));
+    fetch("/api/accounts?limit=500", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setAccounts(d.data || []));
+    fetch("/api/unterkuenfte?limit=500", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setUnterkuenfte(d.data || []));
     if (!isNew && id) {
       fetch(`/api/angebote/${id}`, { credentials: "include" })
-        .then(r => r.json())
-        .then(data => { setAngebot(data); setLoading(false); })
-        .catch(() => { setError("Angebot nicht gefunden"); setLoading(false); });
+        .then((r) => r.json())
+        .then((data) => {
+          setAngebot(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Angebot nicht gefunden");
+          setLoading(false);
+        });
     }
   }, [id, isNew]);
 
   const handleSave = async () => {
-    setSaving(true); setError("");
+    setSaving(true);
+    setError("");
     try {
       const url = isNew ? "/api/angebote" : `/api/angebote/${id}`;
       const res = await fetch(url, {
@@ -37,12 +67,19 @@ export default function AngebotDetailPage() {
         body: JSON.stringify(angebot),
         credentials: "include",
       });
-      if (!res.ok) { const d = await res.json(); setError(d.error || "Fehler"); return; }
+      if (!res.ok) {
+        const d = await res.json();
+        setError(d.error || "Fehler");
+        return;
+      }
       const saved = await res.json();
       if (isNew) navigate(`/angebote/${saved.id}`, { replace: true });
       else setAngebot(saved);
-    } catch { setError("Verbindungsfehler"); }
-    finally { setSaving(false); }
+    } catch {
+      setError("Verbindungsfehler");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -56,128 +93,284 @@ export default function AngebotDetailPage() {
   // Auto-calculate nights
   useEffect(() => {
     if (angebot.checkIn && angebot.checkOut) {
-      const days = Math.ceil((new Date(angebot.checkOut).getTime() - new Date(angebot.checkIn).getTime()) / 86400000);
+      const days = Math.ceil(
+        (new Date(angebot.checkOut).getTime() - new Date(angebot.checkIn).getTime()) / 86400000
+      );
       if (days > 0) update("anzahlNaechte", days);
     }
   }, [angebot.checkIn, angebot.checkOut]);
 
   if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
 
+  // --- Highlight fields ---
+  const highlightFields = [
+    {
+      label: "Status",
+      value: <Badge variant={getStatusVariant(angebot.status)}>{angebot.status}</Badge>,
+    },
+    {
+      label: "Nummer",
+      value: angebot.angebotNummer || "\u2014",
+    },
+    {
+      label: "Gültig bis",
+      value: angebot.gueltigBis
+        ? new Date(angebot.gueltigBis).toLocaleDateString("de-DE")
+        : "\u2014",
+    },
+    {
+      label: "Gesamtpreis",
+      value: formatCurrency(angebot.gesamtPreis),
+    },
+  ];
+
+  // --- Actions ---
+  const actions = (
+    <>
+      {!isNew && (
+        <SldsOutlineButton onClick={handleDelete} danger>
+          <Trash2 className="w-4 h-4" /> Löschen
+        </SldsOutlineButton>
+      )}
+      <SldsPrimaryButton onClick={handleSave} disabled={saving}>
+        <Save className="w-4 h-4" /> {saving ? "Speichert..." : "Speichern"}
+      </SldsPrimaryButton>
+    </>
+  );
+
+  // --- Details tab content ---
+  const detailsContent = (
+    <div className="space-y-4">
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-[13px]">
+          {error}
+        </div>
+      )}
+
+      {/* Angebotsdaten Section */}
+      <DetailSection
+        title="Angebotsdaten"
+        icon={<FileText className="w-4 h-4" />}
+      >
+        <DetailField label="Name" required fullWidth>
+          <input
+            value={angebot.name || ""}
+            onChange={(e) => update("name", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Account">
+          <select
+            value={angebot.accountId || ""}
+            onChange={(e) => update("accountId", e.target.value)}
+            className={sldsSelect}
+          >
+            <option value="">-- Wählen --</option>
+            {accounts.map((a: any) => (
+              <option key={a.id} value={a.id}>
+                {a.name}
+              </option>
+            ))}
+          </select>
+        </DetailField>
+
+        <DetailField label="Unterkunft">
+          <select
+            value={angebot.unterkunftId || ""}
+            onChange={(e) => update("unterkunftId", e.target.value)}
+            className={sldsSelect}
+          >
+            <option value="">-- Wählen --</option>
+            {unterkuenfte.map((u: any) => (
+              <option key={u.id} value={u.id}>
+                {u.name} - {u.ort}
+              </option>
+            ))}
+          </select>
+        </DetailField>
+
+        <DetailField label="Status">
+          <select
+            value={angebot.status || "Entwurf"}
+            onChange={(e) => update("status", e.target.value)}
+            className={sldsSelect}
+          >
+            {STATUS_OPTIONS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </DetailField>
+
+        <DetailField label="Gültig bis">
+          <input
+            type="date"
+            value={angebot.gueltigBis || ""}
+            onChange={(e) => update("gueltigBis", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Sprache">
+          <select
+            value={angebot.sprache || "Deutsch"}
+            onChange={(e) => update("sprache", e.target.value)}
+            className={sldsSelect}
+          >
+            <option value="Deutsch">Deutsch</option>
+            <option value="Englisch">Englisch</option>
+          </select>
+        </DetailField>
+      </DetailSection>
+
+      {/* Zeitraum & Preise Section */}
+      <DetailSection
+        title="Zeitraum & Preise"
+        icon={<Euro className="w-4 h-4" />}
+        columns={3}
+      >
+        <DetailField label="Check-In">
+          <input
+            type="date"
+            value={angebot.checkIn || ""}
+            onChange={(e) => update("checkIn", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Check-Out">
+          <input
+            type="date"
+            value={angebot.checkOut || ""}
+            onChange={(e) => update("checkOut", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Nächte">
+          <input
+            type="number"
+            value={angebot.anzahlNaechte || ""}
+            readOnly
+            className={sldsInputReadonly}
+          />
+        </DetailField>
+
+        <DetailField label="Personen">
+          <input
+            type="number"
+            value={angebot.anzahlPersonen || ""}
+            onChange={(e) => update("anzahlPersonen", parseInt(e.target.value))}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Preis/Nacht €">
+          <input
+            type="number"
+            step="0.01"
+            value={angebot.preisProNacht || ""}
+            onChange={(e) => update("preisProNacht", parseFloat(e.target.value))}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Gesamtpreis €">
+          <input
+            type="number"
+            step="0.01"
+            value={angebot.gesamtPreis || ""}
+            onChange={(e) => update("gesamtPreis", parseFloat(e.target.value))}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Reinigungskosten €">
+          <input
+            type="number"
+            step="0.01"
+            value={angebot.reinigungskosten || ""}
+            onChange={(e) => update("reinigungskosten", parseFloat(e.target.value))}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="Kaution €">
+          <input
+            type="number"
+            step="0.01"
+            value={angebot.kaution || ""}
+            onChange={(e) => update("kaution", parseFloat(e.target.value))}
+            className={sldsInput}
+          />
+        </DetailField>
+
+        <DetailField label="MwSt">
+          <select
+            value={angebot.mwstSatz || "7"}
+            onChange={(e) => update("mwstSatz", parseFloat(e.target.value))}
+            className={sldsSelect}
+          >
+            <option value="7">7%</option>
+            <option value="19">19%</option>
+          </select>
+        </DetailField>
+      </DetailSection>
+
+      {/* Beschreibung Section */}
+      <DetailSection title="Beschreibung">
+        <DetailField label="Beschreibung" fullWidth>
+          <textarea
+            value={angebot.beschreibung || ""}
+            onChange={(e) => update("beschreibung", e.target.value)}
+            rows={4}
+            className={sldsTextarea}
+          />
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
+
+  // --- Related tab content ---
+  const relatedContent = (
+    <div className="bg-white rounded-lg border border-[#e5e5e5] p-8 text-center text-[13px] text-[#706e6b]">
+      Keine verknüpften Datensätze vorhanden
+    </div>
+  );
+
+  // --- Tabs ---
+  const tabs = [
+    { key: "details", label: "Details", content: detailsContent },
+    { key: "related", label: "Verknüpft", content: relatedContent },
+  ];
+
   return (
-    <div className="p-6 max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/angebote" className="p-2 hover:bg-gray-100 rounded-lg"><ArrowLeft className="w-5 h-5" /></Link>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold">{isNew ? "Neues Angebot" : angebot.name}</h1>
-          {!isNew && (
-            <div className="flex gap-2 mt-1">
-              <Badge variant={getStatusVariant(angebot.status)}>{angebot.status}</Badge>
-              {angebot.angebotNummer && <span className="text-sm text-gray-500">#{angebot.angebotNummer}</span>}
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
-          {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
-            <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Record Highlights */}
+      <RecordHighlights
+        backPath="/angebote"
+        icon={<FileText className="w-5 h-5 text-white" />}
+        iconColor="#0176D3"
+        entityLabel="Angebot"
+        title={isNew ? "Neues Angebot" : angebot.name}
+        highlightFields={highlightFields}
+        actions={actions}
+      />
 
-      {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
+      {/* Record Path (only for existing records) */}
+      {!isNew && (
+        <RecordPath
+          stages={PATH_STAGES}
+          currentStage={angebot.status}
+          onStageClick={(stageKey) => update("status", stageKey)}
+          linear
+        />
+      )}
 
-      <div className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><FileText className="w-5 h-5 text-[#0176d3]" /> Angebotsdaten</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-              <input value={angebot.name || ""} onChange={e => update("name", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Account</label>
-              <select value={angebot.accountId || ""} onChange={e => update("accountId", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                <option value="">-- Wählen --</option>
-                {accounts.map((a: any) => <option key={a.id} value={a.id}>{a.name}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Unterkunft</label>
-              <select value={angebot.unterkunftId || ""} onChange={e => update("unterkunftId", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                <option value="">-- Wählen --</option>
-                {unterkuenfte.map((u: any) => <option key={u.id} value={u.id}>{u.name} - {u.ort}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-              <select value={angebot.status || "Entwurf"} onChange={e => update("status", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Gültig bis</label>
-              <input type="date" value={angebot.gueltigBis || ""} onChange={e => update("gueltigBis", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Sprache</label>
-              <select value={angebot.sprache || "Deutsch"} onChange={e => update("sprache", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                <option value="Deutsch">Deutsch</option>
-                <option value="Englisch">Englisch</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#0176d3]" /> Zeitraum & Preise</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Check-In</label>
-              <input type="date" value={angebot.checkIn || ""} onChange={e => update("checkIn", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Check-Out</label>
-              <input type="date" value={angebot.checkOut || ""} onChange={e => update("checkOut", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Nächte</label>
-              <input type="number" value={angebot.anzahlNaechte || ""} readOnly className="w-full px-3 py-2 border rounded-lg bg-gray-50" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Personen</label>
-              <input type="number" value={angebot.anzahlPersonen || ""} onChange={e => update("anzahlPersonen", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Preis/Nacht (€)</label>
-              <input type="number" step="0.01" value={angebot.preisProNacht || ""} onChange={e => update("preisProNacht", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Gesamtpreis (€)</label>
-              <input type="number" step="0.01" value={angebot.gesamtPreis || ""} onChange={e => update("gesamtPreis", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Reinigungskosten (€)</label>
-              <input type="number" step="0.01" value={angebot.reinigungskosten || ""} onChange={e => update("reinigungskosten", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Kaution (€)</label>
-              <input type="number" step="0.01" value={angebot.kaution || ""} onChange={e => update("kaution", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">MwSt (%)</label>
-              <select value={angebot.mwstSatz || "7"} onChange={e => update("mwstSatz", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg">
-                <option value="7">7%</option>
-                <option value="19">19%</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4">Beschreibung</h2>
-          <textarea value={angebot.beschreibung || ""} onChange={e => update("beschreibung", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg" />
-        </div>
-      </div>
+      {/* Record Tabs */}
+      <RecordTabs tabs={tabs} defaultTab="details" />
     </div>
   );
 }

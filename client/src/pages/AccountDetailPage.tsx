@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, Building2, MapPin } from "lucide-react";
-import Badge from "../components/Badge";
+import { useParams, useNavigate } from "react-router-dom";
+import { Save, Trash2, Building2, MapPin } from "lucide-react";
+import RecordHighlights from "../components/RecordHighlights";
+import RecordTabs from "../components/RecordTabs";
+import DetailSection, { DetailField } from "../components/DetailSection";
+import {
+  SldsPrimaryButton,
+  SldsOutlineButton,
+  sldsInput,
+  sldsSelect,
+  sldsTextarea,
+} from "../components/SalesforceField";
 
 interface Account {
   id: string;
@@ -103,152 +112,219 @@ export default function AccountDetailPage() {
 
   if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
 
+  const highlightFields = [
+    {
+      label: "Typ",
+      value: account.recordType === "Account_Vermieter" ? "Vermieter" : "Kunde",
+    },
+    { label: "Telefon", value: account.phone || "–" },
+    { label: "E-Mail", value: account.email || "–" },
+    { label: "Stadt", value: account.billingCity || "–" },
+    { label: "Buchungen", value: String(account.anzahlBuchungen ?? 0) },
+  ];
+
+  const detailsContent = (
+    <div className="space-y-4">
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-[13px]">
+          {error}
+        </div>
+      )}
+
+      {/* Basisdaten */}
+      <DetailSection title="Basisdaten" icon={<Building2 className="w-4 h-4" />}>
+        <DetailField label="Name" required>
+          <input
+            value={account.name || ""}
+            onChange={(e) => update("name", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Typ">
+          <select
+            value={account.recordType || ""}
+            onChange={(e) => update("recordType", e.target.value)}
+            className={sldsSelect}
+          >
+            <option value="Account_Standart">Kunde</option>
+            <option value="Account_Vermieter">Vermieter</option>
+          </select>
+        </DetailField>
+        <DetailField label="Telefon">
+          <input
+            value={account.phone || ""}
+            onChange={(e) => update("phone", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="E-Mail">
+          <input
+            type="email"
+            value={account.email || ""}
+            onChange={(e) => update("email", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Website">
+          <input
+            value={account.website || ""}
+            onChange={(e) => update("website", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Branche">
+          <input
+            value={account.industry || ""}
+            onChange={(e) => update("industry", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+      </DetailSection>
+
+      {/* Rechnungsadresse */}
+      <DetailSection title="Rechnungsadresse" icon={<MapPin className="w-4 h-4" />}>
+        <DetailField label="Straße" fullWidth>
+          <input
+            value={account.billingStreet || ""}
+            onChange={(e) => update("billingStreet", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="PLZ">
+          <input
+            value={account.billingPostalCode || ""}
+            onChange={(e) => update("billingPostalCode", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Stadt">
+          <input
+            value={account.billingCity || ""}
+            onChange={(e) => update("billingCity", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Bundesland">
+          <input
+            value={account.billingState || ""}
+            onChange={(e) => update("billingState", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+        <DetailField label="Land">
+          <input
+            value={account.billingCountry || ""}
+            onChange={(e) => update("billingCountry", e.target.value)}
+            className={sldsInput}
+          />
+        </DetailField>
+      </DetailSection>
+
+      {/* Vermieter-Daten */}
+      {account.recordType === "Account_Vermieter" && (
+        <DetailSection title="Vermieter-Daten">
+          <DetailField label="Vermieter-Nummer">
+            <input
+              value={account.vermieterNummer || ""}
+              onChange={(e) => update("vermieterNummer", e.target.value)}
+              className={sldsInput}
+            />
+          </DetailField>
+          <DetailField label="Status">
+            <select
+              value={account.vermieterStatus || ""}
+              onChange={(e) => update("vermieterStatus", e.target.value)}
+              className={sldsSelect}
+            >
+              <option value="">-- Wählen --</option>
+              <option value="Aktiv">Aktiv</option>
+              <option value="Inaktiv">Inaktiv</option>
+              <option value="Gekündigt">Gekündigt</option>
+            </select>
+          </DetailField>
+          <DetailField label="Steuernummer">
+            <input
+              value={account.steuerNummer || ""}
+              onChange={(e) => update("steuerNummer", e.target.value)}
+              className={sldsInput}
+            />
+          </DetailField>
+          <DetailField label="IBAN">
+            <input
+              value={account.iban || ""}
+              onChange={(e) => update("iban", e.target.value)}
+              className={sldsInput}
+            />
+          </DetailField>
+          <DetailField label="BIC">
+            <input
+              value={account.bic || ""}
+              onChange={(e) => update("bic", e.target.value)}
+              className={sldsInput}
+            />
+          </DetailField>
+          <DetailField label="Bank">
+            <input
+              value={account.bankName || ""}
+              onChange={(e) => update("bankName", e.target.value)}
+              className={sldsInput}
+            />
+          </DetailField>
+        </DetailSection>
+      )}
+
+      {/* Beschreibung */}
+      <DetailSection title="Beschreibung">
+        <DetailField label="Beschreibung" fullWidth>
+          <textarea
+            value={account.description || ""}
+            onChange={(e) => update("description", e.target.value)}
+            rows={4}
+            className={sldsTextarea}
+          />
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
+
+  const relatedContent = (
+    <div className="bg-white rounded-lg border border-[#e5e5e5] p-6 text-[13px] text-[#706e6b]">
+      Keine Related Lists vorhanden
+    </div>
+  );
+
   return (
-    <div className="p-6 max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/accounts" className="p-2 hover:bg-gray-100 rounded-lg">
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold text-gray-900">
-            {isNew ? "Neuer Account" : account.name}
-          </h1>
-          {!isNew && (
-            <div className="flex gap-2 mt-1">
-              <Badge variant={account.recordType === "Account_Vermieter" ? "info" : "neutral"}>
-                {account.recordType === "Account_Vermieter" ? "Vermieter" : "Kunde"}
-              </Badge>
-              <span className="text-sm text-gray-500">
-                {account.anzahlBuchungen} Buchungen &middot; {account.anzahlUnterkuenfte} Unterkünfte
-              </span>
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
-          {!isNew && (
-            <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg">
-              <Trash2 className="w-4 h-4" />
-            </button>
-          )}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
-            <Save className="w-4 h-4" />
-            {saving ? "Speichert..." : "Speichern"}
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      <RecordHighlights
+        backPath="/accounts"
+        icon={<Building2 className="w-5 h-5 text-white" />}
+        iconColor="#7F8DE1"
+        entityLabel="Account"
+        title={isNew ? "Neuer Account" : account.name || ""}
+        highlightFields={isNew ? [] : highlightFields}
+        actions={
+          <>
+            {!isNew && (
+              <SldsOutlineButton onClick={handleDelete} danger>
+                <Trash2 className="w-3.5 h-3.5" />
+                Löschen
+              </SldsOutlineButton>
+            )}
+            <SldsPrimaryButton onClick={handleSave} disabled={saving}>
+              <Save className="w-3.5 h-3.5" />
+              {saving ? "Speichert..." : "Speichern"}
+            </SldsPrimaryButton>
+          </>
+        }
+      />
 
-      {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
-
-      <div className="space-y-6">
-        {/* Basisdaten */}
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-[#0176d3]" /> Basisdaten
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-              <input value={account.name || ""} onChange={(e) => update("name", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Typ</label>
-              <select value={account.recordType || ""} onChange={(e) => update("recordType", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none">
-                <option value="Account_Standart">Kunde</option>
-                <option value="Account_Vermieter">Vermieter</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-              <input value={account.phone || ""} onChange={(e) => update("phone", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-              <input type="email" value={account.email || ""} onChange={(e) => update("email", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-              <input value={account.website || ""} onChange={(e) => update("website", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Branche</label>
-              <input value={account.industry || ""} onChange={(e) => update("industry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-          </div>
-        </div>
-
-        {/* Adresse */}
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-[#0176d3]" /> Rechnungsadresse
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Straße</label>
-              <input value={account.billingStreet || ""} onChange={(e) => update("billingStreet", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">PLZ</label>
-              <input value={account.billingPostalCode || ""} onChange={(e) => update("billingPostalCode", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Stadt</label>
-              <input value={account.billingCity || ""} onChange={(e) => update("billingCity", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bundesland</label>
-              <input value={account.billingState || ""} onChange={(e) => update("billingState", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Land</label>
-              <input value={account.billingCountry || ""} onChange={(e) => update("billingCountry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-            </div>
-          </div>
-        </div>
-
-        {/* Vermieter-spezifisch */}
-        {account.recordType === "Account_Vermieter" && (
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4">Vermieter-Daten</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vermieter-Nummer</label>
-                <input value={account.vermieterNummer || ""} onChange={(e) => update("vermieterNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select value={account.vermieterStatus || ""} onChange={(e) => update("vermieterStatus", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none">
-                  <option value="">-- Wählen --</option>
-                  <option value="Aktiv">Aktiv</option>
-                  <option value="Inaktiv">Inaktiv</option>
-                  <option value="Gekündigt">Gekündigt</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Steuernummer</label>
-                <input value={account.steuerNummer || ""} onChange={(e) => update("steuerNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
-                <input value={account.iban || ""} onChange={(e) => update("iban", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">BIC</label>
-                <input value={account.bic || ""} onChange={(e) => update("bic", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Bank</label>
-                <input value={account.bankName || ""} onChange={(e) => update("bankName", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Beschreibung */}
-        <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4">Beschreibung</h2>
-          <textarea value={account.description || ""} onChange={(e) => update("description", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
-        </div>
-      </div>
+      <RecordTabs
+        defaultTab="details"
+        tabs={[
+          { key: "details", label: "Details", content: detailsContent },
+          { key: "related", label: "Related", content: relatedContent },
+        ]}
+      />
     </div>
   );
 }

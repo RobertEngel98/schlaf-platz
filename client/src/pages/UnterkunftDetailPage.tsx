@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, Home, MapPin, Euro, Settings } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Home, Save, Trash2, MapPin, Euro } from "lucide-react";
 import Badge, { getStatusVariant } from "../components/Badge";
+import RecordHighlights from "../components/RecordHighlights";
+import RecordTabs from "../components/RecordTabs";
+import DetailSection, { DetailField } from "../components/DetailSection";
+import { SldsPrimaryButton, SldsOutlineButton, sldsInput, sldsSelect, sldsTextarea, sldsCheckbox } from "../components/SalesforceField";
 
 const STATUS_OPTIONS = ["Verfügbar", "Belegt", "Inaktiv", "In Aufnahme", "Gesperrt"];
 const TYP_OPTIONS = ["Wohnung", "Apartment", "Zimmer", "Haus", "Studio", "WG-Zimmer", "Monteurzimmer"];
@@ -53,271 +57,261 @@ export default function UnterkunftDetailPage() {
 
   const update = (f: string, v: any) => setUk((p: any) => ({ ...p, [f]: v }));
 
-  const Checkbox = ({ field, label }: { field: string; label: string }) => (
-    <label className="flex items-center gap-2 cursor-pointer">
-      <input type="checkbox" checked={uk[field] || false} onChange={e => update(field, e.target.checked)} className="w-4 h-4 accent-[#0176d3]" />
-      <span className="text-sm">{label}</span>
-    </label>
+  if (loading) return <div className="flex items-center justify-center h-full text-[#706e6b]">Laden...</div>;
+
+  const vermieterName = vermieter.find((v: any) => v.id === uk.vermieterId)?.name;
+
+  // --- DETAILS TAB ---
+  const detailsContent = (
+    <div className="space-y-4 max-w-5xl">
+      {error && <div className="p-3 bg-red-50 border border-red-200 text-[13px] text-[#ea001e] rounded">{error}</div>}
+
+      <DetailSection title="Basisdaten" icon={<Home className="w-4 h-4" />}>
+        <DetailField label="Name" required fullWidth>
+          <input value={uk.name || ""} onChange={e => update("name", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Vermieter">
+          <select value={uk.vermieterId || ""} onChange={e => update("vermieterId", e.target.value)} className={sldsSelect}>
+            <option value="">-- Wählen --</option>
+            {vermieter.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
+          </select>
+        </DetailField>
+        <DetailField label="Typ">
+          <select value={uk.unterkunftsTyp || ""} onChange={e => update("unterkunftsTyp", e.target.value)} className={sldsSelect}>
+            <option value="">-- Wählen --</option>
+            {TYP_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </DetailField>
+        <DetailField label="Status">
+          <select value={uk.status || ""} onChange={e => update("status", e.target.value)} className={sldsSelect}>
+            {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </DetailField>
+        <DetailField label="Aufnahme-Status">
+          <select value={uk.aufnahmeStatus || ""} onChange={e => update("aufnahmeStatus", e.target.value)} className={sldsSelect}>
+            <option value="">-- Wählen --</option>
+            {AUFNAHME_STATUS.map(s => <option key={s} value={s}>{s}</option>)}
+          </select>
+        </DetailField>
+        <DetailField label="Aufnahme %">
+          <input type="number" value={uk.aufnahmeProzent || ""} onChange={e => update("aufnahmeProzent", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Adresse" icon={<MapPin className="w-4 h-4" />} columns={3}>
+        <DetailField label="Straße" fullWidth>
+          <input value={uk.strasse || ""} onChange={e => update("strasse", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Hausnummer">
+          <input value={uk.hausnummer || ""} onChange={e => update("hausnummer", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="PLZ">
+          <input value={uk.plz || ""} onChange={e => update("plz", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Ort">
+          <input value={uk.ort || ""} onChange={e => update("ort", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Bundesland">
+          <input value={uk.bundesland || ""} onChange={e => update("bundesland", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Land">
+          <input value={uk.land || ""} onChange={e => update("land", e.target.value)} className={sldsInput} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Kapazität & Größe" columns={3}>
+        <DetailField label="Zimmer">
+          <input type="number" value={uk.anzahlZimmer || ""} onChange={e => update("anzahlZimmer", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Betten">
+          <input type="number" value={uk.anzahlBetten || ""} onChange={e => update("anzahlBetten", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Badezimmer">
+          <input type="number" value={uk.anzahlBadezimmer || ""} onChange={e => update("anzahlBadezimmer", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Max. Personen">
+          <input type="number" value={uk.maxPersonen || ""} onChange={e => update("maxPersonen", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Wohnfläche (m²)">
+          <input type="number" value={uk.wohnflaeche || ""} onChange={e => update("wohnflaeche", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Mindestaufenthalt (Nächte)">
+          <input type="number" value={uk.mindestaufenthalt || ""} onChange={e => update("mindestaufenthalt", parseInt(e.target.value))} className={sldsInput} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Preise" icon={<Euro className="w-4 h-4" />} columns={3}>
+        <DetailField label="Preis/Nacht (€)">
+          <input type="number" step="0.01" value={uk.preisProNacht || ""} onChange={e => update("preisProNacht", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Preis/Nacht inkl. MwSt (€)">
+          <input type="number" step="0.01" value={uk.preisProNachtInklMwst || ""} onChange={e => update("preisProNachtInklMwst", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="MwSt-Satz (%)">
+          <select value={uk.mwstSatz || "7"} onChange={e => update("mwstSatz", parseFloat(e.target.value))} className={sldsSelect}>
+            <option value="7">7%</option>
+            <option value="19">19%</option>
+          </select>
+        </DetailField>
+        <DetailField label="Reinigungskosten (€)">
+          <input type="number" step="0.01" value={uk.reinigungskosten || ""} onChange={e => update("reinigungskosten", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Kaution (€)">
+          <input type="number" step="0.01" value={uk.kaution || ""} onChange={e => update("kaution", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Provision (%)">
+          <input type="number" step="0.01" value={uk.provisionProzent || ""} onChange={e => update("provisionProzent", parseFloat(e.target.value))} className={sldsInput} />
+        </DetailField>
+      </DetailSection>
+    </div>
   );
 
-  if (loading) return <div className="p-8 text-gray-500">Laden...</div>;
+  // --- AUSSTATTUNG TAB ---
+  const ausstattungContent = (
+    <div className="space-y-4 max-w-5xl">
+      <DetailSection title="Ausstattung" columns={4} collapsible={false}>
+        {([
+          ["kueche", "Küche"],
+          ["waschmaschine", "Waschmaschine"],
+          ["trockner", "Trockner"],
+          ["wlan", "WLAN"],
+          ["parkplatz", "Parkplatz"],
+          ["aufzug", "Aufzug"],
+          ["balkon", "Balkon"],
+          ["terrasse", "Terrasse"],
+          ["garten", "Garten"],
+          ["klimaanlage", "Klimaanlage"],
+          ["haustiere", "Haustiere erlaubt"],
+          ["rauchen", "Rauchen erlaubt"],
+          ["bettwaesche", "Bettwäsche"],
+          ["handtuecher", "Handtücher"],
+          ["fernseher", "Fernseher"],
+          ["geschirrspueler", "Geschirrspüler"],
+          ["mikrowelle", "Mikrowelle"],
+          ["backofen", "Backofen"],
+          ["kuehlschrank", "Kühlschrank"],
+          ["kaffeemaschine", "Kaffeemaschine"],
+        ] as const).map(([field, label]) => (
+          <label key={field} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={uk[field] || false}
+              onChange={e => update(field, e.target.checked)}
+              className={sldsCheckbox}
+            />
+            <span className="text-[13px]">{label}</span>
+          </label>
+        ))}
+      </DetailSection>
+    </div>
+  );
+
+  // --- TEXTE TAB ---
+  const texteContent = (
+    <div className="space-y-4 max-w-5xl">
+      <DetailSection title="Beschreibung" collapsible={false}>
+        <DetailField label="Beschreibung" fullWidth>
+          <textarea value={uk.beschreibung || ""} onChange={e => update("beschreibung", e.target.value)} rows={4} className={sldsTextarea} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Anreisebeschreibung" collapsible={false}>
+        <DetailField label="Anreisebeschreibung" fullWidth>
+          <textarea value={uk.anreiseBeschreibung || ""} onChange={e => update("anreiseBeschreibung", e.target.value)} rows={4} className={sldsTextarea} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Hausregeln" collapsible={false}>
+        <DetailField label="Hausregeln" fullWidth>
+          <textarea value={uk.hausregeln || ""} onChange={e => update("hausregeln", e.target.value)} rows={4} className={sldsTextarea} />
+        </DetailField>
+      </DetailSection>
+
+      <DetailSection title="Interne Notizen" collapsible={false}>
+        <DetailField label="Interne Notizen" fullWidth>
+          <textarea value={uk.interneNotizen || ""} onChange={e => update("interneNotizen", e.target.value)} rows={4} className={sldsTextarea} />
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
+
+  // --- VERMIETER TAB ---
+  const vermieterContent = (
+    <div className="space-y-4 max-w-5xl">
+      <DetailSection title="Vermieter-Kontakt" collapsible={false}>
+        <DetailField label="Anrede">
+          <select value={uk.vermieterAnrede || ""} onChange={e => update("vermieterAnrede", e.target.value)} className={sldsSelect}>
+            <option value="">--</option>
+            <option value="Herr">Herr</option>
+            <option value="Frau">Frau</option>
+          </select>
+        </DetailField>
+        <DetailField label="Vorname">
+          <input value={uk.vermieterVorname || ""} onChange={e => update("vermieterVorname", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Nachname">
+          <input value={uk.vermieterNachname || ""} onChange={e => update("vermieterNachname", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="Telefon">
+          <input value={uk.vermieterTelefon || ""} onChange={e => update("vermieterTelefon", e.target.value)} className={sldsInput} />
+        </DetailField>
+        <DetailField label="E-Mail">
+          <input type="email" value={uk.vermieterEmail || ""} onChange={e => update("vermieterEmail", e.target.value)} className={sldsInput} />
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
+
+  // --- RELATED TAB ---
+  const relatedContent = (
+    <div className="space-y-4 max-w-5xl">
+      <DetailSection title="Verknüpfte Datensätze" collapsible={false}>
+        <DetailField label="" fullWidth>
+          <p className="text-[13px] text-[#706e6b]">Keine verknüpften Datensätze vorhanden.</p>
+        </DetailField>
+      </DetailSection>
+    </div>
+  );
 
   return (
-    <div className="p-6 max-w-5xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link to="/unterkuenfte" className="p-2 hover:bg-gray-100 rounded-lg"><ArrowLeft className="w-5 h-5" /></Link>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold">{isNew ? "Neue Unterkunft" : uk.name}</h1>
-          {!isNew && (
-            <div className="flex gap-2 mt-1">
-              <Badge variant={getStatusVariant(uk.status)}>{uk.status}</Badge>
-              {uk.ort && <span className="text-sm text-gray-500">{uk.ort}</span>}
-              {uk.aufnahmeProzent != null && <span className="text-sm text-gray-500">Aufnahme: {uk.aufnahmeProzent}%</span>}
-            </div>
-          )}
-        </div>
-        <div className="flex gap-2">
-          {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
-            <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
-          </button>
-        </div>
-      </div>
+    <div className="flex flex-col h-full">
+      <RecordHighlights
+        backPath="/unterkuenfte"
+        icon={<Home className="w-5 h-5 text-white" />}
+        iconColor="#2E844A"
+        entityLabel="Unterkunft"
+        title={isNew ? "Neue Unterkunft" : uk.name}
+        highlightFields={[
+          { label: "Status", value: <Badge variant={getStatusVariant(uk.status || "")}>{uk.status || "---"}</Badge> },
+          { label: "Typ", value: uk.unterkunftsTyp || "---" },
+          { label: "Ort", value: uk.ort || "---" },
+          { label: "Aufnahme", value: uk.aufnahmeProzent != null ? `${uk.aufnahmeProzent}%` : "---" },
+          { label: "Vermieter", value: vermieterName || "---" },
+        ]}
+        actions={
+          <>
+            {!isNew && (
+              <SldsOutlineButton onClick={handleDelete} danger>
+                <Trash2 className="w-4 h-4" /> Löschen
+              </SldsOutlineButton>
+            )}
+            <SldsPrimaryButton onClick={handleSave} disabled={saving}>
+              <Save className="w-4 h-4" /> {saving ? "Speichert..." : "Speichern"}
+            </SldsPrimaryButton>
+          </>
+        }
+      />
 
-      {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
-
-      <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-6">
-          {/* Basis */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Home className="w-5 h-5 text-[#0176d3]" /> Basisdaten</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-                <input value={uk.name || ""} onChange={e => update("name", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vermieter</label>
-                <select value={uk.vermieterId || ""} onChange={e => update("vermieterId", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                  <option value="">-- Wählen --</option>
-                  {vermieter.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Typ</label>
-                <select value={uk.unterkunftsTyp || ""} onChange={e => update("unterkunftsTyp", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                  <option value="">-- Wählen --</option>
-                  {TYP_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select value={uk.status || ""} onChange={e => update("status", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                  {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Aufnahme-Status</label>
-                <select value={uk.aufnahmeStatus || ""} onChange={e => update("aufnahmeStatus", e.target.value)} className="w-full px-3 py-2 border rounded-lg">
-                  <option value="">-- Wählen --</option>
-                  {AUFNAHME_STATUS.map(s => <option key={s} value={s}>{s}</option>)}
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Adresse */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-[#0176d3]" /> Adresse</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Straße</label>
-                <input value={uk.strasse || ""} onChange={e => update("strasse", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hausnummer</label>
-                <input value={uk.hausnummer || ""} onChange={e => update("hausnummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">PLZ</label>
-                <input value={uk.plz || ""} onChange={e => update("plz", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ort</label>
-                <input value={uk.ort || ""} onChange={e => update("ort", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Bundesland</label>
-                <input value={uk.bundesland || ""} onChange={e => update("bundesland", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Land</label>
-                <input value={uk.land || ""} onChange={e => update("land", e.target.value)} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-            </div>
-          </div>
-
-          {/* Kapazität */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4">Kapazität & Größe</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Zimmer</label>
-                <input type="number" value={uk.anzahlZimmer || ""} onChange={e => update("anzahlZimmer", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Betten</label>
-                <input type="number" value={uk.anzahlBetten || ""} onChange={e => update("anzahlBetten", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Badezimmer</label>
-                <input type="number" value={uk.anzahlBadezimmer || ""} onChange={e => update("anzahlBadezimmer", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Max. Personen</label>
-                <input type="number" value={uk.maxPersonen || ""} onChange={e => update("maxPersonen", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Wohnfläche (m²)</label>
-                <input type="number" value={uk.wohnflaeche || ""} onChange={e => update("wohnflaeche", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Mindestaufenthalt (Nächte)</label>
-                <input type="number" value={uk.mindestaufenthalt || ""} onChange={e => update("mindestaufenthalt", parseInt(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-            </div>
-          </div>
-
-          {/* Preise */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#0176d3]" /> Preise</h2>
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preis/Nacht (€)</label>
-                <input type="number" step="0.01" value={uk.preisProNacht || ""} onChange={e => update("preisProNacht", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preis/Nacht inkl. MwSt (€)</label>
-                <input type="number" step="0.01" value={uk.preisProNachtInklMwst || ""} onChange={e => update("preisProNachtInklMwst", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">MwSt-Satz (%)</label>
-                <select value={uk.mwstSatz || "7"} onChange={e => update("mwstSatz", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg">
-                  <option value="7">7%</option>
-                  <option value="19">19%</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Reinigungskosten (€)</label>
-                <input type="number" step="0.01" value={uk.reinigungskosten || ""} onChange={e => update("reinigungskosten", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Kaution (€)</label>
-                <input type="number" step="0.01" value={uk.kaution || ""} onChange={e => update("kaution", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Provision (%)</label>
-                <input type="number" step="0.01" value={uk.provisionProzent || ""} onChange={e => update("provisionProzent", parseFloat(e.target.value))} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-            </div>
-          </div>
-
-          {/* Ausstattung */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Settings className="w-5 h-5 text-[#0176d3]" /> Ausstattung</h2>
-            <div className="grid grid-cols-4 gap-3">
-              <Checkbox field="kueche" label="Küche" />
-              <Checkbox field="waschmaschine" label="Waschmaschine" />
-              <Checkbox field="trockner" label="Trockner" />
-              <Checkbox field="wlan" label="WLAN" />
-              <Checkbox field="parkplatz" label="Parkplatz" />
-              <Checkbox field="aufzug" label="Aufzug" />
-              <Checkbox field="balkon" label="Balkon" />
-              <Checkbox field="terrasse" label="Terrasse" />
-              <Checkbox field="garten" label="Garten" />
-              <Checkbox field="klimaanlage" label="Klimaanlage" />
-              <Checkbox field="haustiere" label="Haustiere erlaubt" />
-              <Checkbox field="rauchen" label="Rauchen erlaubt" />
-              <Checkbox field="bettwaesche" label="Bettwäsche" />
-              <Checkbox field="handtuecher" label="Handtücher" />
-              <Checkbox field="fernseher" label="Fernseher" />
-              <Checkbox field="geschirrspueler" label="Geschirrspüler" />
-              <Checkbox field="mikrowelle" label="Mikrowelle" />
-              <Checkbox field="backofen" label="Backofen" />
-              <Checkbox field="kuehlschrank" label="Kühlschrank" />
-              <Checkbox field="kaffeemaschine" label="Kaffeemaschine" />
-            </div>
-          </div>
-
-          {/* Texte */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4">Beschreibung & Regeln</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Beschreibung</label>
-                <textarea value={uk.beschreibung || ""} onChange={e => update("beschreibung", e.target.value)} rows={3} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Anreisebeschreibung</label>
-                <textarea value={uk.anreiseBeschreibung || ""} onChange={e => update("anreiseBeschreibung", e.target.value)} rows={3} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hausregeln</label>
-                <textarea value={uk.hausregeln || ""} onChange={e => update("hausregeln", e.target.value)} rows={3} className="w-full px-3 py-2 border rounded-lg" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Vermieter-Kontakt */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-sm font-semibold mb-3 text-gray-600 uppercase">Vermieter-Kontakt</h2>
-            <div className="space-y-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Anrede</label>
-                <select value={uk.vermieterAnrede || ""} onChange={e => update("vermieterAnrede", e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
-                  <option value="">--</option>
-                  <option value="Herr">Herr</option>
-                  <option value="Frau">Frau</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Vorname</label>
-                <input value={uk.vermieterVorname || ""} onChange={e => update("vermieterVorname", e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Nachname</label>
-                <input value={uk.vermieterNachname || ""} onChange={e => update("vermieterNachname", e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-                <input value={uk.vermieterTelefon || ""} onChange={e => update("vermieterTelefon", e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-                <input value={uk.vermieterEmail || ""} onChange={e => update("vermieterEmail", e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm" />
-              </div>
-            </div>
-          </div>
-
-          {/* Interne Notizen */}
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-sm font-semibold mb-3 text-gray-600 uppercase">Interne Notizen</h2>
-            <textarea value={uk.interneNotizen || ""} onChange={e => update("interneNotizen", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg text-sm" />
-          </div>
-
-          {!isNew && (
-            <div className="bg-white rounded-xl shadow-sm border p-6 text-sm text-gray-500">
-              <div>Buchungen: {uk.anzahlBuchungen || 0}</div>
-              <div>Aufnahme: {uk.aufnahmeProzent || 0}%</div>
-              <div className="mt-2">Erstellt: {new Date(uk.createdAt).toLocaleString("de-DE")}</div>
-              <div>Geändert: {new Date(uk.updatedAt).toLocaleString("de-DE")}</div>
-            </div>
-          )}
-        </div>
-      </div>
+      <RecordTabs
+        defaultTab="details"
+        tabs={[
+          { key: "details", label: "Details", content: detailsContent },
+          { key: "ausstattung", label: "Ausstattung", content: ausstattungContent },
+          { key: "texte", label: "Texte", content: texteContent },
+          { key: "vermieter", label: "Vermieter", content: vermieterContent },
+          { key: "related", label: "Verknüpft", content: relatedContent },
+        ]}
+      />
     </div>
   );
 }
