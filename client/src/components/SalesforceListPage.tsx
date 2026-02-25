@@ -386,13 +386,15 @@ export default function SalesforceListPage<T extends { id: string }>({
     <div className="h-full flex flex-col bg-[#f3f3f3]">
       {/* ---- HEADER BAR ---- */}
       <div className="bg-white border-b border-[#e5e5e5]">
-        <div className="flex items-center justify-between px-6 py-3">
+        <div className="flex items-center justify-between px-3 sm:px-6 py-3">
           {/* Left: Entity icon + label + list view selector */}
-          <div className="flex items-center gap-3">
-            {entityIcon || defaultEntityIcon}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <div className="hidden sm:block">
+              {entityIcon || defaultEntityIcon}
+            </div>
 
-            <div className="flex flex-col">
-              <span className="text-[12px] font-normal text-[#706e6b] leading-none mb-1">
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11px] sm:text-[12px] font-normal text-[#706e6b] leading-none mb-1">
                 {entityLabelPlural}
               </span>
               <div className="flex items-center gap-2">
@@ -436,20 +438,20 @@ export default function SalesforceListPage<T extends { id: string }>({
           </div>
 
           {/* Right: Action buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 ml-2 shrink-0">
             <button
               onClick={() => navigate(`${basePath}/neu`)}
-              className="flex items-center gap-1.5 px-4 py-[6px] text-[13px] font-medium text-[#0176d3] bg-white border border-[#0176d3] rounded hover:bg-[#f3f3f3] transition-colors"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-[6px] text-[13px] font-medium text-[#0176d3] bg-white border border-[#0176d3] rounded hover:bg-[#f3f3f3] transition-colors"
             >
               Neu
             </button>
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 px-3 py-[6px] text-[13px] font-medium text-[#706e6b] bg-white border border-[#c9c9c9] rounded hover:bg-[#f3f3f3] transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-[6px] text-[13px] font-medium text-[#706e6b] bg-white border border-[#c9c9c9] rounded hover:bg-[#f3f3f3] transition-colors"
               title="Druckansicht"
             >
               <Printer className="w-4 h-4" />
-              Druckansicht
+              <span className="hidden md:inline">Druckansicht</span>
             </button>
             {headerActions}
           </div>
@@ -457,9 +459,9 @@ export default function SalesforceListPage<T extends { id: string }>({
       </div>
 
       {/* ---- TOOLBAR ROW ---- */}
-      <div className="flex items-center justify-between px-4 py-1.5 bg-white border-b border-[#e5e5e5]">
+      <div className="flex items-center justify-between px-2 sm:px-4 py-1.5 bg-white border-b border-[#e5e5e5] gap-2">
         {/* Left: Search */}
-        <div className="relative w-56">
+        <div className="relative flex-1 sm:flex-none sm:w-56">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#706e6b]" />
           <input
             type="text"
@@ -468,13 +470,13 @@ export default function SalesforceListPage<T extends { id: string }>({
               setSearch(e.target.value);
               setPage(1);
             }}
-            placeholder="Diese Liste durchsuchen..."
+            placeholder="Durchsuchen…"
             className="w-full pl-8 pr-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3] bg-white placeholder-[#706e6b]"
           />
         </div>
 
         {/* Right: Icon toolbar */}
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-0.5 shrink-0">
           {/* Settings gear dropdown */}
           <div ref={settingsDropdownRef} className="relative">
             <button
@@ -640,7 +642,7 @@ export default function SalesforceListPage<T extends { id: string }>({
           {/* Sort toggle */}
           <button
             onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
-            className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            className="hidden sm:block p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
             title={`Sortierung: ${sortDir === "asc" ? "Aufsteigend" : "Absteigend"}`}
           >
             <ArrowUpDown className="w-4 h-4" />
@@ -648,18 +650,20 @@ export default function SalesforceListPage<T extends { id: string }>({
 
           {/* Column selector (when in table or split) */}
           {(viewMode === "table" || viewMode === "split") && (
-            <ColumnPicker
-              allColumns={allColumns}
-              visibleColumns={visibleColumns}
-              onChange={setVisibleColumns}
-              defaultColumns={defaultVisibleColumns}
-            />
+            <div className="hidden sm:block">
+              <ColumnPicker
+                allColumns={allColumns}
+                visibleColumns={visibleColumns}
+                onChange={setVisibleColumns}
+                defaultColumns={defaultVisibleColumns}
+              />
+            </div>
           )}
 
           {/* Charts toggle */}
           <button
             onClick={() => setShowChart(!showChart)}
-            className={`p-2 rounded transition-colors ${
+            className={`hidden sm:block p-2 rounded transition-colors ${
               showChart
                 ? "text-[#0176d3] bg-[#eef4ff] hover:bg-[#d8e6fe]"
                 : "text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3]"
@@ -669,9 +673,9 @@ export default function SalesforceListPage<T extends { id: string }>({
             <BarChart3 className="w-4 h-4" />
           </button>
 
-          {/* Inline Edit (disabled indicator) */}
+          {/* Inline Edit (disabled indicator) - hidden on mobile */}
           <button
-            className="p-2 rounded text-[#c9c9c9] cursor-not-allowed"
+            className="hidden md:block p-2 rounded text-[#c9c9c9] cursor-not-allowed"
             title="Inline-Bearbeitung ist deaktiviert. Filtern Sie nach einem Datensatztyp zum Aktivieren."
           >
             <Pencil className="w-4 h-4" />
@@ -702,7 +706,7 @@ export default function SalesforceListPage<T extends { id: string }>({
 
       {/* ---- ACTIVE FILTERS BAR ---- */}
       {filters.length > 0 && (
-        <div className="flex items-center gap-2 px-4 py-1.5 bg-[#fafaf9] border-b border-[#e5e5e5]">
+        <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 bg-[#fafaf9] border-b border-[#e5e5e5]">
           <span className="text-[12px] font-medium text-[#706e6b]">
             {filters.length} Filter aktiv
           </span>
@@ -734,7 +738,7 @@ export default function SalesforceListPage<T extends { id: string }>({
       <div className="flex-1 overflow-hidden bg-[#f3f3f3] flex flex-col">
         {/* ---- CHART AREA ---- */}
         {showChart && displayedData.length > 0 && (
-          <div className="mx-4 mt-4 bg-white border border-[#e5e5e5] rounded-lg p-4 shrink-0">
+          <div className="mx-2 sm:mx-4 mt-3 sm:mt-4 bg-white border border-[#e5e5e5] rounded-lg p-3 sm:p-4 shrink-0">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[13px] font-bold text-[#181818]">
                 {entityLabelPlural} – Übersicht
@@ -783,7 +787,7 @@ export default function SalesforceListPage<T extends { id: string }>({
         <div className="flex-1 overflow-hidden flex">
         {/* Table view */}
         {viewMode === "table" && (
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 overflow-auto p-2 sm:p-4">
             <DataTable
               columns={tableColumns}
               data={displayedData}
@@ -807,7 +811,7 @@ export default function SalesforceListPage<T extends { id: string }>({
 
         {/* Kanban view */}
         {viewMode === "kanban" && hasKanban && (
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 overflow-auto p-2 sm:p-4">
             {loading ? (
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="w-8 h-8 text-[#0176d3] animate-spin" />
@@ -829,8 +833,8 @@ export default function SalesforceListPage<T extends { id: string }>({
 
         {/* Split view */}
         {viewMode === "split" && (
-          <>
-            <div className="w-[60%] overflow-auto border-r border-[#e5e5e5] bg-white">
+          <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+            <div className="flex-1 lg:w-[60%] overflow-auto border-b lg:border-b-0 lg:border-r border-[#e5e5e5] bg-white">
               <DataTable
                 columns={tableColumns}
                 data={displayedData}
@@ -850,7 +854,7 @@ export default function SalesforceListPage<T extends { id: string }>({
               />
             </div>
 
-            <div className="w-[40%] overflow-auto bg-white">
+            <div className="h-[40vh] lg:h-auto lg:w-[40%] overflow-auto bg-white">
               {selectedItem ? (
                 <div className="h-full flex flex-col">
                   <div className="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafaf9] shrink-0">
@@ -907,7 +911,7 @@ export default function SalesforceListPage<T extends { id: string }>({
                 </div>
               )}
             </div>
-          </>
+          </div>
         )}
         </div>
       </div>

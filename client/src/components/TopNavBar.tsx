@@ -16,6 +16,8 @@ import {
   FileText,
   AlertCircle,
   CheckSquare,
+  Menu,
+  X,
 } from "lucide-react";
 
 interface NavItem {
@@ -40,10 +42,9 @@ const navItems: NavItem[] = [
   { to: "/unterkuenfte", label: "Unterkünfte" },
   { to: "/kontakte", label: "Contacts" },
   { to: "/angebote", label: "Angebote" },
-  { to: "/vermieter", label: "Vermieter" },
   { to: "/cases", label: "Cases" },
   { to: "/tasks", label: "Tasks" },
-  { to: "/stundenerfassung", label: "Stundenerfassung" },
+  { to: "/stundenerfassung", label: "Stunden" },
 ];
 
 const entityConfig: Record<string, { label: string; icon: React.ComponentType<{ className?: string }> }> = {
@@ -69,9 +70,12 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [, setSearchFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Mobile menu
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Close user menu on outside click
   useEffect(() => {
@@ -160,26 +164,36 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
   return (
     <header className="shrink-0">
       <div
-        className="flex items-center h-[44px] px-4"
+        className="flex items-center h-[44px] px-3 sm:px-4"
         style={{ background: "linear-gradient(to right, #032D60, #0070D2)" }}
       >
-        {/* Left: App launcher + brand */}
-        <div className="flex items-center gap-3 mr-4">
+        {/* Left: Hamburger (mobile) + App launcher + brand */}
+        <div className="flex items-center gap-2 sm:gap-3 mr-2 sm:mr-4">
+          {/* Mobile hamburger */}
           <button
-            className="w-7 h-7 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden w-8 h-8 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-5 h-5 text-white" />
+            ) : (
+              <Menu className="w-5 h-5 text-white" />
+            )}
+          </button>
+
+          <button
+            className="hidden sm:flex w-7 h-7 items-center justify-center rounded hover:bg-white/10 transition-colors"
             title="App Launcher"
           >
             <LayoutGrid className="w-5 h-5 text-white" />
           </button>
-          <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-[14px] tracking-wide">
-              Sales
-            </span>
-          </div>
+          <span className="text-white font-bold text-[14px] tracking-wide">
+            Sales
+          </span>
         </div>
 
-        {/* Center: Nav tabs */}
-        <nav className="flex items-center h-full flex-1 overflow-x-auto nav-scrollbar-hide">
+        {/* Center: Nav tabs (hidden on mobile) */}
+        <nav className="hidden md:flex items-center h-full flex-1 overflow-x-auto nav-scrollbar-hide">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -206,10 +220,13 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
           ))}
         </nav>
 
-        {/* Right: Search + Setup + pencil + user */}
-        <div className="flex items-center gap-1 ml-4">
+        {/* Spacer on mobile */}
+        <div className="flex-1 md:hidden" />
+
+        {/* Right: Search + user */}
+        <div className="flex items-center gap-1 ml-2 sm:ml-4">
           {/* Global Search */}
-          <div ref={searchRef} className="relative mr-2">
+          <div ref={searchRef} className="relative mr-1 sm:mr-2">
             <div className="relative flex items-center">
               <Search className="absolute left-2.5 w-3.5 h-3.5 text-white/60 pointer-events-none z-10" />
               <input
@@ -222,19 +239,18 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
                 }}
                 onBlur={() => setSearchFocused(false)}
                 onKeyDown={handleSearchKeyDown}
-                placeholder="Suche in Salesforce..."
-                className="pl-8 pr-3 py-1.5 rounded-md bg-white/15 text-white text-[13px] placeholder-white/50 outline-none border border-white/20 focus:bg-white/25 focus:border-white/40 transition-all duration-200"
-                style={{ width: searchFocused ? 320 : 200 }}
+                placeholder="Suchen…"
+                className="pl-8 pr-3 py-1.5 rounded-md bg-white/15 text-white text-[13px] placeholder-white/50 outline-none border border-white/20 focus:bg-white/25 focus:border-white/40 transition-all duration-200 w-[120px] sm:w-[160px] focus:w-[200px] sm:focus:w-[280px] md:focus:w-[320px]"
               />
             </div>
 
             {/* Search Dropdown */}
             {searchOpen && (
-              <div className="absolute top-[38px] right-0 w-[380px] bg-white rounded-lg shadow-xl border border-[#e5e5e5] z-50 max-h-[400px] overflow-y-auto">
+              <div className="absolute top-[38px] right-0 w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] bg-white rounded-lg shadow-xl border border-[#e5e5e5] z-50 max-h-[400px] overflow-y-auto">
                 {searchLoading ? (
                   <div className="flex items-center gap-2 px-4 py-3 text-[13px] text-[#706e6b]">
                     <div className="w-4 h-4 border-2 border-[#0070D2] border-t-transparent rounded-full animate-spin" />
-                    Suche...
+                    Suche…
                   </div>
                 ) : searchResults.length === 0 ? (
                   <div className="px-4 py-3 text-[13px] text-[#706e6b]">
@@ -255,7 +271,7 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
                           <button
                             key={`${result.type}-${result.id}`}
                             onClick={() => handleResultClick(result.url)}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#f3f3f3] transition-colors text-left"
+                            className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-[#f3f3f3] transition-colors text-left min-h-[44px]"
                           >
                             <TypeIcon className="w-4 h-4 text-[#706e6b] shrink-0" />
                             <div className="min-w-0 flex-1">
@@ -279,13 +295,13 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
           </div>
 
           <button
-            className="px-2 py-1 text-[12px] text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
+            className="hidden sm:block px-2 py-1 text-[12px] text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
             title="Setup"
           >
             Setup
           </button>
           <button
-            className="w-7 h-7 flex items-center justify-center rounded hover:bg-white/10 transition-colors"
+            className="hidden sm:flex w-7 h-7 items-center justify-center rounded hover:bg-white/10 transition-colors"
             title="Edit"
           >
             <Pencil className="w-3.5 h-3.5 text-white/80" />
@@ -294,7 +310,7 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
           <div ref={userMenuRef} className="relative ml-1">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+              className="w-8 h-8 sm:w-7 sm:h-7 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
             >
               <User className="w-4 h-4 text-white" />
             </button>
@@ -314,7 +330,7 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
                     setUserMenuOpen(false);
                     onLogout();
                   }}
-                  className="w-full flex items-center gap-2 px-4 py-2.5 text-[13px] text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+                  className="w-full flex items-center gap-2 px-4 py-2.5 text-[13px] text-[#181818] hover:bg-[#f3f3f3] transition-colors min-h-[44px]"
                 >
                   <LogOut className="w-4 h-4" />
                   Abmelden
@@ -324,6 +340,37 @@ export default function TopNavBar({ onLogout }: { onLogout: () => void }) {
           </div>
         </div>
       </div>
+
+      {/* Mobile nav drawer */}
+      {mobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50 bg-black/50"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <nav
+            className="absolute top-[44px] left-0 right-0 bg-[#032D60] shadow-xl max-h-[calc(100vh-44px)] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === "/"}
+                onClick={() => setMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  `block px-6 py-3.5 text-[14px] font-medium border-b border-white/10 min-h-[48px] flex items-center ${
+                    isActive
+                      ? "text-white bg-white/10"
+                      : "text-white/80 hover:text-white hover:bg-white/5"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

@@ -28,10 +28,10 @@ export default function DetailSection({
 
   const gridClass =
     columns === 4
-      ? "grid-cols-4"
+      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
       : columns === 3
-      ? "grid-cols-3"
-      : "grid-cols-2";
+      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+      : "grid-cols-1 sm:grid-cols-2";
 
   return (
     <div
@@ -43,7 +43,7 @@ export default function DetailSection({
       {/* Section header */}
       <button
         onClick={() => collapsible && setCollapsed(!collapsed)}
-        className={`w-full flex items-center gap-2 px-5 py-3 text-left ${
+        className={`w-full flex items-center gap-2 px-3 sm:px-5 py-3 text-left ${
           collapsible ? "cursor-pointer hover:bg-[#fafaf9]" : "cursor-default"
         } transition-colors`}
       >
@@ -62,7 +62,7 @@ export default function DetailSection({
 
       {/* Section content */}
       {!collapsed && (
-        <div className={`px-5 pb-5 grid ${gridClass} gap-x-6 gap-y-4`}>
+        <div className={`px-3 sm:px-5 pb-4 sm:pb-5 grid ${gridClass} gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4`}>
           {children}
         </div>
       )}

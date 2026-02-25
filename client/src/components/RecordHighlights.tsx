@@ -35,7 +35,7 @@ export default function RecordHighlights({
 }: RecordHighlightsProps) {
   return (
     <div className="bg-white border-b border-[#e5e5e5]">
-      <div className="px-6 py-4">
+      <div className="px-3 sm:px-6 py-3 sm:py-4">
         {/* Top row: back + entity label + actions */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
@@ -55,15 +55,15 @@ export default function RecordHighlights({
         </div>
 
         {/* Title row: icon + name */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3 sm:mb-4">
           <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center shrink-0"
             style={{ backgroundColor: iconColor }}
           >
             {icon}
           </div>
           <div className="flex items-center gap-2">
-            <h1 className="text-[18px] font-bold text-[#181818] leading-tight">
+            <h1 className="text-[16px] sm:text-[18px] font-bold text-[#181818] leading-tight break-words">
               {title}
             </h1>
             <ChevronDown className="w-4 h-4 text-[#706e6b]" />
@@ -72,9 +72,9 @@ export default function RecordHighlights({
 
         {/* Highlight fields row */}
         {highlightFields.length > 0 && (
-          <div className="flex items-start gap-6 flex-wrap">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:items-start gap-3 sm:gap-4 lg:gap-6">
             {highlightFields.map((field, i) => (
-              <div key={i} className="min-w-[120px]">
+              <div key={i} className="min-w-0 lg:min-w-[120px]">
                 <dt className="text-[11px] font-normal text-[#706e6b] uppercase tracking-wider mb-0.5">
                   {field.label}
                 </dt>

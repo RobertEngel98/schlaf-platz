@@ -174,7 +174,7 @@ export default function DataTable<T extends { id?: string }>({
                       if (el) el.indeterminate = someSelected && !allSelected;
                     }}
                     onChange={toggleSelectAll}
-                    className="w-[14px] h-[14px] rounded-sm border-[#c9c9c9] text-[#0176d3] focus:ring-[#0176d3] focus:ring-offset-0 cursor-pointer"
+                    className="w-4 h-4 rounded-sm border-[#c9c9c9] text-[#0176d3] focus:ring-[#0176d3] focus:ring-offset-0 cursor-pointer"
                   />
                 </th>
               )}
@@ -230,7 +230,7 @@ export default function DataTable<T extends { id?: string }>({
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleSelectRow(rowId)}
-                        className="w-[14px] h-[14px] rounded-sm border-[#c9c9c9] text-[#0176d3] focus:ring-[#0176d3] focus:ring-offset-0 cursor-pointer"
+                        className="w-4 h-4 rounded-sm border-[#c9c9c9] text-[#0176d3] focus:ring-[#0176d3] focus:ring-offset-0 cursor-pointer"
                       />
                     </td>
                   )}
@@ -267,7 +267,7 @@ export default function DataTable<T extends { id?: string }>({
                                 action.onClick(row);
                                 setActionMenuRow(null);
                               }}
-                              className={`w-full flex items-center gap-2 px-3 py-2 text-[13px] hover:bg-[#f3f3f3] transition-colors ${
+                              className={`w-full flex items-center gap-2 px-3 py-2.5 sm:py-2 text-[13px] hover:bg-[#f3f3f3] transition-colors min-h-[44px] sm:min-h-0 ${
                                 action.danger ? "text-[#ea001e]" : "text-[#181818]"
                               }`}
                             >
@@ -288,22 +288,22 @@ export default function DataTable<T extends { id?: string }>({
 
       {/* Pagination */}
       {total > pageSize && onPageChange && (
-        <div className="flex items-center justify-between px-4 py-2.5 border-t border-[#e5e5e5] bg-[#fafaf9]">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 border-t border-[#e5e5e5] bg-[#fafaf9]">
           <p className="text-[12px] text-[#706e6b]">
             {(page - 1) * pageSize + 1}-{Math.min(page * pageSize, total)} von {total}
           </p>
-          <div className="flex items-center gap-0.5">
+          <div className="flex items-center gap-1">
             <button
               onClick={() => onPageChange(1)}
               disabled={page <= 1}
-              className="p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
+              className="p-2 sm:p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
             >
               <ChevronsLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => onPageChange(page - 1)}
               disabled={page <= 1}
-              className="p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
+              className="p-2 sm:p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -313,14 +313,14 @@ export default function DataTable<T extends { id?: string }>({
             <button
               onClick={() => onPageChange(page + 1)}
               disabled={page >= totalPages}
-              className="p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
+              className="p-2 sm:p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
               onClick={() => onPageChange(totalPages)}
               disabled={page >= totalPages}
-              className="p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
+              className="p-2 sm:p-1 rounded hover:bg-[#ecebea] disabled:opacity-30 disabled:cursor-not-allowed text-[#706e6b]"
             >
               <ChevronsRight className="w-4 h-4" />
             </button>

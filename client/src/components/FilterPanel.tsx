@@ -136,7 +136,7 @@ export default function FilterPanel({
       {/* Slide-out panel */}
       <div
         ref={panelRef}
-        className={`fixed top-0 right-0 h-full w-[320px] max-w-full bg-white shadow-xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out border-l border-[#e5e5e5] ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[320px] bg-white shadow-xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out border-l border-[#e5e5e5] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -145,7 +145,7 @@ export default function FilterPanel({
           <h2 className="text-[16px] font-bold text-[#181818]">Filter</h2>
           <button
             onClick={onClose}
-            className="group relative p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            className="group relative p-2 sm:p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
             title="Filter schließen"
           >
             <X className="w-5 h-5" />
