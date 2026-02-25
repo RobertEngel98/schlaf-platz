@@ -252,8 +252,11 @@ export default async function buchungenRoutes(app: FastifyInstance) {
       afterBuchungInsert(newBuchung).catch(err => console.error('Flow error:', err));
 
       return reply.code(201).send(newBuchung);
-    } catch (err) {
+    } catch (err: any) {
       request.log.error(err);
+      if (err.name === "ValidationError" || err.statusCode === 400) {
+        return reply.code(400).send({ error: err.message });
+      }
       return reply.code(500).send({ error: "Fehler beim Erstellen der Buchung" });
     }
   });
@@ -318,8 +321,11 @@ export default async function buchungenRoutes(app: FastifyInstance) {
       }
 
       return updated;
-    } catch (err) {
+    } catch (err: any) {
       request.log.error(err);
+      if (err.name === "ValidationError" || err.statusCode === 400) {
+        return reply.code(400).send({ error: err.message });
+      }
       return reply.code(500).send({ error: "Fehler beim Aktualisieren der Buchung" });
     }
   });

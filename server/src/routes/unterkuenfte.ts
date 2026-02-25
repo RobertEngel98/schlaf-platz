@@ -234,8 +234,11 @@ export default async function unterkuenfteRoutes(app: FastifyInstance) {
       afterUnterkunftInsert(newUnterkunft).catch(err => console.error('Flow error:', err));
 
       return reply.code(201).send(newUnterkunft);
-    } catch (err) {
+    } catch (err: any) {
       request.log.error(err);
+      if (err.name === "ValidationError" || err.statusCode === 400) {
+        return reply.code(400).send({ error: err.message });
+      }
       return reply.code(500).send({ error: "Fehler beim Erstellen der Unterkunft" });
     }
   });
@@ -281,8 +284,11 @@ export default async function unterkuenfteRoutes(app: FastifyInstance) {
       }
 
       return updated;
-    } catch (err) {
+    } catch (err: any) {
       request.log.error(err);
+      if (err.name === "ValidationError" || err.statusCode === 400) {
+        return reply.code(400).send({ error: err.message });
+      }
       return reply.code(500).send({ error: "Fehler beim Aktualisieren der Unterkunft" });
     }
   });
