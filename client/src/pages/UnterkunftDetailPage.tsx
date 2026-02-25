@@ -22,9 +22,11 @@ export default function UnterkunftDetailPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [vermieter, setVermieter] = useState<any[]>([]);
+  const [freelancers, setFreelancers] = useState<any[]>([]);
 
   useEffect(() => {
     fetch("/api/accounts?limit=500&recordType=Account_Vermieter", { credentials: "include" }).then(r => r.json()).then(d => setVermieter(d.data || []));
+    fetch("/api/freelancers", { credentials: "include" }).then(r => r.json()).then(d => setFreelancers(Array.isArray(d) ? d : []));
     if (!isNew && id) {
       fetch(`/api/unterkuenfte/${id}`, { credentials: "include" })
         .then(r => r.json())
@@ -72,10 +74,16 @@ export default function UnterkunftDetailPage() {
         <DetailField label="Name" required fullWidth>
           <input value={uk.name || ""} onChange={e => update("name", e.target.value)} className={sldsInput} />
         </DetailField>
-        <DetailField label="Vermieter">
+        <DetailField label="Vermieter" required>
           <select value={uk.vermieterId || ""} onChange={e => update("vermieterId", e.target.value)} className={sldsSelect}>
             <option value="">-- Wählen --</option>
             {vermieter.map((v: any) => <option key={v.id} value={v.id}>{v.name}</option>)}
+          </select>
+        </DetailField>
+        <DetailField label="Erstellt von (Freelancer)" required>
+          <select value={uk.freelancerId || ""} onChange={e => update("freelancerId", e.target.value)} className={sldsSelect}>
+            <option value="">-- Wählen --</option>
+            {freelancers.map((f: any) => <option key={f.id} value={f.id}>{f.name}</option>)}
           </select>
         </DetailField>
         <DetailField label="Typ">
