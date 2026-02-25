@@ -45,7 +45,7 @@ export default function Sidebar({ onLogout }: { onLogout: () => void }) {
       {/* Brand */}
       <div className="px-5 py-5 border-b border-slate-700/50">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#029fde] rounded-lg flex items-center justify-center">
+          <div className="w-9 h-9 bg-[#0176d3] rounded-lg flex items-center justify-center">
             <BedDouble className="w-5 h-5 text-white" />
           </div>
           <div>

@@ -130,7 +130,7 @@ export default function AccountDetailPage() {
               <Trash2 className="w-4 h-4" />
             </button>
           )}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#029fde] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
             <Save className="w-4 h-4" />
             {saving ? "Speichert..." : "Speichern"}
           </button>
@@ -143,35 +143,35 @@ export default function AccountDetailPage() {
         {/* Basisdaten */}
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Building2 className="w-5 h-5 text-[#029fde]" /> Basisdaten
+            <Building2 className="w-5 h-5 text-[#0176d3]" /> Basisdaten
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-              <input value={account.name || ""} onChange={(e) => update("name", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.name || ""} onChange={(e) => update("name", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Typ</label>
-              <select value={account.recordType || ""} onChange={(e) => update("recordType", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none">
+              <select value={account.recordType || ""} onChange={(e) => update("recordType", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none">
                 <option value="Account_Standart">Kunde</option>
                 <option value="Account_Vermieter">Vermieter</option>
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
-              <input value={account.phone || ""} onChange={(e) => update("phone", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.phone || ""} onChange={(e) => update("phone", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
-              <input type="email" value={account.email || ""} onChange={(e) => update("email", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input type="email" value={account.email || ""} onChange={(e) => update("email", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-              <input value={account.website || ""} onChange={(e) => update("website", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.website || ""} onChange={(e) => update("website", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Branche</label>
-              <input value={account.industry || ""} onChange={(e) => update("industry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.industry || ""} onChange={(e) => update("industry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
           </div>
         </div>
@@ -179,28 +179,28 @@ export default function AccountDetailPage() {
         {/* Adresse */}
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <MapPin className="w-5 h-5 text-[#029fde]" /> Rechnungsadresse
+            <MapPin className="w-5 h-5 text-[#0176d3]" /> Rechnungsadresse
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Straße</label>
-              <input value={account.billingStreet || ""} onChange={(e) => update("billingStreet", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.billingStreet || ""} onChange={(e) => update("billingStreet", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">PLZ</label>
-              <input value={account.billingPostalCode || ""} onChange={(e) => update("billingPostalCode", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.billingPostalCode || ""} onChange={(e) => update("billingPostalCode", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Stadt</label>
-              <input value={account.billingCity || ""} onChange={(e) => update("billingCity", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.billingCity || ""} onChange={(e) => update("billingCity", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Bundesland</label>
-              <input value={account.billingState || ""} onChange={(e) => update("billingState", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.billingState || ""} onChange={(e) => update("billingState", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Land</label>
-              <input value={account.billingCountry || ""} onChange={(e) => update("billingCountry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+              <input value={account.billingCountry || ""} onChange={(e) => update("billingCountry", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
             </div>
           </div>
         </div>
@@ -212,11 +212,11 @@ export default function AccountDetailPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Vermieter-Nummer</label>
-                <input value={account.vermieterNummer || ""} onChange={(e) => update("vermieterNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+                <input value={account.vermieterNummer || ""} onChange={(e) => update("vermieterNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select value={account.vermieterStatus || ""} onChange={(e) => update("vermieterStatus", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none">
+                <select value={account.vermieterStatus || ""} onChange={(e) => update("vermieterStatus", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none">
                   <option value="">-- Wählen --</option>
                   <option value="Aktiv">Aktiv</option>
                   <option value="Inaktiv">Inaktiv</option>
@@ -225,19 +225,19 @@ export default function AccountDetailPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Steuernummer</label>
-                <input value={account.steuerNummer || ""} onChange={(e) => update("steuerNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+                <input value={account.steuerNummer || ""} onChange={(e) => update("steuerNummer", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">IBAN</label>
-                <input value={account.iban || ""} onChange={(e) => update("iban", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+                <input value={account.iban || ""} onChange={(e) => update("iban", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">BIC</label>
-                <input value={account.bic || ""} onChange={(e) => update("bic", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+                <input value={account.bic || ""} onChange={(e) => update("bic", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Bank</label>
-                <input value={account.bankName || ""} onChange={(e) => update("bankName", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+                <input value={account.bankName || ""} onChange={(e) => update("bankName", e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
               </div>
             </div>
           </div>
@@ -246,7 +246,7 @@ export default function AccountDetailPage() {
         {/* Beschreibung */}
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <h2 className="text-lg font-semibold mb-4">Beschreibung</h2>
-          <textarea value={account.description || ""} onChange={(e) => update("description", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#029fde] outline-none" />
+          <textarea value={account.description || ""} onChange={(e) => update("description", e.target.value)} rows={4} className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-[#0176d3] outline-none" />
         </div>
       </div>
     </div>

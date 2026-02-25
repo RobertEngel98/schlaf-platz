@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { AlertCircle } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { AlertCircle, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -53,7 +53,7 @@ const allColumns: Column<Case>[] = [
       <Link
         to={`/cases/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center shrink-0">
           <AlertCircle className="w-4 h-4 text-red-600" />
@@ -162,6 +162,13 @@ const kanbanColumns: KanbanColumn[] = [
 ];
 
 export default function CasesPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Case>[] = [
+    { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/cases/${row.id}`) },
+    { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Case wirklich löschen?")) { await casesApi.delete(row.id); window.location.reload(); } } },
+  ];
+
   const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
     try {
       await casesApi.update(itemId, { status: newColumnKey });
@@ -179,7 +186,9 @@ export default function CasesPage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#ea001e"
       fetchData={(params) => casesApi.list(params)}
+      rowActions={rowActions}
       kanbanColumns={kanbanColumns}
       kanbanField="status"
       getKanbanColumnKey={(item) => item.status}

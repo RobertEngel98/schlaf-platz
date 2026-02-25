@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
 import { contactsApi, type Contact } from "../lib/api";
@@ -13,7 +14,7 @@ const allColumns: Column<Contact>[] = [
       <Link
         to={`/kontakte/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center text-xs font-bold text-indigo-700 shrink-0">
           {(row.firstName?.[0] || "").toUpperCase()}
@@ -79,6 +80,13 @@ const filterFields: FilterField[] = [
 ];
 
 export default function KontaktePage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Contact>[] = [
+    { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/kontakte/${row.id}`) },
+    { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Kontakt wirklich löschen?")) { await contactsApi.delete(row.id); window.location.reload(); } } },
+  ];
+
   return (
     <SalesforceListPage<Contact>
       entity="contacts"
@@ -88,7 +96,9 @@ export default function KontaktePage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#0d9dda"
       fetchData={(params) => contactsApi.list(params)}
+      rowActions={rowActions}
     />
   );
 }

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Home, MapPin, Bed, DoorOpen } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { Home, MapPin, Bed, DoorOpen, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -20,7 +20,7 @@ const allColumns: Column<Unterkunft>[] = [
       <Link
         to={`/unterkuenfte/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-cyan-50 rounded-lg flex items-center justify-center shrink-0">
           <Home className="w-4 h-4 text-cyan-600" />
@@ -149,6 +149,13 @@ const filterFields: FilterField[] = [
 ];
 
 export default function UnterkuenftePage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Unterkunft>[] = [
+    { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/unterkuenfte/${row.id}`) },
+    { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Unterkunft wirklich löschen?")) { await unterkuenfteApi.delete(row.id); window.location.reload(); } } },
+  ];
+
   return (
     <SalesforceListPage<Unterkunft>
       entity="unterkuenfte"
@@ -158,7 +165,9 @@ export default function UnterkuenftePage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#e8780a"
       fetchData={(params) => unterkuenfteApi.list(params)}
+      rowActions={rowActions}
       renderCard={(u) => (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
           <div className="h-3 bg-gradient-to-r from-cyan-400 to-blue-500" />

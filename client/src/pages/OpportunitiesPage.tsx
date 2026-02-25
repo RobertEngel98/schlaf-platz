@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { TrendingUp, DollarSign } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { TrendingUp, DollarSign, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -21,7 +21,7 @@ const allColumns: Column<Opportunity>[] = [
       <Link
         to={`/opportunities/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center shrink-0">
           <TrendingUp className="w-4 h-4 text-purple-600" />
@@ -131,6 +131,27 @@ const kanbanColumns: KanbanColumn[] = [
 ];
 
 export default function OpportunitiesPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Opportunity>[] = [
+    {
+      label: "Bearbeiten",
+      icon: <Pencil className="w-3.5 h-3.5" />,
+      onClick: (row) => navigate(`/opportunities/${row.id}`),
+    },
+    {
+      label: "Löschen",
+      icon: <Trash2 className="w-3.5 h-3.5" />,
+      danger: true,
+      onClick: async (row) => {
+        if (confirm("Opportunity wirklich löschen?")) {
+          await opportunitiesApi.delete(row.id);
+          window.location.reload();
+        }
+      },
+    },
+  ];
+
   const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
     try {
       await opportunitiesApi.update(itemId, { stage: newColumnKey } as any);
@@ -148,7 +169,9 @@ export default function OpportunitiesPage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#7b64ff"
       fetchData={(params) => opportunitiesApi.list(params)}
+      rowActions={rowActions}
       kanbanColumns={kanbanColumns}
       kanbanField="stage"
       getKanbanColumnKey={(item) => item.stage}

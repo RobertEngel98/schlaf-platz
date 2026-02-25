@@ -70,7 +70,7 @@ export default function OpportunityDetailPage() {
         </div>
         <div className="flex gap-2">
           {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#029fde] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
             <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
           </button>
         </div>
@@ -87,7 +87,7 @@ export default function OpportunityDetailPage() {
               const isActive = i <= idx;
               const isCurrent = s === opp.stage;
               return (
-                <button key={s} onClick={() => update("stage", s)} className={`flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-colors ${isCurrent ? "bg-[#029fde] text-white" : isActive ? "bg-[#029fde]/20 text-[#029fde]" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
+                <button key={s} onClick={() => update("stage", s)} className={`flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-colors ${isCurrent ? "bg-[#0176d3] text-white" : isActive ? "bg-[#0176d3]/20 text-[#0176d3]" : "bg-gray-100 text-gray-500 hover:bg-gray-200"}`}>
                   {s}
                 </button>
               );
@@ -99,7 +99,7 @@ export default function OpportunityDetailPage() {
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2 space-y-6">
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#029fde]" /> Details</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-[#0176d3]" /> Details</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
@@ -137,7 +137,7 @@ export default function OpportunityDetailPage() {
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#029fde]" /> Finanzen</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#0176d3]" /> Finanzen</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Betrag (€)</label>

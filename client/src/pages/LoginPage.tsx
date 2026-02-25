@@ -43,7 +43,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#029fde] mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0176d3] mb-4">
             <Building2 className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white">Schlaf-Platz</h1>
@@ -65,7 +65,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#029fde] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0176d3] focus:border-transparent outline-none transition"
               placeholder="info@schlaf-platz.com"
               required
             />
@@ -77,7 +77,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#029fde] focus:border-transparent outline-none transition"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0176d3] focus:border-transparent outline-none transition"
               placeholder="••••••••"
               required
             />
@@ -86,7 +86,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 bg-[#029fde] hover:bg-[#0280b3] text-white font-medium rounded-lg transition disabled:opacity-50"
+            className="w-full py-2.5 bg-[#0176d3] hover:bg-[#0280b3] text-white font-medium rounded-lg transition disabled:opacity-50"
           >
             {loading ? "Wird angemeldet..." : "Anmelden"}
           </button>

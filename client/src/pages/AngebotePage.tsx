@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { FileText } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { FileText, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -20,7 +20,7 @@ const allColumns: Column<Angebot>[] = [
       <Link
         to={`/angebote/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-violet-50 rounded-lg flex items-center justify-center shrink-0">
           <FileText className="w-4 h-4 text-violet-600" />
@@ -140,6 +140,13 @@ const filterFields: FilterField[] = [
 ];
 
 export default function AngebotePage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Angebot>[] = [
+    { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/angebote/${row.id}`) },
+    { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Angebot wirklich löschen?")) { await angeboteApi.delete(row.id); window.location.reload(); } } },
+  ];
+
   return (
     <SalesforceListPage<Angebot>
       entity="angebote"
@@ -149,7 +156,9 @@ export default function AngebotePage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#3c97dd"
       fetchData={(params) => angeboteApi.list(params)}
+      rowActions={rowActions}
     />
   );
 }

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Building2 } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { Building2, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -20,7 +20,7 @@ const allColumns: Column<Account>[] = [
       <Link
         to={`/accounts/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
           <Building2 className="w-4 h-4 text-blue-600" />
@@ -120,16 +120,39 @@ const filterFields: FilterField[] = [
 ];
 
 export default function AccountsPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Account>[] = [
+    {
+      label: "Bearbeiten",
+      icon: <Pencil className="w-3.5 h-3.5" />,
+      onClick: (row) => navigate(`/accounts/${row.id}`),
+    },
+    {
+      label: "Löschen",
+      icon: <Trash2 className="w-3.5 h-3.5" />,
+      danger: true,
+      onClick: async (row) => {
+        if (confirm("Account wirklich löschen?")) {
+          await accountsApi.delete(row.id);
+          window.location.reload();
+        }
+      },
+    },
+  ];
+
   return (
     <SalesforceListPage<Account>
       entity="accounts"
       entityLabel="Account"
       entityLabelPlural="Accounts"
       basePath="/accounts"
+      entityIconColor="#7b83eb"
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
       fetchData={(params) => accountsApi.list(params)}
+      rowActions={rowActions}
     />
   );
 }

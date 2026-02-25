@@ -60,7 +60,7 @@ export default function KontaktDetailPage() {
         </div>
         <div className="flex gap-2">
           {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#029fde] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
             <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
           </button>
         </div>
@@ -70,7 +70,7 @@ export default function KontaktDetailPage() {
 
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-[#029fde]" /> Kontaktdaten</h2>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Users className="w-5 h-5 text-[#0176d3]" /> Kontaktdaten</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Anrede</label>
@@ -124,7 +124,7 @@ export default function KontaktDetailPage() {
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border p-6">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-[#029fde]" /> Adresse</h2>
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><MapPin className="w-5 h-5 text-[#0176d3]" /> Adresse</h2>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Straße</label>

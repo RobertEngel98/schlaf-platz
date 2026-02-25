@@ -1,15 +1,25 @@
-import { useState, useEffect, useCallback, type ReactNode } from "react";
+import { useState, useEffect, useCallback, useRef, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
   Plus,
   List,
-  LayoutGrid,
   Kanban,
   Loader2,
   RefreshCw,
+  Filter,
+  Settings2,
+  Printer,
+  PanelRightOpen,
+  ChevronDown,
+  X,
+  Pin,
+  Check,
+  BarChart3,
+  Pencil,
+  ArrowUpDown,
 } from "lucide-react";
-import DataTable, { type Column } from "./DataTable";
+import DataTable, { type Column, type RowAction } from "./DataTable";
 import FilterPanel, { type FilterField } from "./FilterPanel";
 import KanbanBoard, { type KanbanColumn } from "./KanbanBoard";
 import ListViewSelector from "./ListViewSelector";
@@ -17,18 +27,22 @@ import ColumnPicker from "./ColumnPicker";
 import ViewSaveModal from "./ViewSaveModal";
 import { listViewsApi, type ListView, type FilterCondition } from "../lib/api";
 
-type ViewMode = "table" | "kanban" | "cards";
+type ViewMode = "table" | "kanban" | "split";
 
 export interface SalesforceListPageConfig<T> {
   entity: string;
   entityLabel: string;
   entityLabelPlural: string;
   basePath: string;
+  entityIcon?: ReactNode;
+  entityIconColor?: string;
   // Columns
   allColumns: Column<T>[];
   defaultVisibleColumns: string[];
   // Filter fields
   filterFields: FilterField[];
+  // Row actions
+  rowActions?: RowAction<T>[];
   // Kanban config (optional)
   kanbanColumns?: KanbanColumn[];
   kanbanField?: string;
@@ -36,8 +50,8 @@ export interface SalesforceListPageConfig<T> {
   renderKanbanCard?: (item: T) => ReactNode;
   getKanbanColumnTotal?: (items: T[]) => string;
   onKanbanDragEnd?: (itemId: string, newColumnKey: string) => Promise<void>;
-  // Card view config (optional)
-  renderCard?: (item: T) => ReactNode;
+  // Split view detail renderer (optional)
+  renderSplitDetail?: (item: T) => ReactNode;
   // API
   fetchData: (params: Record<string, string | number | undefined>) => Promise<{
     data: T[];
@@ -52,16 +66,19 @@ export default function SalesforceListPage<T extends { id: string }>({
   entityLabel: _entityLabel,
   entityLabelPlural,
   basePath,
+  entityIcon,
+  entityIconColor = "#7b64ff",
   allColumns,
   defaultVisibleColumns,
   filterFields,
+  rowActions,
   kanbanColumns,
   kanbanField,
   getKanbanColumnKey,
   renderKanbanCard,
   getKanbanColumnTotal,
   onKanbanDragEnd,
-  renderCard,
+  renderSplitDetail,
   fetchData,
   headerActions,
 }: SalesforceListPageConfig<T>) {
@@ -83,13 +100,43 @@ export default function SalesforceListPage<T extends { id: string }>({
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<string>("createdAt");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Filter state
   const [filters, setFilters] = useState<FilterCondition[]>([]);
   const [filterLogic, setFilterLogic] = useState<"AND" | "OR">("AND");
+  const [showFilters, setShowFilters] = useState(false);
 
   // Column visibility
   const [visibleColumns, setVisibleColumns] = useState<string[]>(defaultVisibleColumns);
+
+  // Selection
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  // Split view state
+  const [selectedItem, setSelectedItem] = useState<T | null>(null);
+
+  // View mode dropdown state
+  const [showViewModeDropdown, setShowViewModeDropdown] = useState(false);
+  const viewModeDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Settings dropdown state
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+  const settingsDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (viewModeDropdownRef.current && !viewModeDropdownRef.current.contains(e.target as Node)) {
+        setShowViewModeDropdown(false);
+      }
+      if (settingsDropdownRef.current && !settingsDropdownRef.current.contains(e.target as Node)) {
+        setShowSettingsDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   // Load views
   useEffect(() => {
@@ -135,7 +182,6 @@ export default function SalesforceListPage<T extends { id: string }>({
       search: search || undefined,
     };
 
-    // Apply active filters as query params
     for (const f of filters) {
       if (f.operator === "is_empty" || f.operator === "is_not_empty") {
         params[`${f.field}_${f.operator}`] = "true";
@@ -159,6 +205,7 @@ export default function SalesforceListPage<T extends { id: string }>({
       const result = await fetchData(params);
       setData(result.data);
       setTotal(result.total);
+      setLastUpdated(new Date());
     } catch (e) {
       console.error("Fetch error:", e);
     } finally {
@@ -170,7 +217,7 @@ export default function SalesforceListPage<T extends { id: string }>({
     loadData();
   }, [loadData]);
 
-  // Client-side filter application for filters the backend doesn't support
+  // Client-side filter application
   const filteredData = useCallback(() => {
     if (filters.length === 0) return data;
 
@@ -257,7 +304,6 @@ export default function SalesforceListPage<T extends { id: string }>({
 
   const handleSetDefault = async (view: ListView) => {
     await listViewsApi.update(view.id, { isDefault: !view.isDefault });
-    // Update all views to reflect the new default
     const refreshed = await listViewsApi.list(entity);
     setViews(refreshed);
   };
@@ -267,77 +313,294 @@ export default function SalesforceListPage<T extends { id: string }>({
   const displayedData = filteredData();
 
   const hasKanban = !!kanbanColumns && !!getKanbanColumnKey && !!renderKanbanCard;
-  const hasCards = !!renderCard;
+
+  // Determine which view modes are available
+  const availableViewModes: ViewMode[] = [
+    "table",
+    ...(hasKanban ? ["kanban" as ViewMode] : []),
+    "split",
+  ];
+
+  const viewModeIcon = (mode: ViewMode) => {
+    switch (mode) {
+      case "table": return <List className="w-4 h-4" />;
+      case "kanban": return <Kanban className="w-4 h-4" />;
+      case "split": return <PanelRightOpen className="w-4 h-4" />;
+    }
+  };
+
+  const viewModeLabel = (mode: ViewMode) => {
+    switch (mode) {
+      case "table": return "Table";
+      case "kanban": return "Kanban";
+      case "split": return "Split View";
+    }
+  };
+
+  // Default entity icon
+  const defaultEntityIcon = (
+    <div
+      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+      style={{ backgroundColor: entityIconColor }}
+    >
+      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
+      </svg>
+    </div>
+  );
+
+  // Handle row click
+  const handleRowClick = (row: T) => {
+    if (viewMode === "split") {
+      setSelectedItem(row);
+    } else {
+      navigate(`${basePath}/${row.id}`);
+    }
+  };
+
+  // Info text
+  const sortLabel = allColumns.find((c) => c.key === sortKey)?.header || sortKey;
+  const filterFieldNames = filters.map((f) => {
+    const ff = filterFields.find((fd) => fd.key === f.field);
+    return ff?.label || f.field;
+  });
+
+  const getTimeAgo = () => {
+    const diff = Math.floor((Date.now() - lastUpdated.getTime()) / 1000);
+    if (diff < 5) return "gerade eben";
+    if (diff < 60) return `vor ${diff} Sekunden`;
+    if (diff < 3600) return `vor ${Math.floor(diff / 60)} Minuten`;
+    return `vor ${Math.floor(diff / 3600)} Stunden`;
+  };
 
   return (
-    <div className="h-full flex flex-col">
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
-        <div className="flex items-center gap-3">
-          <h1 className="text-lg font-bold text-gray-800">{entityLabelPlural}</h1>
-          <ListViewSelector
-            views={views}
-            currentView={currentView}
-            onViewChange={applyView}
-            onCreateView={() => {
-              setEditingView(null);
-              setShowViewModal(true);
+    <div className="h-full flex flex-col bg-[#f3f3f3]">
+      {/* ---- HEADER BAR ---- */}
+      <div className="bg-white border-b border-[#e5e5e5]">
+        <div className="flex items-center justify-between px-6 py-3">
+          {/* Left: Entity icon + label + list view selector */}
+          <div className="flex items-center gap-3">
+            {entityIcon || defaultEntityIcon}
+
+            <div className="flex flex-col">
+              <span className="text-[12px] font-normal text-[#706e6b] leading-none mb-1">
+                {entityLabelPlural}
+              </span>
+              <div className="flex items-center gap-2">
+                <ListViewSelector
+                  views={views}
+                  currentView={currentView}
+                  onViewChange={applyView}
+                  onCreateView={() => {
+                    setEditingView(null);
+                    setShowViewModal(true);
+                  }}
+                  onEditView={(v) => {
+                    setEditingView(v);
+                    setShowViewModal(true);
+                  }}
+                  onDeleteView={handleDeleteView}
+                  onTogglePin={handleTogglePin}
+                  onSetDefault={handleSetDefault}
+                  entityLabel={entityLabelPlural}
+                />
+                {currentView?.isPinned && (
+                  <Pin className="w-3.5 h-3.5 text-[#706e6b]" />
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Center: Info text */}
+          <div className="hidden lg:flex items-center text-[12px] text-[#706e6b] gap-1">
+            <span>{total}+ Einträge</span>
+            <span className="mx-0.5">&bull;</span>
+            <span>Sortiert nach {sortLabel}</span>
+            {filterFieldNames.length > 0 && (
+              <>
+                <span className="mx-0.5">&bull;</span>
+                <span>Gefiltert nach {filterFieldNames.join(", ")}</span>
+              </>
+            )}
+            <span className="mx-0.5">&bull;</span>
+            <span>Aktualisiert {getTimeAgo()}</span>
+          </div>
+
+          {/* Right: Action buttons */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate(`${basePath}/new`)}
+              className="flex items-center gap-1.5 px-4 py-[6px] text-[13px] font-medium text-[#0176d3] bg-white border border-[#0176d3] rounded hover:bg-[#f3f3f3] transition-colors"
+            >
+              Neu
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="flex items-center gap-1.5 px-3 py-[6px] text-[13px] font-medium text-[#706e6b] bg-white border border-[#c9c9c9] rounded hover:bg-[#f3f3f3] transition-colors"
+              title="Druckansicht"
+            >
+              <Printer className="w-4 h-4" />
+              Printable View
+            </button>
+            {headerActions}
+          </div>
+        </div>
+      </div>
+
+      {/* ---- TOOLBAR ROW ---- */}
+      <div className="flex items-center justify-between px-4 py-1.5 bg-white border-b border-[#e5e5e5]">
+        {/* Left: Search */}
+        <div className="relative w-56">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#706e6b]" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
             }}
-            onEditView={(v) => {
-              setEditingView(v);
-              setShowViewModal(true);
-            }}
-            onDeleteView={handleDeleteView}
-            onTogglePin={handleTogglePin}
-            onSetDefault={handleSetDefault}
-            entityLabel={entityLabelPlural}
+            placeholder="Diese Liste durchsuchen..."
+            className="w-full pl-8 pr-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3] bg-white placeholder-[#706e6b]"
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* View mode toggle */}
-          <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+        {/* Right: Icon toolbar */}
+        <div className="flex items-center gap-0.5">
+          {/* Settings gear dropdown */}
+          <div ref={settingsDropdownRef} className="relative">
             <button
-              onClick={() => setViewMode("table")}
-              className={`p-2 ${
-                viewMode === "table"
-                  ? "bg-brand text-white"
-                  : "bg-white text-gray-500 hover:bg-gray-50"
-              }`}
-              title="Listenansicht"
+              onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}
+              className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+              title="Einstellungen"
             >
-              <List className="w-4 h-4" />
+              <Settings2 className="w-4 h-4" />
+              <ChevronDown className="w-2.5 h-2.5 inline ml-0.5" />
             </button>
-            {hasKanban && (
-              <button
-                onClick={() => setViewMode("kanban")}
-                className={`p-2 border-l border-gray-300 ${
-                  viewMode === "kanban"
-                    ? "bg-brand text-white"
-                    : "bg-white text-gray-500 hover:bg-gray-50"
-                }`}
-                title="Kanban-Ansicht"
-              >
-                <Kanban className="w-4 h-4" />
-              </button>
-            )}
-            {hasCards && (
-              <button
-                onClick={() => setViewMode("cards")}
-                className={`p-2 border-l border-gray-300 ${
-                  viewMode === "cards"
-                    ? "bg-brand text-white"
-                    : "bg-white text-gray-500 hover:bg-gray-50"
-                }`}
-                title="Kartenansicht"
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
+            {showSettingsDropdown && (
+              <div className="absolute z-50 top-full right-0 mt-1 w-[240px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
+                <button
+                  onClick={() => {
+                    navigate(`${basePath}/new`);
+                    setShowSettingsDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                >
+                  Neu
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingView(null);
+                    setShowViewModal(true);
+                    setShowSettingsDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                >
+                  Ansicht speichern
+                </button>
+                {currentView && (
+                  <button
+                    onClick={() => {
+                      setEditingView(currentView);
+                      setShowViewModal(true);
+                      setShowSettingsDropdown(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                  >
+                    Ansicht bearbeiten
+                  </button>
+                )}
+                <div className="border-t border-[#e5e5e5]" />
+                <button
+                  onClick={() => {
+                    setVisibleColumns(defaultVisibleColumns);
+                    setShowSettingsDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                >
+                  Angezeigte Felder auswählen
+                </button>
+                <button
+                  onClick={() => {
+                    setSortKey("createdAt");
+                    setSortDir("desc");
+                    setShowSettingsDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                >
+                  Spaltensortierung zurücksetzen
+                </button>
+                <button
+                  onClick={() => {
+                    setVisibleColumns(defaultVisibleColumns);
+                    setShowSettingsDropdown(false);
+                  }}
+                  className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                >
+                  Spaltenbreiten zurücksetzen
+                </button>
+              </div>
             )}
           </div>
 
-          {/* Column picker (table mode only) */}
-          {viewMode === "table" && (
+          {/* View mode dropdown */}
+          <div ref={viewModeDropdownRef} className="relative">
+            <button
+              onClick={() => setShowViewModeDropdown(!showViewModeDropdown)}
+              className="flex items-center gap-0.5 p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+              title={viewModeLabel(viewMode)}
+            >
+              {viewModeIcon(viewMode)}
+              <ChevronDown className="w-2.5 h-2.5" />
+            </button>
+
+            {showViewModeDropdown && (
+              <div className="absolute z-50 top-full right-0 mt-1 w-[180px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
+                {availableViewModes.map((mode) => (
+                  <button
+                    key={mode}
+                    onClick={() => {
+                      setViewMode(mode);
+                      setShowViewModeDropdown(false);
+                      if (mode !== "split") setSelectedItem(null);
+                    }}
+                    className={`w-full flex items-center gap-2.5 px-4 py-2 text-[13px] transition-colors ${
+                      viewMode === mode
+                        ? "text-[#181818] font-medium"
+                        : "text-[#706e6b] hover:bg-[#f3f3f3]"
+                    }`}
+                  >
+                    {viewMode === mode && <Check className="w-3.5 h-3.5 text-[#0176d3] shrink-0" />}
+                    {viewMode !== mode && <span className="w-3.5 shrink-0" />}
+                    {viewModeIcon(mode)}
+                    <span>{viewModeLabel(mode)}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Refresh */}
+          <button
+            onClick={loadData}
+            className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            title="Aktualisieren"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          </button>
+
+          {/* Sort toggle */}
+          <button
+            onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
+            className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            title={`Sortierung: ${sortDir === "asc" ? "Aufsteigend" : "Absteigend"}`}
+          >
+            <ArrowUpDown className="w-4 h-4" />
+          </button>
+
+          {/* Column selector (when in table or split) */}
+          {(viewMode === "table" || viewMode === "split") && (
             <ColumnPicker
               allColumns={allColumns}
               visibleColumns={visibleColumns}
@@ -346,29 +609,53 @@ export default function SalesforceListPage<T extends { id: string }>({
             />
           )}
 
-          {/* Refresh */}
+          {/* Charts placeholder */}
           <button
-            onClick={loadData}
-            className="p-2 rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-            title="Aktualisieren"
+            className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            title="Diagramm"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+            <BarChart3 className="w-4 h-4" />
           </button>
 
-          {/* New button */}
-          <button
-            onClick={() => navigate(`${basePath}/new`)}
-            className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-brand rounded-lg hover:bg-brand-dark"
-          >
-            <Plus className="w-4 h-4" />
-            Neu
-          </button>
+          {/* Separator */}
+          <div className="w-px h-5 bg-[#e5e5e5] mx-0.5" />
 
-          {headerActions}
+          {/* Filter toggle */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`relative p-2 rounded transition-colors ${
+              showFilters || filters.length > 0
+                ? "text-[#0176d3] bg-[#eef4ff] hover:bg-[#d8e6fe]"
+                : "text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3]"
+            }`}
+            title="Filter"
+          >
+            <Filter className="w-4 h-4" />
+            {filters.length > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#0176d3] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                {filters.length}
+              </span>
+            )}
+          </button>
         </div>
       </div>
 
-      {/* Filter panel */}
+      {/* ---- ACTIVE FILTERS BAR ---- */}
+      {filters.length > 0 && (
+        <div className="flex items-center gap-2 px-4 py-1.5 bg-[#fafaf9] border-b border-[#e5e5e5]">
+          <span className="text-[12px] font-medium text-[#706e6b]">
+            {filters.length} Filter aktiv
+          </span>
+          <button
+            onClick={() => { setFilters([]); setPage(1); }}
+            className="text-[12px] text-[#706e6b] hover:text-[#ea001e] transition-colors ml-1"
+          >
+            Alle entfernen
+          </button>
+        </div>
+      )}
+
+      {/* ---- FILTER PANEL ---- */}
       <FilterPanel
         fields={filterFields}
         filters={filters}
@@ -378,49 +665,43 @@ export default function SalesforceListPage<T extends { id: string }>({
         }}
         logic={filterLogic}
         onLogicChange={setFilterLogic}
+        isOpen={showFilters}
+        onClose={() => setShowFilters(false)}
+        entityLabel={entityLabelPlural}
       />
 
-      {/* Search bar */}
-      <div className="px-6 py-3 bg-white border-b border-gray-200">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-            placeholder={`${entityLabelPlural} durchsuchen...`}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand/30 focus:border-brand bg-white"
-          />
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex-1 overflow-auto p-6 bg-gray-50">
+      {/* ---- CONTENT AREA ---- */}
+      <div className="flex-1 overflow-hidden bg-[#f3f3f3] flex">
+        {/* Table view */}
         {viewMode === "table" && (
-          <DataTable
-            columns={tableColumns}
-            data={displayedData}
-            total={total}
-            page={page}
-            pageSize={pageSize}
-            onPageChange={setPage}
-            onSort={handleSort}
-            sortKey={sortKey}
-            sortDirection={sortDir}
-            onRowClick={(row) => navigate(`${basePath}/${row.id}`)}
-            loading={loading}
-            emptyMessage={`Keine ${entityLabelPlural} gefunden`}
-          />
+          <div className="flex-1 overflow-auto p-4">
+            <DataTable
+              columns={tableColumns}
+              data={displayedData}
+              total={total}
+              page={page}
+              pageSize={pageSize}
+              onPageChange={setPage}
+              onSort={handleSort}
+              sortKey={sortKey}
+              sortDirection={sortDir}
+              onRowClick={handleRowClick}
+              loading={loading}
+              emptyMessage={`Keine ${entityLabelPlural} gefunden`}
+              rowActions={rowActions}
+              selectable
+              selectedIds={selectedIds}
+              onSelectionChange={setSelectedIds}
+            />
+          </div>
         )}
 
+        {/* Kanban view */}
         {viewMode === "kanban" && hasKanban && (
-          <>
+          <div className="flex-1 overflow-auto p-4">
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-brand animate-spin" />
+                <Loader2 className="w-8 h-8 text-[#0176d3] animate-spin" />
               </div>
             ) : (
               <KanbanBoard
@@ -434,37 +715,94 @@ export default function SalesforceListPage<T extends { id: string }>({
                 getColumnTotal={getKanbanColumnTotal}
               />
             )}
-          </>
+          </div>
         )}
 
-        {viewMode === "cards" && hasCards && (
+        {/* Split view */}
+        {viewMode === "split" && (
           <>
-            {loading ? (
-              <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 text-brand animate-spin" />
-              </div>
-            ) : displayedData.length === 0 ? (
-              <div className="text-center py-20 text-gray-500 text-sm">
-                Keine {entityLabelPlural} gefunden
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {displayedData.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => navigate(`${basePath}/${item.id}`)}
-                    className="cursor-pointer"
-                  >
-                    {renderCard!(item)}
+            <div className="w-[60%] overflow-auto border-r border-[#e5e5e5] bg-white">
+              <DataTable
+                columns={tableColumns}
+                data={displayedData}
+                total={total}
+                page={page}
+                pageSize={pageSize}
+                onPageChange={setPage}
+                onSort={handleSort}
+                sortKey={sortKey}
+                sortDirection={sortDir}
+                onRowClick={handleRowClick}
+                loading={loading}
+                emptyMessage={`Keine ${entityLabelPlural} gefunden`}
+                selectable
+                selectedIds={selectedIds}
+                onSelectionChange={setSelectedIds}
+              />
+            </div>
+
+            <div className="w-[40%] overflow-auto bg-white">
+              {selectedItem ? (
+                <div className="h-full flex flex-col">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5] bg-[#fafaf9] shrink-0">
+                    <h3 className="text-[13px] font-bold text-[#181818] truncate">
+                      Detailvorschau
+                    </h3>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => navigate(`${basePath}/${selectedItem.id}`)}
+                        className="text-[12px] text-[#0176d3] hover:underline font-medium"
+                      >
+                        Vollständig öffnen
+                      </button>
+                      <button
+                        onClick={() => setSelectedItem(null)}
+                        className="p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#ecebea] transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
+
+                  <div className="flex-1 overflow-y-auto p-4">
+                    {renderSplitDetail ? (
+                      renderSplitDetail(selectedItem)
+                    ) : (
+                      <div className="space-y-3">
+                        {tableColumns.map((col) => {
+                          const value = col.render
+                            ? col.render(selectedItem)
+                            : (selectedItem as Record<string, unknown>)[col.key];
+                          return (
+                            <div key={col.key}>
+                              <dt className="text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-0.5">
+                                {col.header}
+                              </dt>
+                              <dd className="text-[13px] text-[#181818]">
+                                {value as ReactNode ?? <span className="text-[#c9c9c9]">---</span>}
+                              </dd>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-full text-[#706e6b]">
+                  <PanelRightOpen className="w-10 h-10 mb-3 text-[#c9c9c9]" />
+                  <p className="text-[13px] font-medium">Keine Auswahl</p>
+                  <p className="text-[12px] mt-1">
+                    Klicken Sie auf eine Zeile, um die Details anzuzeigen
+                  </p>
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
 
-      {/* View save modal */}
+      {/* ---- VIEW SAVE MODAL ---- */}
       <ViewSaveModal
         isOpen={showViewModal}
         onClose={() => {

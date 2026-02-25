@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { CheckSquare } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { CheckSquare, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -51,7 +51,7 @@ const allColumns: Column<Task>[] = [
       <Link
         to={`/tasks/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div
           className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
@@ -161,6 +161,13 @@ const kanbanColumns: KanbanColumn[] = [
 ];
 
 export default function TasksPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Task>[] = [
+    { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/tasks/${row.id}`) },
+    { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Aufgabe wirklich löschen?")) { await tasksApi.delete(row.id); window.location.reload(); } } },
+  ];
+
   const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
     try {
       await tasksApi.update(itemId, { status: newColumnKey });
@@ -178,7 +185,9 @@ export default function TasksPage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#4bc076"
       fetchData={(params) => tasksApi.list(params)}
+      rowActions={rowActions}
       kanbanColumns={kanbanColumns}
       kanbanField="status"
       getKanbanColumnKey={(item) => item.status}

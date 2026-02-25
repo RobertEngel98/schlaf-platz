@@ -89,7 +89,7 @@ export default function BuchungDetailPage() {
         </div>
         <div className="flex gap-2">
           {!isNew && <button onClick={handleDelete} className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 className="w-4 h-4" /></button>}
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#029fde] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2 bg-[#0176d3] hover:bg-[#0280b3] text-white rounded-lg flex items-center gap-2 disabled:opacity-50">
             <Save className="w-4 h-4" />{saving ? "Speichert..." : "Speichern"}
           </button>
         </div>
@@ -101,7 +101,7 @@ export default function BuchungDetailPage() {
         {/* Spalte 1: Buchungsdetails */}
         <div className="col-span-2 space-y-6">
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Calendar className="w-5 h-5 text-[#029fde]" /> Buchungsdetails</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Calendar className="w-5 h-5 text-[#0176d3]" /> Buchungsdetails</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Buchungstyp</label>
@@ -136,7 +136,7 @@ export default function BuchungDetailPage() {
 
           {/* Gast-Infos */}
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><User className="w-5 h-5 text-[#029fde]" /> Gast</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><User className="w-5 h-5 text-[#0176d3]" /> Gast</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Account</label>
@@ -173,7 +173,7 @@ export default function BuchungDetailPage() {
 
           {/* Preise */}
           <div className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#029fde]" /> Preise & Kosten</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2"><Euro className="w-5 h-5 text-[#0176d3]" /> Preise & Kosten</h2>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Preis/Nacht (€)</label>
@@ -237,11 +237,11 @@ export default function BuchungDetailPage() {
           <div className="bg-white rounded-xl shadow-sm border p-6">
             <h2 className="text-sm font-semibold mb-3 text-gray-600 uppercase">Optionen</h2>
             <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={buchung.probewochtUeberspringen || false} onChange={e => update("probewochtUeberspringen", e.target.checked)} className="w-4 h-4 accent-[#029fde]" />
+              <input type="checkbox" checked={buchung.probewochtUeberspringen || false} onChange={e => update("probewochtUeberspringen", e.target.checked)} className="w-4 h-4 accent-[#0176d3]" />
               <span className="text-sm">Probewoche überspringen</span>
             </label>
             <label className="flex items-center gap-3 cursor-pointer mt-2">
-              <input type="checkbox" checked={buchung.istProbewoche || false} onChange={e => update("istProbewoche", e.target.checked)} className="w-4 h-4 accent-[#029fde]" />
+              <input type="checkbox" checked={buchung.istProbewoche || false} onChange={e => update("istProbewoche", e.target.checked)} className="w-4 h-4 accent-[#0176d3]" />
               <span className="text-sm">Ist Probewoche</span>
             </label>
           </div>

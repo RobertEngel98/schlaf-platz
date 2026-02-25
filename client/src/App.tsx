@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
+import TopNavBar from "./components/TopNavBar";
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import AccountsPage from "./pages/AccountsPage";
@@ -64,8 +64,8 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar onLogout={handleLogout} />
+    <div className="flex flex-col h-screen overflow-hidden">
+      <TopNavBar onLogout={handleLogout} />
       <main className="flex-1 bg-gray-50 overflow-hidden flex flex-col">
         <Routes>
           <Route path="/" element={<Dashboard />} />

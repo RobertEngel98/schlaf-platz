@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Filter, Plus, X, ChevronDown } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { X, Plus, Trash2 } from "lucide-react";
 import type { FilterCondition } from "../lib/api";
 
 export interface FilterField {
@@ -15,18 +15,21 @@ interface FilterPanelProps {
   onChange: (filters: FilterCondition[]) => void;
   logic: "AND" | "OR";
   onLogicChange: (logic: "AND" | "OR") => void;
+  isOpen: boolean;
+  onClose: () => void;
+  entityLabel?: string;
 }
 
 const OPERATORS: Record<string, { label: string; types: string[] }> = {
-  equals: { label: "ist gleich", types: ["text", "number", "date", "select", "boolean"] },
-  not_equals: { label: "ist nicht gleich", types: ["text", "number", "date", "select"] },
-  contains: { label: "enthält", types: ["text"] },
-  not_contains: { label: "enthält nicht", types: ["text"] },
-  starts_with: { label: "beginnt mit", types: ["text"] },
-  greater_than: { label: "größer als", types: ["number", "date"] },
-  less_than: { label: "kleiner als", types: ["number", "date"] },
-  is_empty: { label: "ist leer", types: ["text", "number", "date", "select"] },
-  is_not_empty: { label: "ist nicht leer", types: ["text", "number", "date", "select"] },
+  equals: { label: "equals", types: ["text", "number", "date", "select", "boolean"] },
+  not_equals: { label: "not equal to", types: ["text", "number", "date", "select"] },
+  contains: { label: "contains", types: ["text"] },
+  not_contains: { label: "does not contain", types: ["text"] },
+  starts_with: { label: "starts with", types: ["text"] },
+  greater_than: { label: "greater or equal", types: ["number", "date"] },
+  less_than: { label: "less than", types: ["number", "date"] },
+  is_empty: { label: "is empty", types: ["text", "number", "date", "select"] },
+  is_not_empty: { label: "is not empty", types: ["text", "number", "date", "select"] },
 };
 
 function getOperatorsForType(type: string) {
@@ -35,37 +38,58 @@ function getOperatorsForType(type: string) {
     .map(([k, v]) => ({ value: k, label: v.label }));
 }
 
+const noValueOperators = ["is_empty", "is_not_empty"];
+
 export default function FilterPanel({
   fields,
   filters,
   onChange,
   logic,
   onLogicChange,
+  isOpen,
+  onClose,
+  entityLabel = "Datensätze",
 }: FilterPanelProps) {
-  const [isOpen, setIsOpen] = useState(filters.length > 0);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newField, setNewField] = useState(fields[0]?.key || "");
+  const [newOperator, setNewOperator] = useState("contains");
+  const [newValue, setNewValue] = useState("");
+  const [showLogicEditor, setShowLogicEditor] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowAddForm(false);
+      setShowLogicEditor(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const fieldDef = fields.find((f) => f.key === newField);
+    const ops = getOperatorsForType(fieldDef?.type || "text");
+    if (!ops.find((o) => o.value === newOperator)) {
+      setNewOperator(ops[0]?.value || "equals");
+    }
+    setNewValue("");
+  }, [newField]);
 
   const addFilter = () => {
-    const firstField = fields[0];
-    if (!firstField) return;
+    if (!newField) return;
+    const needsVal = !noValueOperators.includes(newOperator);
+    if (needsVal && !newValue) return;
+
     onChange([
       ...filters,
-      { field: firstField.key, operator: "contains", value: "" },
+      {
+        field: newField,
+        operator: newOperator as FilterCondition["operator"],
+        value: needsVal ? newValue : "",
+      },
     ]);
-    setIsOpen(true);
-  };
-
-  const updateFilter = (idx: number, patch: Partial<FilterCondition>) => {
-    const updated = filters.map((f, i) => (i === idx ? { ...f, ...patch } : f));
-    // Reset operator when field changes
-    if (patch.field) {
-      const field = fields.find((f) => f.key === patch.field);
-      const ops = getOperatorsForType(field?.type || "text");
-      if (!ops.find((o) => o.value === updated[idx].operator)) {
-        updated[idx].operator = ops[0]?.value as FilterCondition["operator"] || "equals";
-      }
-      updated[idx].value = "";
-    }
-    onChange(updated);
+    setShowAddForm(false);
+    setNewField(fields[0]?.key || "");
+    setNewOperator("contains");
+    setNewValue("");
   };
 
   const removeFilter = (idx: number) => {
@@ -76,168 +100,265 @@ export default function FilterPanel({
     onChange([]);
   };
 
-  const noValueOperators = ["is_empty", "is_not_empty"];
+  const getFieldLabel = (fieldKey: string) =>
+    fields.find((f) => f.key === fieldKey)?.label || fieldKey;
+
+  const getOperatorLabel = (op: string) =>
+    OPERATORS[op]?.label || op;
+
+  const getValueDisplay = (filter: FilterCondition) => {
+    if (noValueOperators.includes(filter.operator)) return "";
+    const fieldDef = fields.find((f) => f.key === filter.field);
+    if (fieldDef?.type === "select" && fieldDef.options) {
+      const opt = fieldDef.options.find((o) => o.value === filter.value);
+      return opt?.label || filter.value;
+    }
+    if (fieldDef?.type === "boolean") {
+      return filter.value === "true" ? "Ja" : "Nein";
+    }
+    return filter.value;
+  };
+
+  const newFieldDef = fields.find((f) => f.key === newField);
+  const newFieldOps = getOperatorsForType(newFieldDef?.type || "text");
+  const newNeedsValue = !noValueOperators.includes(newOperator);
 
   return (
-    <div className="border-b border-gray-200 bg-white">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2.5">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900"
-        >
-          <Filter className="w-4 h-4" />
-          Filter
-          {filters.length > 0 && (
-            <span className="ml-1 px-1.5 py-0.5 text-xs font-semibold bg-brand text-white rounded-full">
-              {filters.length}
-            </span>
-          )}
-          <ChevronDown
-            className={`w-3.5 h-3.5 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          />
-        </button>
-        <div className="flex items-center gap-2">
-          {filters.length > 0 && (
-            <button
-              onClick={clearAll}
-              className="text-xs text-gray-500 hover:text-red-600"
-            >
-              Alle entfernen
-            </button>
-          )}
+    <>
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Slide-out panel */}
+      <div
+        ref={panelRef}
+        className={`fixed top-0 right-0 h-full w-[320px] max-w-full bg-white shadow-xl z-50 flex flex-col transform transition-transform duration-300 ease-in-out border-l border-[#e5e5e5] ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5]">
+          <h2 className="text-[16px] font-bold text-[#181818]">Filters</h2>
           <button
-            onClick={addFilter}
-            className="flex items-center gap-1 text-xs font-medium text-brand hover:text-brand-dark"
+            onClick={onClose}
+            className="group relative p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
+            title="Close Filters"
           >
-            <Plus className="w-3.5 h-3.5" />
-            Filter hinzufügen
+            <X className="w-5 h-5" />
+            <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[11px] font-medium text-white bg-[#0176d3] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              Close Filters
+            </span>
           </button>
         </div>
-      </div>
 
-      {/* Filter rows */}
-      {isOpen && filters.length > 0 && (
-        <div className="px-4 pb-3 space-y-2">
-          {/* AND/OR toggle */}
-          {filters.length > 1 && (
-            <div className="flex items-center gap-1 mb-2">
-              <span className="text-xs text-gray-500 mr-1">Logik:</span>
-              <button
-                onClick={() => onLogicChange("AND")}
-                className={`px-2 py-0.5 text-xs font-medium rounded ${
-                  logic === "AND"
-                    ? "bg-brand text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                UND
-              </button>
-              <button
-                onClick={() => onLogicChange("OR")}
-                className={`px-2 py-0.5 text-xs font-medium rounded ${
-                  logic === "OR"
-                    ? "bg-brand text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                ODER
-              </button>
+        {/* Filter by Owner */}
+        <div className="mx-4 mt-4 mb-3 border border-[#e5e5e5] rounded-lg p-3 bg-white">
+          <p className="text-[12px] font-medium text-[#706e6b]">Filter by Owner</p>
+          <p className="text-[13px] text-[#181818] mt-0.5">All {entityLabel.toLowerCase()}</p>
+        </div>
+
+        {/* Matching logic text */}
+        <div className="px-4 pb-2">
+          <p className="text-[12px] text-[#706e6b] italic">
+            {logic === "AND"
+              ? "Matching all of these filters"
+              : "Matching any of these filters"}
+          </p>
+        </div>
+
+        {/* Filter list */}
+        <div className="flex-1 overflow-y-auto px-4 py-2">
+          {filters.length === 0 && !showAddForm && (
+            <div className="text-center py-8 text-[13px] text-[#c9c9c9]">
+              Keine Filter aktiv
             </div>
           )}
 
-          {filters.map((filter, idx) => {
-            const fieldDef = fields.find((f) => f.key === filter.field);
-            const operators = getOperatorsForType(fieldDef?.type || "text");
-            const needsValue = !noValueOperators.includes(filter.operator);
+          <div className="space-y-3">
+            {filters.map((filter, idx) => {
+              const valueDisplay = getValueDisplay(filter);
+              const isNoValue = noValueOperators.includes(filter.operator);
+              return (
+                <div key={idx}>
+                  <div className="relative border border-[#e5e5e5] rounded-lg p-3 bg-white hover:shadow-sm transition-shadow group">
+                    <div className="pr-7">
+                      <p className="text-[13px] font-semibold text-[#181818] leading-tight">
+                        {getFieldLabel(filter.field)}
+                      </p>
+                      <p className="text-[12px] text-[#706e6b] mt-0.5">
+                        {getOperatorLabel(filter.operator)}
+                        {!isNoValue && valueDisplay && (
+                          <>
+                            {"  "}
+                            <span className="font-medium text-[#181818]">{valueDisplay}</span>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => removeFilter(idx)}
+                      className="absolute top-3 right-3 text-[#c9c9c9] hover:text-[#ea001e] transition-colors"
+                      title="Entfernen"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
-            return (
-              <div key={idx} className="flex items-center gap-2">
-                {/* Logic connector */}
-                {idx > 0 && (
-                  <span className="text-xs font-medium text-gray-400 w-8 text-center shrink-0">
-                    {logic === "AND" ? "UND" : "ODER"}
-                  </span>
-                )}
-                {idx === 0 && filters.length > 1 && <span className="w-8 shrink-0" />}
-
-                {/* Field */}
+          {/* Add filter form */}
+          {showAddForm && (
+            <div className="mt-3 border-2 border-[#fe9339] rounded-lg p-3 bg-[#fef3e0]">
+              <div className="mb-2">
+                <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
+                  Field
+                </label>
                 <select
-                  value={filter.field}
-                  onChange={(e) => updateFilter(idx, { field: e.target.value })}
-                  className="flex-1 min-w-[120px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-md bg-white focus:ring-1 focus:ring-brand focus:border-brand"
+                  value={newField}
+                  onChange={(e) => setNewField(e.target.value)}
+                  className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
                 >
                   {fields.map((f) => (
-                    <option key={f.key} value={f.key}>
-                      {f.label}
-                    </option>
+                    <option key={f.key} value={f.key}>{f.label}</option>
                   ))}
                 </select>
+              </div>
 
-                {/* Operator */}
+              <div className="mb-2">
+                <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
+                  Operator
+                </label>
                 <select
-                  value={filter.operator}
-                  onChange={(e) =>
-                    updateFilter(idx, {
-                      operator: e.target.value as FilterCondition["operator"],
-                    })
-                  }
-                  className="w-[140px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-md bg-white focus:ring-1 focus:ring-brand focus:border-brand"
+                  value={newOperator}
+                  onChange={(e) => setNewOperator(e.target.value)}
+                  className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
                 >
-                  {operators.map((op) => (
-                    <option key={op.value} value={op.value}>
-                      {op.label}
-                    </option>
+                  {newFieldOps.map((op) => (
+                    <option key={op.value} value={op.value}>{op.label}</option>
                   ))}
                 </select>
+              </div>
 
-                {/* Value */}
-                {needsValue && (
-                  <>
-                    {fieldDef?.type === "select" || fieldDef?.type === "boolean" ? (
-                      <select
-                        value={filter.value}
-                        onChange={(e) => updateFilter(idx, { value: e.target.value })}
-                        className="flex-1 min-w-[120px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-md bg-white focus:ring-1 focus:ring-brand focus:border-brand"
-                      >
-                        <option value="">-- Auswählen --</option>
-                        {fieldDef?.type === "boolean" ? (
-                          <>
-                            <option value="true">Ja</option>
-                            <option value="false">Nein</option>
-                          </>
-                        ) : (
-                          fieldDef?.options?.map((opt) => (
-                            <option key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </option>
-                          ))
-                        )}
-                      </select>
-                    ) : (
-                      <input
-                        type={fieldDef?.type === "date" ? "date" : fieldDef?.type === "number" ? "number" : "text"}
-                        value={filter.value}
-                        onChange={(e) => updateFilter(idx, { value: e.target.value })}
-                        placeholder="Wert..."
-                        className="flex-1 min-w-[120px] px-2.5 py-1.5 text-sm border border-gray-300 rounded-md focus:ring-1 focus:ring-brand focus:border-brand"
-                      />
-                    )}
-                  </>
-                )}
+              {newNeedsValue && (
+                <div className="mb-3">
+                  <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
+                    Value
+                  </label>
+                  {newFieldDef?.type === "select" || newFieldDef?.type === "boolean" ? (
+                    <select
+                      value={newValue}
+                      onChange={(e) => setNewValue(e.target.value)}
+                      className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
+                    >
+                      <option value="">-- Auswählen --</option>
+                      {newFieldDef?.type === "boolean" ? (
+                        <>
+                          <option value="true">Ja</option>
+                          <option value="false">Nein</option>
+                        </>
+                      ) : (
+                        newFieldDef?.options?.map((opt) => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))
+                      )}
+                    </select>
+                  ) : (
+                    <input
+                      type={
+                        newFieldDef?.type === "date" ? "date"
+                          : newFieldDef?.type === "number" ? "number"
+                          : "text"
+                      }
+                      value={newValue}
+                      onChange={(e) => setNewValue(e.target.value)}
+                      placeholder="Wert eingeben..."
+                      className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") addFilter();
+                      }}
+                    />
+                  )}
+                </div>
+              )}
 
-                {/* Remove */}
+              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => removeFilter(idx)}
-                  className="p-1 text-gray-400 hover:text-red-500 shrink-0"
+                  onClick={() => {
+                    setShowAddForm(false);
+                    setNewValue("");
+                  }}
+                  className="px-3 py-1.5 text-[13px] font-medium text-[#706e6b] bg-white border border-[#c9c9c9] rounded hover:bg-[#f3f3f3] transition-colors"
                 >
-                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+                <button
+                  onClick={addFilter}
+                  className="px-3 py-1.5 text-[13px] font-medium text-white bg-[#0176d3] rounded hover:bg-[#014486] transition-colors"
+                >
+                  Save
                 </button>
               </div>
-            );
-          })}
+            </div>
+          )}
         </div>
-      )}
-    </div>
+
+        {/* Bottom actions */}
+        <div className="border-t border-[#e5e5e5] px-4 py-3">
+          <div className="flex items-center justify-between mb-2">
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="text-[13px] font-medium text-[#0176d3] hover:underline"
+            >
+              Add Filter
+            </button>
+            {filters.length > 0 && (
+              <button
+                onClick={clearAll}
+                className="text-[13px] font-medium text-[#0176d3] hover:underline"
+              >
+                Remove All
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={() => setShowLogicEditor(!showLogicEditor)}
+            className="text-[13px] font-medium text-[#0176d3] hover:underline"
+          >
+            Add Filter Logic
+          </button>
+          {showLogicEditor && (
+            <div className="mt-2 flex items-center gap-2">
+              <button
+                onClick={() => onLogicChange("AND")}
+                className={`px-3 py-1.5 text-[12px] font-bold rounded transition-colors ${
+                  logic === "AND"
+                    ? "bg-[#0176d3] text-white"
+                    : "bg-white text-[#706e6b] border border-[#c9c9c9] hover:bg-[#f3f3f3]"
+                }`}
+              >
+                AND
+              </button>
+              <button
+                onClick={() => onLogicChange("OR")}
+                className={`px-3 py-1.5 text-[12px] font-bold rounded transition-colors ${
+                  logic === "OR"
+                    ? "bg-[#0176d3] text-white"
+                    : "bg-white text-[#706e6b] border border-[#c9c9c9] hover:bg-[#f3f3f3]"
+                }`}
+              >
+                OR
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }

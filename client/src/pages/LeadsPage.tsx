@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { UserPlus, Building, Mail } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { UserPlus, Building, Mail, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -16,7 +16,7 @@ const allColumns: Column<Lead>[] = [
       <Link
         to={`/leads/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center shrink-0">
           <UserPlus className="w-4 h-4 text-emerald-600" />
@@ -154,6 +154,27 @@ const kanbanColumns: KanbanColumn[] = [
 ];
 
 export default function LeadsPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Lead>[] = [
+    {
+      label: "Bearbeiten",
+      icon: <Pencil className="w-3.5 h-3.5" />,
+      onClick: (row) => navigate(`/leads/${row.id}`),
+    },
+    {
+      label: "Löschen",
+      icon: <Trash2 className="w-3.5 h-3.5" />,
+      danger: true,
+      onClick: async (row) => {
+        if (confirm("Lead wirklich löschen?")) {
+          await leadsApi.delete(row.id);
+          window.location.reload();
+        }
+      },
+    },
+  ];
+
   const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
     try {
       await leadsApi.update(itemId, { status: newColumnKey } as any);
@@ -171,7 +192,9 @@ export default function LeadsPage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#2e844a"
       fetchData={(params) => leadsApi.list(params)}
+      rowActions={rowActions}
       kanbanColumns={kanbanColumns}
       kanbanField="status"
       getKanbanColumnKey={(item) => item.status}

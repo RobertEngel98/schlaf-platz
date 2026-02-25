@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Calendar } from "lucide-react";
-import { type Column } from "../components/DataTable";
+import { Link, useNavigate } from "react-router-dom";
+import { Calendar, Pencil, Trash2 } from "lucide-react";
+import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
@@ -30,7 +30,7 @@ const allColumns: Column<Buchung>[] = [
       <Link
         to={`/buchungen/${row.id}`}
         onClick={(e) => e.stopPropagation()}
-        className="flex items-center gap-3 hover:text-[#029fde]"
+        className="flex items-center gap-3 hover:text-[#0176d3]"
       >
         <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center shrink-0">
           <Calendar className="w-4 h-4 text-orange-600" />
@@ -175,6 +175,27 @@ const kanbanColumns: KanbanColumn[] = [
 ];
 
 export default function BuchungenPage() {
+  const navigate = useNavigate();
+
+  const rowActions: RowAction<Buchung>[] = [
+    {
+      label: "Bearbeiten",
+      icon: <Pencil className="w-3.5 h-3.5" />,
+      onClick: (row) => navigate(`/buchungen/${row.id}`),
+    },
+    {
+      label: "Löschen",
+      icon: <Trash2 className="w-3.5 h-3.5" />,
+      danger: true,
+      onClick: async (row) => {
+        if (confirm("Buchung wirklich löschen?")) {
+          await buchungenApi.delete(row.id);
+          window.location.reload();
+        }
+      },
+    },
+  ];
+
   const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
     try {
       await buchungenApi.update(itemId, { buchungsphase: newColumnKey } as any);
@@ -192,7 +213,9 @@ export default function BuchungenPage() {
       allColumns={allColumns}
       defaultVisibleColumns={defaultVisibleColumns}
       filterFields={filterFields}
+      entityIconColor="#f59e0b"
       fetchData={(params) => buchungenApi.list(params)}
+      rowActions={rowActions}
       kanbanColumns={kanbanColumns}
       kanbanField="buchungsphase"
       getKanbanColumnKey={(item) => item.buchungsphase}

@@ -124,7 +124,7 @@ export default function StundenerfassungPage() {
             {total} Einträge | Seite: {totalHours.toFixed(1)} Stunden
           </p>
         </div>
-        <button className="flex items-center gap-2 bg-[#029fde] hover:bg-[#0280b3] text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">
+        <button className="flex items-center gap-2 bg-[#0176d3] hover:bg-[#0280b3] text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-colors shadow-sm">
           <Plus className="w-4 h-4" />
           Neue Stunden
         </button>
@@ -138,7 +138,7 @@ export default function StundenerfassungPage() {
           placeholder="Mitarbeiter oder Beschreibung suchen..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#029fde]/20 focus:border-[#029fde]"
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0176d3]/20 focus:border-[#0176d3]"
         />
       </div>
 
