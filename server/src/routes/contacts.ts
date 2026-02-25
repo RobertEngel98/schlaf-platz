@@ -62,6 +62,10 @@ export default async function contactRoutes(app: FastifyInstance) {
     await db.delete(schema.activities).where(
       and(eq(schema.activities.entityType, "contact"), eq(schema.activities.entityId, id))
     );
+    // Unlink child records
+    await db.update(schema.tasks).set({ contactId: null }).where(eq(schema.tasks.contactId, id));
+    await db.update(schema.cases).set({ contactId: null }).where(eq(schema.cases.contactId, id));
+    await db.update(schema.buchungen).set({ contactId: null }).where(eq(schema.buchungen.contactId, id));
     await db.delete(schema.contacts).where(eq(schema.contacts.id, id));
     return { success: true };
   });

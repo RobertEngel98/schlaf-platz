@@ -257,10 +257,12 @@ export default async function leadsRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Lead nicht gefunden" });
       }
 
-      // Delete related activities first
+      // Delete related child records first
       await db.delete(schema.activities).where(
         and(eq(schema.activities.entityType, "lead"), eq(schema.activities.entityId, id))
       );
+      // Unlink tasks referencing this lead
+      await db.update(schema.tasks).set({ leadId: null }).where(eq(schema.tasks.leadId, id));
 
       await db.delete(schema.leads).where(eq(schema.leads.id, id));
 

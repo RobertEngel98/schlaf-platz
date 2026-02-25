@@ -199,10 +199,19 @@ export default async function accountsRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Account nicht gefunden" });
       }
 
-      // Delete related activities first
+      // Delete related child records first
       await db.delete(schema.activities).where(
         and(eq(schema.activities.entityType, "account"), eq(schema.activities.entityId, id))
       );
+      // Unlink child records referencing this account
+      await db.update(schema.contacts).set({ accountId: null }).where(eq(schema.contacts.accountId, id));
+      await db.update(schema.opportunities).set({ accountId: null }).where(eq(schema.opportunities.accountId, id));
+      await db.update(schema.buchungen).set({ accountId: null }).where(eq(schema.buchungen.accountId, id));
+      await db.update(schema.angebote).set({ accountId: null }).where(eq(schema.angebote.accountId, id));
+      await db.update(schema.tasks).set({ accountId: null }).where(eq(schema.tasks.accountId, id));
+      await db.update(schema.cases).set({ accountId: null }).where(eq(schema.cases.accountId, id));
+      await db.update(schema.unterkuenfte).set({ vermieterId: null }).where(eq(schema.unterkuenfte.vermieterId, id));
+      await db.delete(schema.vermieterUebersicht).where(eq(schema.vermieterUebersicht.accountId, id));
 
       await db.delete(schema.accounts).where(eq(schema.accounts.id, id));
 
