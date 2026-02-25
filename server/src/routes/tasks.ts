@@ -64,6 +64,9 @@ export default async function taskRoutes(app: FastifyInstance) {
   app.delete("/api/tasks/:id", async (req) => {
     const { id } = req.params as { id: string };
     const task = await db.select().from(schema.tasks).where(eq(schema.tasks.id, id)).get();
+    await db.delete(schema.activities).where(
+      and(eq(schema.activities.entityType, "task"), eq(schema.activities.entityId, id))
+    );
     await db.delete(schema.tasks).where(eq(schema.tasks.id, id));
 
     // Update task count on opportunity

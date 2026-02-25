@@ -7,8 +7,8 @@ def api(method, path, data=None, auth=True):
     cmd = ["curl", "-s", "-w", "\n%{http_code}", "-X", method, f"{B}{path}"]
     if auth:
         cmd += ["-b", f"token={TOKEN}"]
-    cmd += ["-H", "Content-Type: application/json"]
     if data:
+        cmd += ["-H", "Content-Type: application/json"]
         cmd += ["--data-raw", json.dumps(data)]
     r = subprocess.run(cmd, capture_output=True, text=True)
     lines = r.stdout.strip().rsplit("\n", 1)
@@ -50,7 +50,7 @@ c, d = api("GET", "/api/search?q=a")
 check("Suche (<2 Zeichen)", c, 400, d.get("error",""))
 c, d = api("GET", "/api/auth/me")
 check("Auth Check (/me)", c, 200, d.get("name",""))
-c, d = api("POST", "/api/auth/logout")
+c, d = api("POST", "/api/auth/logout", {})
 check("Logout", c, 200, f"success={d.get('success')}")
 
 print()
@@ -108,7 +108,11 @@ c, d = api("POST", "/api/angebote", {"name": "BtnAngebot", "status": "Entwurf"})
 check("Angebot Neu", c, 200, d.get("id","")[:10])
 agid = d.get("id","")
 
-c, d = api("POST", "/api/unterkuenfte", {"name": "BtnUnterkunft"})
+c, d = api("POST", "/api/freelancers", {"name": "TestFreelancer"})
+check("Freelancer Neu (Hilfsdaten)", c, 200, d.get("id","")[:10])
+frid = d.get("id","")
+
+c, d = api("POST", "/api/unterkuenfte", {"name": "BtnUnterkunft", "vermieterId": aid, "freelancerId": frid})
 check("Unterkunft Neu", c, 201, d.get("id","")[:10])
 uiid = d.get("id","")
 
@@ -136,7 +140,7 @@ c, d = api("PUT", f"/api/angebote/{agid}", {"status": "Gesendet"})
 check("Angebot speichern", c, 200, d.get("status",""))
 c, d = api("PUT", f"/api/unterkuenfte/{uiid}", {"name": "Updated UK"})
 check("Unterkunft speichern", c, 200, d.get("name",""))
-c, d = api("PUT", f"/api/stundenerfassung/{sid}", {"stunden": 4.0})
+c, d = api("PUT", f"/api/stundenerfassung/{sid}", {"stunden": 4.0, "datum": "2026-02-25", "fuerWen": "Test", "userId": "admin002"})
 check("Stundenerfassung speichern", c, 200, f"stunden={d.get('stunden','')}")
 
 print()
@@ -213,7 +217,9 @@ for eid, label, path in [
     (oid, "Opportunity", "opportunities"),
     (kid, "Kontakt", "contacts"),
     (uiid, "Unterkunft", "unterkuenfte"),
+    (lid, "Lead", "leads"),
     (aid, "Account", "accounts"),
+    (frid, "Freelancer", "freelancers"),
 ]:
     c, d = api("DELETE", f"/api/{path}/{eid}")
     check(f"{label} loeschen", c, 200)

@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { db, schema } from "../db/index.js";
-import { eq, like, or, desc, sql } from "drizzle-orm";
+import { eq, like, or, desc, sql, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 export default async function contactRoutes(app: FastifyInstance) {
@@ -59,6 +59,9 @@ export default async function contactRoutes(app: FastifyInstance) {
   // DELETE
   app.delete("/api/contacts/:id", async (req) => {
     const { id } = req.params as { id: string };
+    await db.delete(schema.activities).where(
+      and(eq(schema.activities.entityType, "contact"), eq(schema.activities.entityId, id))
+    );
     await db.delete(schema.contacts).where(eq(schema.contacts.id, id));
     return { success: true };
   });

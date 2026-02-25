@@ -345,7 +345,10 @@ export default async function buchungenRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Buchung nicht gefunden" });
       }
 
-      // Delete related files first
+      // Delete related activities and files first
+      await db.delete(schema.activities).where(
+        and(eq(schema.activities.entityType, "buchung"), eq(schema.activities.entityId, id))
+      );
       await db.delete(schema.bookingFiles).where(eq(schema.bookingFiles.buchungId, id));
 
       // Delete the booking

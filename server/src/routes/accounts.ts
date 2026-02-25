@@ -199,6 +199,11 @@ export default async function accountsRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Account nicht gefunden" });
       }
 
+      // Delete related activities first
+      await db.delete(schema.activities).where(
+        and(eq(schema.activities.entityType, "account"), eq(schema.activities.entityId, id))
+      );
+
       await db.delete(schema.accounts).where(eq(schema.accounts.id, id));
 
       return { success: true, message: "Account gelöscht" };

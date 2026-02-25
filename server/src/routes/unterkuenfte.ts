@@ -308,6 +308,11 @@ export default async function unterkuenfteRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Unterkunft nicht gefunden" });
       }
 
+      // Delete related activities first
+      await db.delete(schema.activities).where(
+        and(eq(schema.activities.entityType, "unterkunft"), eq(schema.activities.entityId, id))
+      );
+
       await db.delete(schema.unterkuenfte).where(eq(schema.unterkuenfte.id, id));
 
       // Update Vermieter account count

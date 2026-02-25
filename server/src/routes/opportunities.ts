@@ -254,7 +254,10 @@ export default async function opportunitiesRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Opportunity nicht gefunden" });
       }
 
-      // Delete related search timers first
+      // Delete related activities and search timers first
+      await db.delete(schema.activities).where(
+        and(eq(schema.activities.entityType, "opportunity"), eq(schema.activities.entityId, id))
+      );
       await db.delete(schema.searchTimers).where(eq(schema.searchTimers.opportunityId, id));
 
       await db.delete(schema.opportunities).where(eq(schema.opportunities.id, id));

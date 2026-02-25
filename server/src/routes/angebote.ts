@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { db, schema } from "../db/index.js";
-import { eq, like, or, desc, sql } from "drizzle-orm";
+import { eq, like, or, desc, sql, and } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
 export default async function angeboteRoutes(app: FastifyInstance) {
@@ -55,6 +55,9 @@ export default async function angeboteRoutes(app: FastifyInstance) {
   // DELETE
   app.delete("/api/angebote/:id", async (req) => {
     const { id } = req.params as { id: string };
+    await db.delete(schema.activities).where(
+      and(eq(schema.activities.entityType, "angebot"), eq(schema.activities.entityId, id))
+    );
     await db.delete(schema.angebote).where(eq(schema.angebote.id, id));
     return { success: true };
   });

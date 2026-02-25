@@ -52,6 +52,9 @@ export default async function caseRoutes(app: FastifyInstance) {
   // DELETE
   app.delete("/api/cases/:id", async (req) => {
     const { id } = req.params as { id: string };
+    await db.delete(schema.activities).where(
+      and(eq(schema.activities.entityType, "case"), eq(schema.activities.entityId, id))
+    );
     await db.delete(schema.cases).where(eq(schema.cases.id, id));
     return { success: true };
   });
