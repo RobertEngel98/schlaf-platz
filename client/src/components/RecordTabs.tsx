@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 
 export interface RecordTab {
   key: string;
@@ -10,10 +10,25 @@ export interface RecordTab {
 interface RecordTabsProps {
   tabs: RecordTab[];
   defaultTab?: string;
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
 }
 
-export default function RecordTabs({ tabs, defaultTab }: RecordTabsProps) {
-  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.key || "");
+export default function RecordTabs({ tabs, defaultTab, activeTab: controlledTab, onTabChange }: RecordTabsProps) {
+  const [internalTab, setInternalTab] = useState(defaultTab || tabs[0]?.key || "");
+
+  const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
+
+  useEffect(() => {
+    if (controlledTab !== undefined) {
+      setInternalTab(controlledTab);
+    }
+  }, [controlledTab]);
+
+  const handleTabChange = (tab: string) => {
+    setInternalTab(tab);
+    onTabChange?.(tab);
+  };
 
   const activeContent = tabs.find((t) => t.key === activeTab)?.content;
 
@@ -25,7 +40,7 @@ export default function RecordTabs({ tabs, defaultTab }: RecordTabsProps) {
           {tabs.map((tab) => (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => handleTabChange(tab.key)}
               className={`
                 relative px-3 sm:px-4 py-3 text-[13px] font-medium transition-colors whitespace-nowrap
                 ${

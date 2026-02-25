@@ -23,6 +23,7 @@ export default function LeadDetailPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("details");
 
   useEffect(() => {
     if (!isNew && id) {
@@ -204,7 +205,7 @@ export default function LeadDetailPage() {
               body: JSON.stringify({ entityType: "lead", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
             }).then(() => {});
           }},
-          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => setActiveTab("activity") },
           { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
             fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
               body: JSON.stringify({ entityType: "lead", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
@@ -216,6 +217,8 @@ export default function LeadDetailPage() {
       {/* Record Tabs */}
       <RecordTabs
         defaultTab="details"
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         tabs={[
           { key: "details", label: "Details", content: detailsContent },
           { key: "related", label: "Verknüpft", content: relatedContent },

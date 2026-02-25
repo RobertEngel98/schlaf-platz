@@ -29,6 +29,7 @@ export default function TaskDetailPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("details");
 
   useEffect(() => {
     if (!isNew && id) {
@@ -226,7 +227,7 @@ export default function TaskDetailPage() {
               body: JSON.stringify({ entityType: "task", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
             }).then(() => {});
           }},
-          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => setActiveTab("activity") },
           { key: "task", label: "Neue Aufgabe", icon: <CheckSquare className="w-4 h-4" />, onClick: () => {
             fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
               body: JSON.stringify({ entityType: "task", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
@@ -236,7 +237,7 @@ export default function TaskDetailPage() {
       )}
 
       {/* Record Tabs */}
-      <RecordTabs tabs={tabs} defaultTab="details" />
+      <RecordTabs tabs={tabs} defaultTab="details" activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 }

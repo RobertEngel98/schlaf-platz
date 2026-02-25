@@ -30,6 +30,7 @@ export default function CaseDetailPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("details");
   const [accounts, setAccounts] = useState<any[]>([]);
   const [contacts, setContacts] = useState<any[]>([]);
 
@@ -295,7 +296,7 @@ export default function CaseDetailPage() {
               body: JSON.stringify({ entityType: "case", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
             }).then(() => {});
           }},
-          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => setActiveTab("activity") },
           { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
             fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
               body: JSON.stringify({ entityType: "case", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
@@ -305,7 +306,7 @@ export default function CaseDetailPage() {
       )}
 
       {/* Record Tabs */}
-      <RecordTabs tabs={tabs} defaultTab="details" />
+      <RecordTabs tabs={tabs} defaultTab="details" activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 }

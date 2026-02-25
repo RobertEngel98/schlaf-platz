@@ -21,6 +21,7 @@ export default function UnterkunftDetailPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("details");
   const [vermieter, setVermieter] = useState<any[]>([]);
   const [freelancers, setFreelancers] = useState<any[]>([]);
 
@@ -319,7 +320,7 @@ export default function UnterkunftDetailPage() {
               body: JSON.stringify({ entityType: "unterkunft", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
             }).then(() => {});
           }},
-          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => setActiveTab("activity") },
           { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
             fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
               body: JSON.stringify({ entityType: "unterkunft", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
@@ -330,6 +331,8 @@ export default function UnterkunftDetailPage() {
 
       <RecordTabs
         defaultTab="details"
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
         tabs={[
           { key: "details", label: "Details", content: detailsContent },
           { key: "ausstattung", label: "Ausstattung", content: ausstattungContent },

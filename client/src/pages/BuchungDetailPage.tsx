@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, Save, Trash2, Calendar, Euro, User, Phone, MessageSquare, CheckSquare as CheckSquareIcon } from "lucide-react";
 import ActivityTimeline from "../components/ActivityTimeline";
@@ -24,6 +24,7 @@ export default function BuchungDetailPage() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const activityRef = useRef<HTMLDivElement>(null);
   const [unterkuenfte, setUnterkuenfte] = useState<any[]>([]);
   const [accounts, setAccounts] = useState<any[]>([]);
 
@@ -107,7 +108,7 @@ export default function BuchungDetailPage() {
                 body: JSON.stringify({ entityType: "buchung", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
               }).then(() => {});
             }},
-            { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+            { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => activityRef.current?.scrollIntoView({ behavior: "smooth" }) },
             { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
               fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
                 body: JSON.stringify({ entityType: "buchung", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
@@ -294,7 +295,7 @@ export default function BuchungDetailPage() {
 
       {/* Aktivitäten */}
       {!isNew && id && (
-        <div className="mt-6">
+        <div className="mt-6" ref={activityRef}>
           <ActivityTimeline entityType="buchung" entityId={id} />
         </div>
       )}
