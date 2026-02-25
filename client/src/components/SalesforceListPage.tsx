@@ -16,6 +16,9 @@ import {
   Check,
   BarChart3,
   ArrowUpDown,
+  Pencil,
+  Copy,
+  Trash2,
 } from "lucide-react";
 import DataTable, { type Column, type RowAction } from "./DataTable";
 import FilterPanel, { type FilterField } from "./FilterPanel";
@@ -124,6 +127,9 @@ export default function SalesforceListPage<T extends { id: string }>({
 
   // Column picker state (triggered from settings menu)
   const [showColumnPickerFromMenu, setShowColumnPickerFromMenu] = useState(false);
+
+  // Chart toggle
+  const [showChart, setShowChart] = useState(false);
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -501,16 +507,56 @@ export default function SalesforceListPage<T extends { id: string }>({
                   Ansicht speichern
                 </button>
                 {currentView && (
-                  <button
-                    onClick={() => {
-                      setEditingView(currentView);
-                      setShowViewModal(true);
-                      setShowSettingsDropdown(false);
-                    }}
-                    className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
-                  >
-                    Ansicht bearbeiten
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        setEditingView(currentView);
+                        setShowViewModal(true);
+                        setShowSettingsDropdown(false);
+                      }}
+                      className="w-full flex items-center gap-2.5 text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                    >
+                      <Pencil className="w-3.5 h-3.5 text-[#706e6b]" />
+                      Ansicht bearbeiten
+                    </button>
+                    <button
+                      onClick={async () => {
+                        try {
+                          const cloned = await listViewsApi.create({
+                            entity,
+                            name: `${currentView.name} (Kopie)`,
+                            isDefault: false,
+                            isPinned: false,
+                            filters,
+                            visibleColumns,
+                            sortField: sortKey,
+                            sortOrder: sortDir,
+                            viewMode,
+                            kanbanField: kanbanField || undefined,
+                          });
+                          setViews((v) => [...v, cloned]);
+                          setCurrentView(cloned);
+                        } catch {}
+                        setShowSettingsDropdown(false);
+                      }}
+                      className="w-full flex items-center gap-2.5 text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
+                    >
+                      <Copy className="w-3.5 h-3.5 text-[#706e6b]" />
+                      Ansicht duplizieren
+                    </button>
+                    <button
+                      onClick={async () => {
+                        if (confirm(`Ansicht "${currentView.name}" wirklich löschen?`)) {
+                          await handleDeleteView(currentView);
+                        }
+                        setShowSettingsDropdown(false);
+                      }}
+                      className="w-full flex items-center gap-2.5 text-left px-4 py-2 text-[13px] text-[#ea001e] hover:bg-red-50"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Ansicht löschen
+                    </button>
+                  </>
                 )}
                 <div className="border-t border-[#e5e5e5]" />
                 <button
@@ -610,12 +656,25 @@ export default function SalesforceListPage<T extends { id: string }>({
             />
           )}
 
-          {/* Charts placeholder */}
+          {/* Charts toggle */}
           <button
-            className="p-2 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
-            title="Diagramm"
+            onClick={() => setShowChart(!showChart)}
+            className={`p-2 rounded transition-colors ${
+              showChart
+                ? "text-[#0176d3] bg-[#eef4ff] hover:bg-[#d8e6fe]"
+                : "text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3]"
+            }`}
+            title={showChart ? "Diagramm ausblenden" : "Diagramm anzeigen"}
           >
             <BarChart3 className="w-4 h-4" />
+          </button>
+
+          {/* Inline Edit (disabled indicator) */}
+          <button
+            className="p-2 rounded text-[#c9c9c9] cursor-not-allowed"
+            title="Inline-Bearbeitung ist deaktiviert. Filtern Sie nach einem Datensatztyp zum Aktivieren."
+          >
+            <Pencil className="w-4 h-4" />
           </button>
 
           {/* Separator */}
@@ -672,7 +731,56 @@ export default function SalesforceListPage<T extends { id: string }>({
       />
 
       {/* ---- CONTENT AREA ---- */}
-      <div className="flex-1 overflow-hidden bg-[#f3f3f3] flex">
+      <div className="flex-1 overflow-hidden bg-[#f3f3f3] flex flex-col">
+        {/* ---- CHART AREA ---- */}
+        {showChart && displayedData.length > 0 && (
+          <div className="mx-4 mt-4 bg-white border border-[#e5e5e5] rounded-lg p-4 shrink-0">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-[13px] font-bold text-[#181818]">
+                {entityLabelPlural} – Übersicht
+              </h3>
+              <button
+                onClick={() => setShowChart(false)}
+                className="p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3]"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <div className="flex items-end gap-1 h-[120px]">
+              {(() => {
+                const statusCol = allColumns.find(c =>
+                  ["status", "stage", "buchungsphase", "priority", "recordType"].includes(c.key)
+                );
+                if (!statusCol) return <p className="text-[12px] text-[#706e6b]">Kein Gruppierungsfeld verfügbar</p>;
+                const counts: Record<string, number> = {};
+                displayedData.forEach((item) => {
+                  const val = String((item as Record<string, any>)[statusCol.key] || "Unbekannt");
+                  counts[val] = (counts[val] || 0) + 1;
+                });
+                const entries = Object.entries(counts);
+                const maxCount = Math.max(...entries.map(([, c]) => c), 1);
+                const colors = ["#0176d3", "#2e844a", "#7b64ff", "#f59e0b", "#ea001e", "#706e6b", "#e8780a", "#0d9dda"];
+                return entries.map(([label, count], i) => (
+                  <div key={label} className="flex-1 flex flex-col items-center gap-1">
+                    <span className="text-[10px] font-medium text-[#181818]">{count}</span>
+                    <div
+                      className="w-full rounded-t"
+                      style={{
+                        height: `${Math.max((count / maxCount) * 100, 8)}px`,
+                        backgroundColor: colors[i % colors.length],
+                      }}
+                    />
+                    <span className="text-[10px] text-[#706e6b] truncate max-w-full text-center" title={label}>
+                      {label}
+                    </span>
+                  </div>
+                ));
+              })()}
+            </div>
+          </div>
+        )}
+
+        <div className="flex-1 overflow-hidden flex">
         {/* Table view */}
         {viewMode === "table" && (
           <div className="flex-1 overflow-auto p-4">
@@ -801,6 +909,7 @@ export default function SalesforceListPage<T extends { id: string }>({
             </div>
           </>
         )}
+        </div>
       </div>
 
       {/* ---- COLUMN PICKER MODAL (from settings menu) ---- */}
