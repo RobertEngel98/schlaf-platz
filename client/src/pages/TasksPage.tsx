@@ -49,7 +49,7 @@ interface Task {
 const allColumns: Column<Task>[] = [
   {
     key: "subject",
-    header: "Betreff",
+    header: "Aufgabenbetreff",
     sortable: true,
     render: (row) => (
       <Link
@@ -117,12 +117,31 @@ const allColumns: Column<Task>[] = [
     },
   },
   {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -155,6 +174,7 @@ const filterFields: FilterField[] = [
   },
   { key: "subject", label: "Betreff", type: "text" },
   { key: "dueDate", label: "Fällig am", type: "date" },
+  { key: "description", label: "Beschreibung", type: "text" },
 ];
 
 const kanbanColumns: KanbanColumn[] = [

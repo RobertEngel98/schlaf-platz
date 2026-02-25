@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Building2, Pencil, Trash2 } from "lucide-react";
 import { type Column, type RowAction } from "../components/DataTable";
-import Badge from "../components/Badge";
+import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
 import { accountsApi, type Account } from "../lib/api";
@@ -14,7 +14,7 @@ const recordTypeLabels: Record<string, string> = {
 const allColumns: Column<Account>[] = [
   {
     key: "name",
-    header: "Name",
+    header: "Accountname",
     sortable: true,
     render: (row) => (
       <Link
@@ -31,7 +31,8 @@ const allColumns: Column<Account>[] = [
   },
   {
     key: "recordType",
-    header: "Typ",
+    header: "Datensatztyp",
+    sortable: true,
     render: (row) => (
       <Badge variant={row.recordType === "Account_Vermieter" ? "purple" : "info"}>
         {recordTypeLabels[row.recordType] || row.recordType}
@@ -50,20 +51,73 @@ const allColumns: Column<Account>[] = [
     render: (row) => <span className="text-gray-600">{row.email || "---"}</span>,
   },
   {
+    key: "website",
+    header: "Website",
+    render: (row) =>
+      row.website ? (
+        <span className="text-[#0176d3] truncate max-w-[200px] inline-block">{row.website}</span>
+      ) : (
+        <span className="text-gray-400">---</span>
+      ),
+  },
+  {
+    key: "industry",
+    header: "Branche",
+    sortable: true,
+    render: (row) => <span className="text-gray-600">{row.industry || "---"}</span>,
+  },
+  {
+    key: "billingStreet",
+    header: "Straße",
+    render: (row) => <span className="text-gray-600">{row.billingStreet || "---"}</span>,
+  },
+  {
+    key: "billingPostalCode",
+    header: "PLZ",
+    render: (row) => <span className="text-gray-600">{row.billingPostalCode || "---"}</span>,
+  },
+  {
     key: "billingCity",
     header: "Stadt",
     sortable: true,
     render: (row) => <span className="text-gray-600">{row.billingCity || "---"}</span>,
   },
   {
-    key: "industry",
-    header: "Branche",
-    render: (row) => <span className="text-gray-600">{row.industry || "---"}</span>,
+    key: "billingState",
+    header: "Bundesland",
+    render: (row) => <span className="text-gray-600">{row.billingState || "---"}</span>,
   },
   {
-    key: "website",
-    header: "Website",
-    render: (row) => <span className="text-gray-600">{row.website || "---"}</span>,
+    key: "billingCountry",
+    header: "Land",
+    render: (row) => <span className="text-gray-600">{row.billingCountry || "---"}</span>,
+  },
+  {
+    key: "vermieterNummer",
+    header: "Vermieter-Nr.",
+    render: (row) => <span className="text-gray-600">{row.vermieterNummer || "---"}</span>,
+  },
+  {
+    key: "vermieterStatus",
+    header: "Vermieter Status",
+    render: (row) => row.vermieterStatus
+      ? <Badge variant={getStatusVariant(row.vermieterStatus)}>{row.vermieterStatus}</Badge>
+      : <span className="text-gray-400">---</span>,
+  },
+  {
+    key: "steuerNummer",
+    header: "Steuernummer",
+    render: (row) => <span className="text-gray-600">{row.steuerNummer || "---"}</span>,
+  },
+  {
+    key: "iban",
+    header: "IBAN",
+    render: (row) => <span className="text-gray-600 text-xs">{row.iban || "---"}</span>,
+  },
+  {
+    key: "bankName",
+    header: "Bank",
+    render: (row) => <span className="text-gray-600">{row.bankName || "---"}</span>,
   },
   {
     key: "anzahlBuchungen",
@@ -80,12 +134,31 @@ const allColumns: Column<Account>[] = [
     className: "text-right",
   },
   {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -103,18 +176,31 @@ const defaultVisibleColumns = [
 const filterFields: FilterField[] = [
   {
     key: "recordType",
-    label: "Typ",
+    label: "Datensatztyp",
     type: "select",
     options: [
       { value: "Account_Standart", label: "Kunde" },
       { value: "Account_Vermieter", label: "Vermieter" },
     ],
   },
-  { key: "name", label: "Name", type: "text" },
+  {
+    key: "vermieterStatus",
+    label: "Vermieter Status",
+    type: "select",
+    options: [
+      { value: "Aktiv", label: "Aktiv" },
+      { value: "Inaktiv", label: "Inaktiv" },
+      { value: "Gesperrt", label: "Gesperrt" },
+    ],
+  },
+  { key: "name", label: "Accountname", type: "text" },
   { key: "email", label: "E-Mail", type: "text" },
   { key: "phone", label: "Telefon", type: "text" },
   { key: "billingCity", label: "Stadt", type: "text" },
+  { key: "billingPostalCode", label: "PLZ", type: "text" },
+  { key: "billingState", label: "Bundesland", type: "text" },
   { key: "industry", label: "Branche", type: "text" },
+  { key: "vermieterNummer", label: "Vermieter-Nr.", type: "text" },
   { key: "anzahlBuchungen", label: "Buchungen", type: "number" },
   { key: "anzahlUnterkuenfte", label: "Unterkünfte", type: "number" },
 ];

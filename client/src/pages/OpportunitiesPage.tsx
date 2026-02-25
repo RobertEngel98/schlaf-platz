@@ -15,7 +15,7 @@ const fmt = (n?: number) =>
 const allColumns: Column<Opportunity>[] = [
   {
     key: "name",
-    header: "Name",
+    header: "Opportunity-Name",
     sortable: true,
     render: (row) => (
       <Link
@@ -47,7 +47,7 @@ const allColumns: Column<Opportunity>[] = [
   },
   {
     key: "probability",
-    header: "Wahrscheinl.",
+    header: "Wahrscheinlichkeit",
     sortable: true,
     render: (row) => (
       <div className="flex items-center gap-2">
@@ -67,12 +67,40 @@ const allColumns: Column<Opportunity>[] = [
     sortable: true,
     render: (row) =>
       row.closeDate ? (
-        <span className="text-gray-600">
+        <span className={`text-gray-600 ${new Date(row.closeDate) < new Date() && row.stage !== "Gewonnen" && row.stage !== "Verloren" ? "text-red-600 font-medium" : ""}`}>
           {new Date(row.closeDate).toLocaleDateString("de-DE")}
         </span>
       ) : (
         <span className="text-gray-400">---</span>
       ),
+  },
+  {
+    key: "searchStartDate",
+    header: "Suchbeginn",
+    sortable: true,
+    render: (row) =>
+      row.searchStartDate ? (
+        <span className="text-gray-600">{new Date(row.searchStartDate).toLocaleDateString("de-DE")}</span>
+      ) : (
+        <span className="text-gray-400">---</span>
+      ),
+  },
+  {
+    key: "searchEndDate",
+    header: "Suchende",
+    sortable: true,
+    render: (row) =>
+      row.searchEndDate ? (
+        <span className="text-gray-600">{new Date(row.searchEndDate).toLocaleDateString("de-DE")}</span>
+      ) : (
+        <span className="text-gray-400">---</span>
+      ),
+  },
+  {
+    key: "searchTimeMinutes",
+    header: "Suchzeit (Min.)",
+    render: (row) => <span className="text-gray-600">{row.searchTimeMinutes ?? "---"}</span>,
+    className: "text-right",
   },
   {
     key: "taskCount",
@@ -81,12 +109,36 @@ const allColumns: Column<Opportunity>[] = [
     className: "text-right",
   },
   {
+    key: "lossReason",
+    header: "Verlustgrund",
+    render: (row) => <span className="text-gray-600">{row.lossReason || "---"}</span>,
+  },
+  {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -98,6 +150,7 @@ const defaultVisibleColumns = [
   "amount",
   "probability",
   "closeDate",
+  "taskCount",
   "createdAt",
 ];
 
@@ -115,10 +168,14 @@ const filterFields: FilterField[] = [
       { value: "Verloren", label: "Verloren" },
     ],
   },
-  { key: "name", label: "Name", type: "text" },
+  { key: "name", label: "Opportunity-Name", type: "text" },
   { key: "amount", label: "Betrag", type: "number" },
   { key: "probability", label: "Wahrscheinlichkeit", type: "number" },
   { key: "closeDate", label: "Abschlussdatum", type: "date" },
+  { key: "searchStartDate", label: "Suchbeginn", type: "date" },
+  { key: "searchEndDate", label: "Suchende", type: "date" },
+  { key: "searchTimeMinutes", label: "Suchzeit (Min.)", type: "number" },
+  { key: "lossReason", label: "Verlustgrund", type: "text" },
 ];
 
 const kanbanColumns: KanbanColumn[] = [

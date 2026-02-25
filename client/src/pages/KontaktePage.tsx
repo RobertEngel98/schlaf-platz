@@ -8,7 +8,7 @@ import { contactsApi, type Contact } from "../lib/api";
 const allColumns: Column<Contact>[] = [
   {
     key: "name",
-    header: "Name",
+    header: "Kontaktname",
     sortable: true,
     render: (row) => (
       <Link
@@ -31,6 +31,11 @@ const allColumns: Column<Contact>[] = [
     ),
   },
   {
+    key: "title",
+    header: "Position",
+    render: (row) => <span className="text-gray-600">{row.title || "---"}</span>,
+  },
+  {
     key: "email",
     header: "E-Mail",
     render: (row) => <span className="text-gray-600">{row.email || "---"}</span>,
@@ -46,19 +51,48 @@ const allColumns: Column<Contact>[] = [
     render: (row) => <span className="text-gray-600">{row.mobilePhone || "---"}</span>,
   },
   {
+    key: "mailingStreet",
+    header: "Straße",
+    render: (row) => <span className="text-gray-600">{row.mailingStreet || "---"}</span>,
+  },
+  {
+    key: "mailingPostalCode",
+    header: "PLZ",
+    render: (row) => <span className="text-gray-600">{row.mailingPostalCode || "---"}</span>,
+  },
+  {
     key: "mailingCity",
     header: "Stadt",
     sortable: true,
     render: (row) => <span className="text-gray-600">{row.mailingCity || "---"}</span>,
   },
   {
-    key: "title",
-    header: "Position",
-    render: (row) => <span className="text-gray-600">{row.title || "---"}</span>,
+    key: "mailingState",
+    header: "Bundesland",
+    render: (row) => <span className="text-gray-600">{row.mailingState || "---"}</span>,
+  },
+  {
+    key: "baustellenleiterCapo",
+    header: "Baustellenleiter/Capo",
+    render: (row) => <span className="text-gray-600">{row.baustellenleiterCapo || "---"}</span>,
+  },
+  {
+    key: "kontaktUnterkunft",
+    header: "Kontakt Unterkunft",
+    render: (row) => <span className="text-gray-600">{row.kontaktUnterkunft || "---"}</span>,
+  },
+  {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
   },
   {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
@@ -66,9 +100,19 @@ const allColumns: Column<Contact>[] = [
       </span>
     ),
   },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
 ];
 
-const defaultVisibleColumns = ["name", "email", "phone", "mailingCity", "createdAt"];
+const defaultVisibleColumns = ["name", "email", "phone", "mailingCity", "title", "createdAt"];
 
 const filterFields: FilterField[] = [
   { key: "lastName", label: "Nachname", type: "text" },
@@ -76,7 +120,10 @@ const filterFields: FilterField[] = [
   { key: "email", label: "E-Mail", type: "text" },
   { key: "phone", label: "Telefon", type: "text" },
   { key: "mailingCity", label: "Stadt", type: "text" },
+  { key: "mailingPostalCode", label: "PLZ", type: "text" },
   { key: "title", label: "Position", type: "text" },
+  { key: "baustellenleiterCapo", label: "Baustellenleiter/Capo", type: "text" },
+  { key: "kontaktUnterkunft", label: "Kontakt Unterkunft", type: "text" },
 ];
 
 export default function KontaktePage() {

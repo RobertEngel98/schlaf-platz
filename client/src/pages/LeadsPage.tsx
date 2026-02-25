@@ -23,7 +23,7 @@ const allColumns: Column<Lead>[] = [
         </div>
         <div>
           <span className="font-medium text-gray-900">
-            {row.firstName} {row.lastName}
+            {row.salutation ? `${row.salutation} ` : ""}{row.firstName} {row.lastName}
           </span>
           {row.company && (
             <p className="text-xs text-gray-500">{row.company}</p>
@@ -49,19 +49,25 @@ const allColumns: Column<Lead>[] = [
     render: (row) => <span className="text-gray-600">{row.phone || "---"}</span>,
   },
   {
+    key: "mobilePhone",
+    header: "Mobil",
+    render: (row) => <span className="text-gray-600">{row.mobilePhone || "---"}</span>,
+  },
+  {
     key: "status",
-    header: "Status",
+    header: "Lead-Status",
     sortable: true,
     render: (row) => <Badge variant={getStatusVariant(row.status)}>{row.status}</Badge>,
   },
   {
     key: "source",
-    header: "Quelle",
+    header: "Leadquelle",
+    sortable: true,
     render: (row) => <span className="text-gray-600">{row.source || "---"}</span>,
   },
   {
     key: "nurtureStage",
-    header: "Nurture",
+    header: "Nurture Stage",
     render: (row) => {
       if (!row.nurtureStage) return <span className="text-gray-400">---</span>;
       const colors: Record<string, string> = {
@@ -77,17 +83,62 @@ const allColumns: Column<Lead>[] = [
     },
   },
   {
+    key: "street",
+    header: "Straße",
+    render: (row) => <span className="text-gray-600">{row.street || "---"}</span>,
+  },
+  {
+    key: "postalCode",
+    header: "PLZ",
+    render: (row) => <span className="text-gray-600">{row.postalCode || "---"}</span>,
+  },
+  {
     key: "city",
     header: "Stadt",
+    sortable: true,
     render: (row) => <span className="text-gray-600">{row.city || "---"}</span>,
   },
   {
+    key: "state",
+    header: "Bundesland",
+    render: (row) => <span className="text-gray-600">{row.state || "---"}</span>,
+  },
+  {
+    key: "country",
+    header: "Land",
+    render: (row) => <span className="text-gray-600">{row.country || "---"}</span>,
+  },
+  {
+    key: "lossReason",
+    header: "Verlustgrund",
+    render: (row) => <span className="text-gray-600">{row.lossReason || "---"}</span>,
+  },
+  {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -105,7 +156,7 @@ const defaultVisibleColumns = [
 const filterFields: FilterField[] = [
   {
     key: "status",
-    label: "Status",
+    label: "Lead-Status",
     type: "select",
     options: [
       { value: "Neu", label: "Neu" },
@@ -117,7 +168,7 @@ const filterFields: FilterField[] = [
   },
   {
     key: "source",
-    label: "Quelle",
+    label: "Leadquelle",
     type: "select",
     options: [
       { value: "Website", label: "Website" },
@@ -129,10 +180,6 @@ const filterFields: FilterField[] = [
       { value: "Sonstige", label: "Sonstige" },
     ],
   },
-  { key: "lastName", label: "Nachname", type: "text" },
-  { key: "company", label: "Firma", type: "text" },
-  { key: "email", label: "E-Mail", type: "text" },
-  { key: "city", label: "Stadt", type: "text" },
   {
     key: "nurtureStage",
     label: "Nurture Stage",
@@ -143,6 +190,14 @@ const filterFields: FilterField[] = [
       { value: "Heiß", label: "Heiß" },
     ],
   },
+  { key: "lastName", label: "Nachname", type: "text" },
+  { key: "firstName", label: "Vorname", type: "text" },
+  { key: "company", label: "Firma", type: "text" },
+  { key: "email", label: "E-Mail", type: "text" },
+  { key: "phone", label: "Telefon", type: "text" },
+  { key: "city", label: "Stadt", type: "text" },
+  { key: "postalCode", label: "PLZ", type: "text" },
+  { key: "state", label: "Bundesland", type: "text" },
 ];
 
 const kanbanColumns: KanbanColumn[] = [

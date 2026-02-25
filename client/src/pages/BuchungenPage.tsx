@@ -24,7 +24,7 @@ const recordTypeLabels: Record<string, string> = {
 const allColumns: Column<Buchung>[] = [
   {
     key: "buchungsNummer",
-    header: "Nr.",
+    header: "Buchungsname",
     sortable: true,
     render: (row) => (
       <Link
@@ -42,8 +42,15 @@ const allColumns: Column<Buchung>[] = [
     ),
   },
   {
+    key: "rechnungsNummer",
+    header: "Rechnungs-Nr.",
+    sortable: true,
+    render: (row) => <span className="text-gray-600">{row.rechnungsNummer || "---"}</span>,
+  },
+  {
     key: "recordType",
-    header: "Typ",
+    header: "Datensatztyp",
+    sortable: true,
     render: (row) => (
       <Badge variant={getStatusVariant(row.recordType)}>
         {recordTypeLabels[row.recordType] || row.recordType}
@@ -53,7 +60,18 @@ const allColumns: Column<Buchung>[] = [
   {
     key: "gastName",
     header: "Gast",
+    sortable: true,
     render: (row) => <span className="text-gray-700">{row.gastName || "---"}</span>,
+  },
+  {
+    key: "gastEmail",
+    header: "Gast E-Mail",
+    render: (row) => <span className="text-gray-600">{row.gastEmail || "---"}</span>,
+  },
+  {
+    key: "gastTelefon",
+    header: "Gast Telefon",
+    render: (row) => <span className="text-gray-600">{row.gastTelefon || "---"}</span>,
   },
   {
     key: "checkIn",
@@ -84,17 +102,88 @@ const allColumns: Column<Buchung>[] = [
   {
     key: "anzahlNaechte",
     header: "Nächte",
+    sortable: true,
     render: (row) => <span className="font-medium">{row.anzahlNaechte ?? "---"}</span>,
     className: "text-right",
   },
   {
+    key: "anzahlGaeste",
+    header: "Gäste",
+    render: (row) => <span className="text-gray-600">{row.anzahlGaeste ?? "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "preisProNacht",
+    header: "Preis/Nacht",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-700">{fmt(row.preisProNacht)}</span>
+    ),
+    className: "text-right",
+  },
+  {
     key: "gesamtPreis",
-    header: "Gesamt",
+    header: "Gesamtpreis",
     sortable: true,
     render: (row) => (
       <span className="font-medium text-gray-800">{fmt(row.gesamtPreis)}</span>
     ),
     className: "text-right",
+  },
+  {
+    key: "reinigungskosten",
+    header: "Reinigung",
+    render: (row) => <span className="text-gray-600">{fmt(row.reinigungskosten)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "kaution",
+    header: "Kaution",
+    render: (row) => <span className="text-gray-600">{fmt(row.kaution)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "kautionStatus",
+    header: "Kaution Status",
+    render: (row) => row.kautionStatus
+      ? <Badge variant={getStatusVariant(row.kautionStatus)}>{row.kautionStatus}</Badge>
+      : <span className="text-gray-400">---</span>,
+  },
+  {
+    key: "provision",
+    header: "Provision",
+    render: (row) => <span className="text-gray-600">{fmt(row.provision)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "provisionProzent",
+    header: "Prov. %",
+    render: (row) => <span className="text-gray-600">{row.provisionProzent != null ? `${row.provisionProzent}%` : "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "mwstSatz",
+    header: "MwSt.",
+    render: (row) => <span className="text-gray-600">{row.mwstSatz != null ? `${row.mwstSatz}%` : "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "rechnungsBetrag",
+    header: "Rechnungsbetrag",
+    sortable: true,
+    render: (row) => <span className="text-gray-700">{fmt(row.rechnungsBetrag)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "rechnungsDatum",
+    header: "Rechnungsdatum",
+    sortable: true,
+    render: (row) =>
+      row.rechnungsDatum ? (
+        <span className="text-gray-600">{new Date(row.rechnungsDatum).toLocaleDateString("de-DE")}</span>
+      ) : (
+        <span className="text-gray-400">---</span>
+      ),
   },
   {
     key: "buchungsphase",
@@ -107,12 +196,36 @@ const allColumns: Column<Buchung>[] = [
     ),
   },
   {
+    key: "istProbewoche",
+    header: "Probewoche",
+    render: (row) => (
+      <span className={row.istProbewoche ? "text-green-600 font-medium" : "text-gray-400"}>
+        {row.istProbewoche ? "Ja" : "Nein"}
+      </span>
+    ),
+  },
+  {
+    key: "stornierungsGrund",
+    header: "Stornierungsgrund",
+    render: (row) => <span className="text-gray-600">{row.stornierungsGrund || "---"}</span>,
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -146,7 +259,7 @@ const filterFields: FilterField[] = [
   },
   {
     key: "recordType",
-    label: "Typ",
+    label: "Datensatztyp",
     type: "select",
     options: [
       { value: "Buchung", label: "Buchung" },
@@ -157,11 +270,28 @@ const filterFields: FilterField[] = [
       { value: "Stornos", label: "Storno" },
     ],
   },
+  {
+    key: "kautionStatus",
+    label: "Kaution Status",
+    type: "select",
+    options: [
+      { value: "Offen", label: "Offen" },
+      { value: "Eingezogen", label: "Eingezogen" },
+      { value: "Zurückgezahlt", label: "Zurückgezahlt" },
+      { value: "Einbehalten", label: "Einbehalten" },
+    ],
+  },
   { key: "gastName", label: "Gast", type: "text" },
+  { key: "gastEmail", label: "Gast E-Mail", type: "text" },
   { key: "buchungsNummer", label: "Buchungsnr.", type: "text" },
+  { key: "rechnungsNummer", label: "Rechnungs-Nr.", type: "text" },
   { key: "checkIn", label: "Check-In", type: "date" },
   { key: "checkOut", label: "Check-Out", type: "date" },
   { key: "gesamtPreis", label: "Gesamtpreis", type: "number" },
+  { key: "preisProNacht", label: "Preis/Nacht", type: "number" },
+  { key: "anzahlNaechte", label: "Nächte", type: "number" },
+  { key: "kaution", label: "Kaution", type: "number" },
+  { key: "istProbewoche", label: "Probewoche", type: "boolean" },
 ];
 
 const kanbanColumns: KanbanColumn[] = [

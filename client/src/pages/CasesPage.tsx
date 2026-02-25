@@ -51,7 +51,7 @@ interface Case {
 const allColumns: Column<Case>[] = [
   {
     key: "subject",
-    header: "Betreff",
+    header: "Case-Betreff",
     sortable: true,
     render: (row) => (
       <Link
@@ -88,25 +88,46 @@ const allColumns: Column<Case>[] = [
   },
   {
     key: "recordType",
-    header: "Typ",
+    header: "Datensatztyp",
+    sortable: true,
     render: (row) => (
-      <span className="text-gray-600">
+      <Badge variant={row.recordType === "Anwaltsfall" ? "purple" : "neutral"}>
         {row.recordType === "Anwaltsfall" ? "Anwaltsfall" : "Standard"}
-      </span>
+      </Badge>
     ),
   },
   {
     key: "origin",
-    header: "Herkunft",
+    header: "Case-Herkunft",
+    sortable: true,
     render: (row) => <span className="text-gray-600">{row.origin || "---"}</span>,
   },
   {
+    key: "description",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.description || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -117,6 +138,7 @@ const defaultVisibleColumns = [
   "priority",
   "status",
   "recordType",
+  "origin",
   "createdAt",
 ];
 
@@ -147,11 +169,22 @@ const filterFields: FilterField[] = [
   },
   {
     key: "recordType",
-    label: "Typ",
+    label: "Datensatztyp",
     type: "select",
     options: [
       { value: "Standart_Case", label: "Standard" },
       { value: "Anwaltsfall", label: "Anwaltsfall" },
+    ],
+  },
+  {
+    key: "origin",
+    label: "Case-Herkunft",
+    type: "select",
+    options: [
+      { value: "Telefon", label: "Telefon" },
+      { value: "E-Mail", label: "E-Mail" },
+      { value: "Web", label: "Web" },
+      { value: "Intern", label: "Intern" },
     ],
   },
   { key: "subject", label: "Betreff", type: "text" },

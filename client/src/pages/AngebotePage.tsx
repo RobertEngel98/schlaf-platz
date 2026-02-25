@@ -14,7 +14,7 @@ const fmt = (n?: number) =>
 const allColumns: Column<Angebot>[] = [
   {
     key: "angebotNummer",
-    header: "Nr.",
+    header: "Angebots-Nr.",
     sortable: true,
     render: (row) => (
       <Link
@@ -33,7 +33,7 @@ const allColumns: Column<Angebot>[] = [
   },
   {
     key: "name",
-    header: "Name",
+    header: "Angebotsname",
     sortable: true,
     render: (row) => <span className="text-gray-700">{row.name}</span>,
   },
@@ -61,6 +61,7 @@ const allColumns: Column<Angebot>[] = [
   {
     key: "checkOut",
     header: "Check-Out",
+    sortable: true,
     render: (row) =>
       row.checkOut ? (
         <span className="text-gray-600">
@@ -73,12 +74,25 @@ const allColumns: Column<Angebot>[] = [
   {
     key: "anzahlNaechte",
     header: "Nächte",
-    render: (row) => <span>{row.anzahlNaechte ?? "---"}</span>,
+    render: (row) => <span className="text-gray-600">{row.anzahlNaechte ?? "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "anzahlPersonen",
+    header: "Personen",
+    render: (row) => <span className="text-gray-600">{row.anzahlPersonen ?? "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "preisProNacht",
+    header: "Preis/Nacht",
+    sortable: true,
+    render: (row) => <span className="text-gray-700">{fmt(row.preisProNacht)}</span>,
     className: "text-right",
   },
   {
     key: "gesamtPreis",
-    header: "Gesamt",
+    header: "Gesamtpreis",
     sortable: true,
     render: (row) => (
       <span className="font-medium text-gray-800">{fmt(row.gesamtPreis)}</span>
@@ -86,12 +100,35 @@ const allColumns: Column<Angebot>[] = [
     className: "text-right",
   },
   {
+    key: "reinigungskosten",
+    header: "Reinigung",
+    render: (row) => <span className="text-gray-600">{fmt(row.reinigungskosten)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "kaution",
+    header: "Kaution",
+    render: (row) => <span className="text-gray-600">{fmt(row.kaution)}</span>,
+    className: "text-right",
+  },
+  {
+    key: "mwstSatz",
+    header: "MwSt.",
+    render: (row) => <span className="text-gray-600">{row.mwstSatz != null ? `${row.mwstSatz}%` : "---"}</span>,
+    className: "text-right",
+  },
+  {
+    key: "sprache",
+    header: "Sprache",
+    render: (row) => <span className="text-gray-600">{row.sprache || "---"}</span>,
+  },
+  {
     key: "gueltigBis",
     header: "Gültig bis",
     sortable: true,
     render: (row) =>
       row.gueltigBis ? (
-        <span className="text-gray-600">
+        <span className={`${new Date(row.gueltigBis) < new Date() ? "text-red-600 font-medium" : "text-gray-600"}`}>
           {new Date(row.gueltigBis).toLocaleDateString("de-DE")}
         </span>
       ) : (
@@ -99,12 +136,31 @@ const allColumns: Column<Angebot>[] = [
       ),
   },
   {
+    key: "beschreibung",
+    header: "Beschreibung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.beschreibung || "---"}
+      </span>
+    ),
+  },
+  {
     key: "createdAt",
-    header: "Erstellt",
+    header: "Erstellt am",
     sortable: true,
     render: (row) => (
       <span className="text-gray-500 text-xs">
         {new Date(row.createdAt).toLocaleDateString("de-DE")}
+      </span>
+    ),
+  },
+  {
+    key: "updatedAt",
+    header: "Geändert am",
+    sortable: true,
+    render: (row) => (
+      <span className="text-gray-500 text-xs">
+        {new Date(row.updatedAt).toLocaleDateString("de-DE")}
       </span>
     ),
   },
@@ -133,10 +189,25 @@ const filterFields: FilterField[] = [
       { value: "Abgelaufen", label: "Abgelaufen" },
     ],
   },
-  { key: "name", label: "Name", type: "text" },
+  {
+    key: "sprache",
+    label: "Sprache",
+    type: "select",
+    options: [
+      { value: "de", label: "Deutsch" },
+      { value: "en", label: "Englisch" },
+    ],
+  },
+  { key: "name", label: "Angebotsname", type: "text" },
+  { key: "angebotNummer", label: "Angebots-Nr.", type: "text" },
   { key: "gesamtPreis", label: "Gesamtpreis", type: "number" },
+  { key: "preisProNacht", label: "Preis/Nacht", type: "number" },
+  { key: "anzahlNaechte", label: "Nächte", type: "number" },
+  { key: "anzahlPersonen", label: "Personen", type: "number" },
   { key: "checkIn", label: "Check-In", type: "date" },
+  { key: "checkOut", label: "Check-Out", type: "date" },
   { key: "gueltigBis", label: "Gültig bis", type: "date" },
+  { key: "kaution", label: "Kaution", type: "number" },
 ];
 
 export default function AngebotePage() {
