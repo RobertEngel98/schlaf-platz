@@ -27,6 +27,10 @@ const casesApi = {
     });
     return res.json();
   },
+  delete: async (id: string) => {
+    const res = await fetch(`/api/cases/${id}`, { method: "DELETE" });
+    return res.json();
+  },
 };
 
 interface Case {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { X, Plus, Trash2 } from "lucide-react";
+import { X } from "lucide-react";
 import type { FilterCondition } from "../lib/api";
 
 export interface FilterField {

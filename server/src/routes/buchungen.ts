@@ -292,7 +292,7 @@ export default async function buchungenRoutes(app: FastifyInstance) {
         body.anzahlNaechte = Math.max(1, Math.round(diffMs / (1000 * 60 * 60 * 24)));
       }
 
-      const updateData = {
+      const updateData: any = {
         ...body,
         updatedAt: new Date().toISOString(),
       };

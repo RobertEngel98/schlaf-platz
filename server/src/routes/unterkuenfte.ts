@@ -259,7 +259,7 @@ export default async function unterkuenfteRoutes(app: FastifyInstance) {
       // Run validation rules before update
       await validateUnterkunftUpdate(body, existing);
 
-      const updateData = {
+      const updateData: any = {
         ...body,
         updatedAt: new Date().toISOString(),
       };

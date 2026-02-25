@@ -1,25 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  LayoutDashboard,
-  Building2,
-  Users,
-  UserPlus,
-  TrendingUp,
-  Home,
-  Calendar,
-  FileText,
-  Clock,
-  AlertCircle,
-  CheckSquare,
   ChevronDown,
   LogOut,
   User,
   LayoutGrid,
-  BedDouble,
   Pencil,
 } from "lucide-react";
-import type React from "react";
 
 interface NavItem {
   to: string;

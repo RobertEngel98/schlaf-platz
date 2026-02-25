@@ -205,7 +205,7 @@ export default async function opportunitiesRoutes(app: FastifyInstance) {
         });
       }
 
-      const updateData = {
+      const updateData: any = {
         ...body,
         updatedAt: new Date().toISOString(),
       };

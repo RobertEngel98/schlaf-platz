@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom";
 import {
   Search,
-  Plus,
   List,
   Kanban,
   Loader2,
@@ -16,7 +15,6 @@ import {
   Pin,
   Check,
   BarChart3,
-  Pencil,
   ArrowUpDown,
 } from "lucide-react";
 import DataTable, { type Column, type RowAction } from "./DataTable";

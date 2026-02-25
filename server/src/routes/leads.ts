@@ -209,7 +209,7 @@ export default async function leadsRoutes(app: FastifyInstance) {
         });
       }
 
-      const updateData = {
+      const updateData: any = {
         ...body,
         updatedAt: new Date().toISOString(),
       };

@@ -168,34 +168,6 @@ export default function UnterkuenftePage() {
       entityIconColor="#e8780a"
       fetchData={(params) => unterkuenfteApi.list(params)}
       rowActions={rowActions}
-      renderCard={(u) => (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-          <div className="h-3 bg-gradient-to-r from-cyan-400 to-blue-500" />
-          <div className="p-4">
-            <h3 className="font-semibold text-gray-800 truncate">{u.name}</h3>
-            <div className="flex items-center gap-1 mt-1 text-xs text-gray-500">
-              <MapPin className="w-3 h-3" />
-              {u.plz} {u.ort}
-            </div>
-            <div className="flex items-center gap-4 mt-3 text-xs text-gray-600">
-              <span className="flex items-center gap-1">
-                <DoorOpen className="w-3 h-3" /> {u.anzahlZimmer ?? 0}
-              </span>
-              <span className="flex items-center gap-1">
-                <Bed className="w-3 h-3" /> {u.anzahlBetten ?? 0}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mt-3">
-              <span className="text-sm font-semibold text-gray-800">
-                {fmt(u.preisProNacht)}/Nacht
-              </span>
-              <Badge variant={getStatusVariant(u.status || "")}>
-                {u.status || "---"}
-              </Badge>
-            </div>
-          </div>
-        </div>
-      )}
     />
   );
 }

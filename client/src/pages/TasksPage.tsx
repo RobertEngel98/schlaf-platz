@@ -26,6 +26,10 @@ const tasksApi = {
     });
     return res.json();
   },
+  delete: async (id: string) => {
+    const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" });
+    return res.json();
+  },
 };
 
 interface Task {

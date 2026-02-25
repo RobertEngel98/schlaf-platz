@@ -162,7 +162,7 @@ export default async function accountsRoutes(app: FastifyInstance) {
         return reply.code(404).send({ error: "Account nicht gefunden" });
       }
 
-      const updateData = {
+      const updateData: any = {
         ...body,
         updatedAt: new Date().toISOString(),
       };

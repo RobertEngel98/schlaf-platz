@@ -102,7 +102,7 @@ await app.register(listViewRoutes);
 // ============================================================================
 // GLOBAL ERROR HANDLER
 // ============================================================================
-app.setErrorHandler((error, request, reply) => {
+app.setErrorHandler((error: any, request, reply) => {
   if (error.name === 'ValidationError') {
     reply.code(400).send({ error: error.message });
     return;
