@@ -1,4 +1,4 @@
-import { type ReactNode, type ChangeEvent } from "react";
+import { type ReactNode } from "react";
 
 /** Shared SLDS input class */
 export const sldsInput =
