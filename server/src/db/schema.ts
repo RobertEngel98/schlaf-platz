@@ -482,6 +482,24 @@ export const salesforceAnpassungen = sqliteTable("salesforce_anpassungen", {
 });
 
 // ============================================================================
+// ACTIVITIES (Chatter / Activity Timeline)
+// ============================================================================
+export const activities = sqliteTable("activities", {
+  id: text("id").primaryKey(),
+  entityType: text("entity_type").notNull(), // 'account', 'contact', 'lead', 'opportunity', 'buchung', 'unterkunft', 'angebot', 'case', 'task'
+  entityId: text("entity_id").notNull(),
+  activityType: text("activity_type").notNull(), // 'comment', 'status_change', 'call_logged', 'email_sent', 'task_created', 'field_change'
+  title: text("title").notNull(),
+  description: text("description"),
+  oldValue: text("old_value"),
+  newValue: text("new_value"),
+  fieldName: text("field_name"),
+  userId: text("user_id"),
+  userName: text("user_name"),
+  createdAt: text("created_at").notNull(),
+});
+
+// ============================================================================
 // RELATIONS
 // ============================================================================
 export const accountsRelations = relations(accounts, ({ many }) => ({

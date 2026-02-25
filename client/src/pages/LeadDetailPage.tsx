@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Save, Trash2, UserPlus, MapPin } from "lucide-react";
+import { Save, Trash2, UserPlus, MapPin, Phone, MessageSquare, CheckSquare as CheckSquareIcon } from "lucide-react";
+import ActivityTimeline from "../components/ActivityTimeline";
+import QuickActions from "../components/QuickActions";
 import Badge, { getStatusVariant } from "../components/Badge";
 import RecordHighlights from "../components/RecordHighlights";
 import RecordPath from "../components/RecordPath";
@@ -195,12 +197,29 @@ export default function LeadDetailPage() {
         />
       )}
 
+      {!isNew && id && (
+        <QuickActions actions={[
+          { key: "call", label: "Anruf loggen", icon: <Phone className="w-4 h-4" />, onClick: () => {
+            fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+              body: JSON.stringify({ entityType: "lead", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
+            }).then(() => {});
+          }},
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
+            fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+              body: JSON.stringify({ entityType: "lead", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
+            }).then(() => {});
+          }},
+        ]} />
+      )}
+
       {/* Record Tabs */}
       <RecordTabs
         defaultTab="details"
         tabs={[
           { key: "details", label: "Details", content: detailsContent },
           { key: "related", label: "Verknüpft", content: relatedContent },
+          { key: "activity", label: "Aktivitäten", content: !isNew && id ? <ActivityTimeline entityType="lead" entityId={id} /> : <div className="p-6 text-[13px] text-[#706e6b]">Erst nach Speichern verfügbar</div> },
         ]}
       />
     </div>

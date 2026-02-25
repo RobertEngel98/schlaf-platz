@@ -429,7 +429,23 @@ CREATE TABLE IF NOT EXISTS salesforce_anpassungen (
   updated_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS activities (
+  id TEXT PRIMARY KEY,
+  entity_type TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  activity_type TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  old_value TEXT,
+  new_value TEXT,
+  field_name TEXT,
+  user_id TEXT,
+  user_name TEXT,
+  created_at TEXT NOT NULL
+);
+
 -- Indexes
+CREATE INDEX IF NOT EXISTS idx_activities_entity ON activities(entity_type, entity_id);
 CREATE INDEX IF NOT EXISTS idx_accounts_record_type ON accounts(record_type);
 CREATE INDEX IF NOT EXISTS idx_accounts_name ON accounts(name);
 CREATE INDEX IF NOT EXISTS idx_contacts_account_id ON contacts(account_id);

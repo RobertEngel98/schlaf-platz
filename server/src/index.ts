@@ -27,6 +27,7 @@ import vermieterRoutes from "./routes/vermieter.js";
 import logRoutes from "./routes/logs.js";
 import listViewRoutes from "./routes/listViews.js";
 import globalSearchRoutes from "./routes/globalSearch.js";
+import activityRoutes from "./routes/activities.js";
 
 const app = Fastify({ logger: true });
 
@@ -100,6 +101,7 @@ await app.register(vermieterRoutes);
 await app.register(logRoutes);
 await app.register(listViewRoutes);
 await app.register(globalSearchRoutes);
+await app.register(activityRoutes);
 
 // ============================================================================
 // GLOBAL ERROR HANDLER

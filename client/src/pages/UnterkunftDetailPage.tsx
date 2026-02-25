@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Home, Save, Trash2, MapPin, Euro } from "lucide-react";
+import { Home, Save, Trash2, MapPin, Euro, Phone, MessageSquare, CheckSquare as CheckSquareIcon } from "lucide-react";
+import ActivityTimeline from "../components/ActivityTimeline";
+import QuickActions from "../components/QuickActions";
 import Badge, { getStatusVariant } from "../components/Badge";
 import RecordHighlights from "../components/RecordHighlights";
 import RecordTabs from "../components/RecordTabs";
@@ -302,6 +304,22 @@ export default function UnterkunftDetailPage() {
         }
       />
 
+      {!isNew && id && (
+        <QuickActions actions={[
+          { key: "call", label: "Anruf loggen", icon: <Phone className="w-4 h-4" />, onClick: () => {
+            fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+              body: JSON.stringify({ entityType: "unterkunft", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
+            }).then(() => {});
+          }},
+          { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+          { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
+            fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+              body: JSON.stringify({ entityType: "unterkunft", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
+            }).then(() => {});
+          }},
+        ]} />
+      )}
+
       <RecordTabs
         defaultTab="details"
         tabs={[
@@ -310,6 +328,7 @@ export default function UnterkunftDetailPage() {
           { key: "texte", label: "Texte", content: texteContent },
           { key: "vermieter", label: "Vermieter", content: vermieterContent },
           { key: "related", label: "Verknüpft", content: relatedContent },
+          { key: "activity", label: "Aktivitäten", content: !isNew && id ? <ActivityTimeline entityType="unterkunft" entityId={id} /> : <div className="p-6 text-[13px] text-[#706e6b]">Erst nach Speichern verfügbar</div> },
         ]}
       />
     </div>

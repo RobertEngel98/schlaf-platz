@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Save, Trash2, Calendar, Euro, User } from "lucide-react";
+import { ArrowLeft, Save, Trash2, Calendar, Euro, User, Phone, MessageSquare, CheckSquare as CheckSquareIcon } from "lucide-react";
+import ActivityTimeline from "../components/ActivityTimeline";
+import QuickActions from "../components/QuickActions";
 import Badge, { getStatusVariant } from "../components/Badge";
 
 const RECORD_TYPES = [
@@ -94,6 +96,24 @@ export default function BuchungDetailPage() {
           </button>
         </div>
       </div>
+
+      {!isNew && id && (
+        <div className="mb-4">
+          <QuickActions actions={[
+            { key: "call", label: "Anruf loggen", icon: <Phone className="w-4 h-4" />, onClick: () => {
+              fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify({ entityType: "buchung", entityId: id, activityType: "call_logged", title: "Anruf geloggt" })
+              }).then(() => {});
+            }},
+            { key: "comment", label: "Kommentar", icon: <MessageSquare className="w-4 h-4" />, onClick: () => {} },
+            { key: "task", label: "Neue Aufgabe", icon: <CheckSquareIcon className="w-4 h-4" />, onClick: () => {
+              fetch("/api/activities", { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify({ entityType: "buchung", entityId: id, activityType: "task_created", title: "Aufgabe erstellt" })
+              }).then(() => {});
+            }},
+          ]} />
+        </div>
+      )}
 
       {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">{error}</div>}
 
@@ -269,6 +289,13 @@ export default function BuchungDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Aktivitäten */}
+      {!isNew && id && (
+        <div className="mt-6">
+          <ActivityTimeline entityType="buchung" entityId={id} />
+        </div>
+      )}
     </div>
   );
 }
