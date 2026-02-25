@@ -21,15 +21,15 @@ interface FilterPanelProps {
 }
 
 const OPERATORS: Record<string, { label: string; types: string[] }> = {
-  equals: { label: "equals", types: ["text", "number", "date", "select", "boolean"] },
-  not_equals: { label: "not equal to", types: ["text", "number", "date", "select"] },
-  contains: { label: "contains", types: ["text"] },
-  not_contains: { label: "does not contain", types: ["text"] },
-  starts_with: { label: "starts with", types: ["text"] },
-  greater_than: { label: "greater or equal", types: ["number", "date"] },
-  less_than: { label: "less than", types: ["number", "date"] },
-  is_empty: { label: "is empty", types: ["text", "number", "date", "select"] },
-  is_not_empty: { label: "is not empty", types: ["text", "number", "date", "select"] },
+  equals: { label: "ist gleich", types: ["text", "number", "date", "select", "boolean"] },
+  not_equals: { label: "ist nicht gleich", types: ["text", "number", "date", "select"] },
+  contains: { label: "enthält", types: ["text"] },
+  not_contains: { label: "enthält nicht", types: ["text"] },
+  starts_with: { label: "beginnt mit", types: ["text"] },
+  greater_than: { label: "größer oder gleich", types: ["number", "date"] },
+  less_than: { label: "kleiner als", types: ["number", "date"] },
+  is_empty: { label: "ist leer", types: ["text", "number", "date", "select"] },
+  is_not_empty: { label: "ist nicht leer", types: ["text", "number", "date", "select"] },
 };
 
 function getOperatorsForType(type: string) {
@@ -142,38 +142,38 @@ export default function FilterPanel({
       >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-[#e5e5e5]">
-          <h2 className="text-[16px] font-bold text-[#181818]">Filters</h2>
+          <h2 className="text-[16px] font-bold text-[#181818]">Filter</h2>
           <button
             onClick={onClose}
             className="group relative p-1 rounded text-[#706e6b] hover:text-[#181818] hover:bg-[#f3f3f3] transition-colors"
-            title="Close Filters"
+            title="Filter schließen"
           >
             <X className="w-5 h-5" />
             <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 text-[11px] font-medium text-white bg-[#0176d3] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              Close Filters
+              Filter schließen
             </span>
           </button>
         </div>
 
         {/* Filter by Owner */}
         <div className="mx-4 mt-4 mb-3 border border-[#e5e5e5] rounded-lg p-3 bg-white">
-          <p className="text-[12px] font-medium text-[#706e6b]">Filter by Owner</p>
-          <p className="text-[13px] text-[#181818] mt-0.5">All {entityLabel.toLowerCase()}</p>
+          <p className="text-[12px] font-medium text-[#706e6b]">Filter nach Eigentümer</p>
+          <p className="text-[13px] text-[#181818] mt-0.5">Alle {entityLabel}</p>
         </div>
 
         {/* Matching logic text */}
         <div className="px-4 pb-2">
           <p className="text-[12px] text-[#706e6b] italic">
             {logic === "AND"
-              ? "Matching all of these filters"
-              : "Matching any of these filters"}
+              ? "Alle Filter müssen zutreffen"
+              : "Mindestens ein Filter muss zutreffen"}
           </p>
         </div>
 
         {/* Filter list */}
         <div className="flex-1 overflow-y-auto px-4 py-2">
           {filters.length === 0 && !showAddForm && (
-            <div className="text-center py-8 text-[13px] text-[#c9c9c9]">
+            <div className="text-center py-8 text-[13px] text-[#706e6b]">
               Keine Filter aktiv
             </div>
           )}
@@ -217,7 +217,7 @@ export default function FilterPanel({
             <div className="mt-3 border-2 border-[#fe9339] rounded-lg p-3 bg-[#fef3e0]">
               <div className="mb-2">
                 <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
-                  Field
+                  Feld
                 </label>
                 <select
                   value={newField}
@@ -232,7 +232,7 @@ export default function FilterPanel({
 
               <div className="mb-2">
                 <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
-                  Operator
+                  Bedingung
                 </label>
                 <select
                   value={newOperator}
@@ -248,7 +248,7 @@ export default function FilterPanel({
               {newNeedsValue && (
                 <div className="mb-3">
                   <label className="block text-[11px] font-bold text-[#706e6b] uppercase tracking-wider mb-1">
-                    Value
+                    Wert
                   </label>
                   {newFieldDef?.type === "select" || newFieldDef?.type === "boolean" ? (
                     <select
@@ -256,7 +256,7 @@ export default function FilterPanel({
                       onChange={(e) => setNewValue(e.target.value)}
                       className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
                     >
-                      <option value="">-- Auswählen --</option>
+                      <option value="">— Auswählen —</option>
                       {newFieldDef?.type === "boolean" ? (
                         <>
                           <option value="true">Ja</option>
@@ -277,7 +277,7 @@ export default function FilterPanel({
                       }
                       value={newValue}
                       onChange={(e) => setNewValue(e.target.value)}
-                      placeholder="Wert eingeben..."
+                      placeholder="Wert eingeben…"
                       className="w-full px-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3]"
                       onKeyDown={(e) => {
                         if (e.key === "Enter") addFilter();
@@ -295,13 +295,13 @@ export default function FilterPanel({
                   }}
                   className="px-3 py-1.5 text-[13px] font-medium text-[#706e6b] bg-white border border-[#c9c9c9] rounded hover:bg-[#f3f3f3] transition-colors"
                 >
-                  Cancel
+                  Abbrechen
                 </button>
                 <button
                   onClick={addFilter}
                   className="px-3 py-1.5 text-[13px] font-medium text-white bg-[#0176d3] rounded hover:bg-[#014486] transition-colors"
                 >
-                  Save
+                  Speichern
                 </button>
               </div>
             </div>
@@ -315,14 +315,14 @@ export default function FilterPanel({
               onClick={() => setShowAddForm(true)}
               className="text-[13px] font-medium text-[#0176d3] hover:underline"
             >
-              Add Filter
+              Filter hinzufügen
             </button>
             {filters.length > 0 && (
               <button
                 onClick={clearAll}
                 className="text-[13px] font-medium text-[#0176d3] hover:underline"
               >
-                Remove All
+                Alle entfernen
               </button>
             )}
           </div>
@@ -331,7 +331,7 @@ export default function FilterPanel({
             onClick={() => setShowLogicEditor(!showLogicEditor)}
             className="text-[13px] font-medium text-[#0176d3] hover:underline"
           >
-            Add Filter Logic
+            Filterlogik bearbeiten
           </button>
           {showLogicEditor && (
             <div className="mt-2 flex items-center gap-2">

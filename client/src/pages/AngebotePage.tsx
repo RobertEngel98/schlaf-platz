@@ -4,6 +4,7 @@ import { type Column, type RowAction } from "../components/DataTable";
 import Badge, { getStatusVariant } from "../components/Badge";
 import SalesforceListPage from "../components/SalesforceListPage";
 import type { FilterField } from "../components/FilterPanel";
+import type { KanbanColumn } from "../components/KanbanBoard";
 import { angeboteApi, type Angebot } from "../lib/api";
 
 const fmt = (n?: number) =>
@@ -210,6 +211,14 @@ const filterFields: FilterField[] = [
   { key: "kaution", label: "Kaution", type: "number" },
 ];
 
+const kanbanColumns: KanbanColumn[] = [
+  { key: "Entwurf", label: "Entwurf", color: "gray" },
+  { key: "Gesendet", label: "Gesendet", color: "blue" },
+  { key: "Angenommen", label: "Angenommen", color: "green" },
+  { key: "Abgelehnt", label: "Abgelehnt", color: "red" },
+  { key: "Abgelaufen", label: "Abgelaufen", color: "amber" },
+];
+
 export default function AngebotePage() {
   const navigate = useNavigate();
 
@@ -217,6 +226,14 @@ export default function AngebotePage() {
     { label: "Bearbeiten", icon: <Pencil className="w-3.5 h-3.5" />, onClick: (row) => navigate(`/angebote/${row.id}`) },
     { label: "Löschen", icon: <Trash2 className="w-3.5 h-3.5" />, danger: true, onClick: async (row) => { if (confirm("Angebot wirklich löschen?")) { await angeboteApi.delete(row.id); window.location.reload(); } } },
   ];
+
+  const handleKanbanDragEnd = async (itemId: string, newColumnKey: string) => {
+    try {
+      await angeboteApi.update(itemId, { status: newColumnKey } as any);
+    } catch (e) {
+      console.error("Status update failed:", e);
+    }
+  };
 
   return (
     <SalesforceListPage<Angebot>
@@ -230,6 +247,35 @@ export default function AngebotePage() {
       entityIconColor="#3c97dd"
       fetchData={(params) => angeboteApi.list(params)}
       rowActions={rowActions}
+      kanbanColumns={kanbanColumns}
+      kanbanField="status"
+      getKanbanColumnKey={(item) => item.status || "Entwurf"}
+      onKanbanDragEnd={handleKanbanDragEnd}
+      getKanbanColumnTotal={(items) => {
+        const sum = items.reduce((acc, i) => acc + (i.gesamtPreis || 0), 0);
+        return `Gesamt: ${fmt(sum)}`;
+      }}
+      renderKanbanCard={(a) => (
+        <div>
+          <p className="text-sm font-medium text-gray-800">
+            {a.angebotNummer || a.id.slice(0, 8)}
+          </p>
+          {a.name && (
+            <p className="text-xs text-gray-500 mt-1">{a.name}</p>
+          )}
+          {a.checkIn && a.checkOut && (
+            <p className="text-[10px] text-gray-400 mt-1">
+              {new Date(a.checkIn).toLocaleDateString("de-DE")} –{" "}
+              {new Date(a.checkOut).toLocaleDateString("de-DE")}
+            </p>
+          )}
+          {a.gesamtPreis != null && (
+            <p className="text-xs font-semibold text-green-700 mt-1.5">
+              {fmt(a.gesamtPreis)}
+            </p>
+          )}
+        </div>
+      )}
     />
   );
 }

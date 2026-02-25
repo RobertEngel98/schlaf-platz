@@ -15,7 +15,7 @@ const tasksApi = {
       }
     }
     const qs = searchParams.toString();
-    const res = await fetch(`/api/tasks${qs ? `?${qs}` : ""}`);
+    const res = await fetch(`/api/tasks${qs ? `?${qs}` : ""}`, { credentials: "include" });
     return res.json();
   },
   update: async (id: string, data: any) => {
@@ -23,11 +23,12 @@ const tasksApi = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
+      credentials: "include",
     });
     return res.json();
   },
   delete: async (id: string) => {
-    const res = await fetch(`/api/tasks/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/tasks/${id}`, { method: "DELETE", credentials: "include" });
     return res.json();
   },
 };

@@ -81,7 +81,7 @@ export default function ListViewSelector({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search lists..."
+                placeholder="Listen durchsuchen…"
                 className="w-full pl-8 pr-3 py-1.5 text-[13px] border border-[#c9c9c9] rounded bg-white focus:ring-2 focus:ring-[#0176d3]/30 focus:border-[#0176d3] placeholder-[#706e6b]"
               />
             </div>
@@ -109,7 +109,7 @@ export default function ListViewSelector({
               <>
                 <div className="px-3 py-1.5 border-t border-[#e5e5e5]">
                   <p className="text-[11px] font-bold text-[#706e6b] uppercase tracking-wider">
-                    Recent List Views
+                    Zuletzt verwendete Ansichten
                   </p>
                 </div>
                 {filteredPinned.map((view, idx) => (
@@ -137,7 +137,7 @@ export default function ListViewSelector({
               <>
                 <div className="px-3 py-1.5 border-t border-[#e5e5e5]">
                   <p className="text-[11px] font-bold text-[#706e6b] uppercase tracking-wider">
-                    All Other Lists
+                    Alle weiteren Listen
                   </p>
                 </div>
                 {filteredOther.map((view, idx) => (

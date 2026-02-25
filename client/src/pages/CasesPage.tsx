@@ -16,7 +16,7 @@ const casesApi = {
       }
     }
     const qs = searchParams.toString();
-    const res = await fetch(`/api/cases${qs ? `?${qs}` : ""}`);
+    const res = await fetch(`/api/cases${qs ? `?${qs}` : ""}`, { credentials: "include" });
     return res.json();
   },
   update: async (id: string, data: any) => {
@@ -24,11 +24,12 @@ const casesApi = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
+      credentials: "include",
     });
     return res.json();
   },
   delete: async (id: string) => {
-    const res = await fetch(`/api/cases/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/cases/${id}`, { method: "DELETE", credentials: "include" });
     return res.json();
   },
 };
@@ -38,11 +39,13 @@ interface Case {
   recordType?: string;
   subject: string;
   description?: string;
+  resolution?: string;
   status: string;
   priority: string;
   origin?: string;
   accountId?: string;
   contactId?: string;
+  unterkunftId?: string;
   ownerId?: string;
   createdAt: string;
   updatedAt: string;
@@ -108,6 +111,15 @@ const allColumns: Column<Case>[] = [
     render: (row) => (
       <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
         {row.description || "---"}
+      </span>
+    ),
+  },
+  {
+    key: "resolution",
+    header: "Lösung",
+    render: (row) => (
+      <span className="text-gray-500 text-xs truncate max-w-[200px] inline-block">
+        {row.resolution || "---"}
       </span>
     ),
   },

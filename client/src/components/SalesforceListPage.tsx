@@ -122,6 +122,9 @@ export default function SalesforceListPage<T extends { id: string }>({
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const settingsDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Column picker state (triggered from settings menu)
+  const [showColumnPickerFromMenu, setShowColumnPickerFromMenu] = useState(false);
+
   // Close dropdowns on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -329,9 +332,9 @@ export default function SalesforceListPage<T extends { id: string }>({
 
   const viewModeLabel = (mode: ViewMode) => {
     switch (mode) {
-      case "table": return "Table";
+      case "table": return "Tabelle";
       case "kanban": return "Kanban";
-      case "split": return "Split View";
+      case "split": return "Geteilte Ansicht";
     }
   };
 
@@ -429,7 +432,7 @@ export default function SalesforceListPage<T extends { id: string }>({
           {/* Right: Action buttons */}
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate(`${basePath}/new`)}
+              onClick={() => navigate(`${basePath}/neu`)}
               className="flex items-center gap-1.5 px-4 py-[6px] text-[13px] font-medium text-[#0176d3] bg-white border border-[#0176d3] rounded hover:bg-[#f3f3f3] transition-colors"
             >
               Neu
@@ -440,7 +443,7 @@ export default function SalesforceListPage<T extends { id: string }>({
               title="Druckansicht"
             >
               <Printer className="w-4 h-4" />
-              Printable View
+              Druckansicht
             </button>
             {headerActions}
           </div>
@@ -480,7 +483,7 @@ export default function SalesforceListPage<T extends { id: string }>({
               <div className="absolute z-50 top-full right-0 mt-1 w-[240px] bg-white border border-[#e5e5e5] rounded shadow-lg overflow-hidden">
                 <button
                   onClick={() => {
-                    navigate(`${basePath}/new`);
+                    navigate(`${basePath}/neu`);
                     setShowSettingsDropdown(false);
                   }}
                   className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
@@ -512,7 +515,7 @@ export default function SalesforceListPage<T extends { id: string }>({
                 <div className="border-t border-[#e5e5e5]" />
                 <button
                   onClick={() => {
-                    setVisibleColumns(defaultVisibleColumns);
+                    setShowColumnPickerFromMenu(true);
                     setShowSettingsDropdown(false);
                   }}
                   className="w-full text-left px-4 py-2 text-[13px] text-[#181818] hover:bg-[#f3f3f3]"
@@ -799,6 +802,75 @@ export default function SalesforceListPage<T extends { id: string }>({
           </>
         )}
       </div>
+
+      {/* ---- COLUMN PICKER MODAL (from settings menu) ---- */}
+      {showColumnPickerFromMenu && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+          <div className="bg-white rounded-xl shadow-xl w-[360px] max-w-[90vw] max-h-[80vh] flex flex-col">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#e5e5e5]">
+              <h3 className="text-[15px] font-bold text-[#181818]">Angezeigte Felder auswählen</h3>
+              <button
+                onClick={() => setShowColumnPickerFromMenu(false)}
+                className="p-1 rounded hover:bg-[#f3f3f3] text-[#706e6b]"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto py-1">
+              {allColumns.map((col) => {
+                const isVisible = visibleColumns.includes(col.key);
+                return (
+                  <button
+                    key={col.key}
+                    onClick={() => {
+                      if (isVisible) {
+                        if (visibleColumns.length > 1) {
+                          setVisibleColumns(visibleColumns.filter((k) => k !== col.key));
+                        }
+                      } else {
+                        setVisibleColumns([...visibleColumns, col.key]);
+                      }
+                    }}
+                    className="w-full flex items-center gap-2.5 px-5 py-2 text-[13px] hover:bg-[#f3f3f3]"
+                  >
+                    <div
+                      className={`w-4 h-4 rounded border flex items-center justify-center shrink-0 ${
+                        isVisible
+                          ? "bg-[#0176d3] border-[#0176d3] text-white"
+                          : "border-[#c9c9c9]"
+                      }`}
+                    >
+                      {isVisible && <Check className="w-3 h-3" />}
+                    </div>
+                    <span className={isVisible ? "text-[#181818] font-medium" : "text-[#706e6b]"}>
+                      {col.header}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="px-5 py-3 border-t border-[#e5e5e5] flex items-center justify-between">
+              <p className="text-[12px] text-[#706e6b]">
+                {visibleColumns.length} von {allColumns.length} Spalten sichtbar
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setVisibleColumns(defaultVisibleColumns)}
+                  className="px-3 py-1.5 text-[12px] font-medium text-[#706e6b] border border-[#c9c9c9] rounded hover:bg-[#f3f3f3]"
+                >
+                  Zurücksetzen
+                </button>
+                <button
+                  onClick={() => setShowColumnPickerFromMenu(false)}
+                  className="px-3 py-1.5 text-[12px] font-medium text-white bg-[#0176d3] rounded hover:bg-[#014486]"
+                >
+                  Fertig
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ---- VIEW SAVE MODAL ---- */}
       <ViewSaveModal
