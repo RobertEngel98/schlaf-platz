@@ -79,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <CookieConsent />
-        <script src="https://neues-crm-sp.vercel.app/widget/chat.js" data-source="schlaf-platz.vercel.app" async />
+        {/* <script src="https://neues-crm-sp.vercel.app/widget/chat.js" data-source="schlaf-platz.vercel.app" async /> */}
       </body>
     </html>
   );
